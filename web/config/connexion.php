@@ -1,6 +1,6 @@
 class Connexion{
     private $host = "localhost";
-    private $db_name = "BaseDemocratie";
+    private $db_name = "saes3-aviau";
     private $username = "saes3-aviau";
     private $password = "ymPVbOHi9IjBplOm";
     public $connexion;
