@@ -19,6 +19,7 @@ footer{
 	display:flex;
 	justify-content:center;
 	color:#979797;
+	position-anchor: bottom;
 }
 
 #centered {
