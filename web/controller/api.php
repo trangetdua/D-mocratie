@@ -1,7 +1,7 @@
 <?php
-require_once '../config/connexion.php'; 
-require_once '../modele/modele.php';
-
+require_once ('../config/connexion.php'); 
+require_once ('../modele/modele.php');
+$pdo = Connexion::getConnection();
 
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 
