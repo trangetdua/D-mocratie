@@ -1,9 +1,9 @@
 <?php
-require_once 'vue/config/connexion.php'; 
-require_once 'modele/groupe.php';
-require_once 'modele/proposition.php';
-require_once 'modele/theme.php';
-require_once 'modele/utilisateur.php';
+require_once '../config/connexion.php'; 
+require_once '../modele/groupe.php';
+require_once '../modele/proposition.php';
+require_once '../modele/theme.php';
+require_once '../modele/utilisateur.php';
 
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 
