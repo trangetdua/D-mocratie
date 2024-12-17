@@ -1,4 +1,6 @@
 <?php
+    require_once('modele.php');
+
 class Utilisateur extends modele{
     protected static $objet ="utilisateur";
     protected static $cle ="Id_Utilisateur";

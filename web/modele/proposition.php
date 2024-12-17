@@ -1,4 +1,6 @@
 <?php
+    require_once('modele.php');
+
 class Proposition extends modele{
     protected static $objet ="proposition";
     protected static $cle ="Id_Proposition";

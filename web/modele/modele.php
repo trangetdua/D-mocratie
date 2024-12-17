@@ -1,5 +1,6 @@
 <?php
 class modele {
+    
     //getter générique 
     public function get($attribut){
         return $this->$attribut;

@@ -1,4 +1,6 @@
 <?php
+    require_once('modele.php');
+
 class Theme extends modele{
     protected static $objet ="theme";
     protected static $cle ="Id_Theme";
