@@ -13,7 +13,9 @@ class Utilisateur extends modele{
     protected string $Mail_Utilisateur;
     protected string $Login_Utilisateur;
     
-    
+    public function __construct($donnees = NULL) {
+        parent::__construct($donnees);
+    }
     
 }
 ?>

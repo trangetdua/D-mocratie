@@ -1,7 +1,13 @@
 <?php
-require_once ('../config/connexion.php'); 
+require_once(__DIR__ . '/../config/connexion.php');
 require_once ('../modele/modele.php');
-$pdo = Connexion::getConnection();
+$pdo = Connexion::connect();
+
+if (!$pdo) {
+    die("Erreur: Impossible de se connecter à la base de données.");
+} else {
+    echo "Connexion réussie!";
+}
 
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 
