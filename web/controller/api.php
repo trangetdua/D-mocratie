@@ -1,10 +1,16 @@
 <?php
 require_once ('../config/connexion.php'); 
 require_once ('../modele/modele.php');
-$pdo = Connexion::getConnection();
 
+
+class api {
+
+
+
+public static function getJson(){
+    // Mettre en attribut ce qu'il y a en dessous
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
-
+$pdo = Connexion::getConnection();
 $method = $_SERVER['REQUEST_METHOD'];
 $path = explode('/', trim($_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'], '/'));
 
@@ -27,9 +33,10 @@ if ($path[0] == 'utilisateur' ) {
                 }
 
             } else {
-                $stmt = $pdo->query('select * from utilisateur;');
+                $stmt = self::$pdo->query('select * from utilisateur;');
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                echo json_encode($result);
+                //echo json_encode($result);
+                return json_encode($result);
             }
             //break;
     
@@ -107,6 +114,7 @@ if ($path[0] == 'utilisateur' ) {
     http_response_code(404);
     echo json_encode(['message' => 'Endpoint non trouve']);
 }
-    
+}
+}
 
 ?>
