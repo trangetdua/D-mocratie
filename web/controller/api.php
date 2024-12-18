@@ -1,25 +1,19 @@
 <?php
-require_once(__DIR__ . '/../config/connexion.php');
+require_once ('../config/connexion.php'); 
 require_once ('../modele/modele.php');
-$pdo = Connexion::connect();
-
-if (!$pdo) {
-    die("Erreur: Impossible de se connecter à la base de données.");
-} else {
-    echo "Connexion réussie!";
-}
+$pdo = Connexion::getConnection();
 
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = explode('/', trim($_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'], '/'));
 
-if ($path[0] == 'utilisateurs' ) {
+if ($path[0] == 'utilisateur' ) {
     try {
         if ($method == 'GET') {
             if (isset($path[1])) {
                 $id = intval($path[1]);
-                $stmt = $pdo->prepare('select * from utilisateurs where id_utilisateur = :id');
+                $stmt = $pdo->prepare('select * from utilisateur where id_utilisateur = :id');
                 $stmt->execute(['id' => $id]);
                 $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,7 +27,7 @@ if ($path[0] == 'utilisateurs' ) {
                 }
 
             } else {
-                $stmt = $pdo->query('select * from utilisateurs;');
+                $stmt = $pdo->query('select * from utilisateur;');
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($result);
             }
@@ -41,7 +35,7 @@ if ($path[0] == 'utilisateurs' ) {
     
         } elseif($method == 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
-            $stmt = $pdo->prepare('insert into utilisateur (nom_utiisateur, prenom_utilisateur, adr_utilisateur, cp_utilisateur, mail_utilisateur, login_utilisateur, pdp_utilisateur 
+            $stmt = $pdo->prepare('insert into utilisateur (nom_utilisateur, prenom_utilisateur, adr_utilisateur, cp_utilisateur, mail_utilisateur, login_utilisateur, pdp_utilisateur 
                                 values (:nom, :prenom, :adr, :cp, :mail, :login, :pdp) ');
             $stmt->execute([
                 ':id' => $data['id_utilisateur'],
@@ -106,6 +100,8 @@ if ($path[0] == 'utilisateurs' ) {
         } catch (Exception $e) {
             http_response_code(500); //Method not allowed
             echo json_encode(['message' => 'Méthode non autorise']);
+            echo $e->getMessage();
+
         }
 } else {
     http_response_code(404);
