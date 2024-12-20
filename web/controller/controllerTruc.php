@@ -1,4 +1,5 @@
 <?php
+require_once ('../config/connexion.php'); 
 require_once("../modele");
 
 abstract class ControllerTruc {
@@ -44,9 +45,9 @@ abstract class ControllerTruc {
             $newId = $model::create($data); 
 
             if($newID) {
-                return $this->jsonResponse(["message" => "Utilisateur ajouté avec succès" ], 201);
+                return $this->jsonResponse(["message" => "$modelClass ajouté avec succès" ], 201);
             } else {
-                return $this->jsonResponse(["error" => "Impossible de créer un nouvel utilisateur"],400 );
+                return $this->jsonResponse(["error" => "Impossible de créer"],400 );
             }
         } else {
             return $this->jsonResponse(["error" => "Méthode non autorisé"], 500);
@@ -61,7 +62,51 @@ abstract class ControllerTruc {
         $model = $this->modelClass;
 
         if ($_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'POST') {
-            $inputData = $_SERVER['REQUEST_METHOD'] 
+            /*$inputData = json_decode(file_get_contents('php://input'), true);
+            if (!$inputData) {
+                return $this->jsonResponse(["error" => "Données manquantes"], 400);
+            }
+
+            $stmt = $this->model::create();
+            if ($stmt) {
+                return $this->jsonResponse(["message" => "$modelClass est mis à jour"], 201);
+            } else {
+                return $this->jsonResponse(["error" => "Impossible de mettre à jour"], 500)
+            }*/
+
+            $inputData = $_SERVER['REQUEST_METHOD'] === 'PUT' ? file_get_contents('php://input') : json_encode($_POST);
+            $updateData = json_decode($inputData, true);
+
+            if (!$updateData) {
+                $updateData = $_POST;
+            } 
+
+            $data = /*A completer**/
+            $result = $model::update($id, $data);
+            if(!$result) {
+                return $this->jsonResponse(["error" => "Mise à jour erronée"], 500);
+            } else {
+                return $this->jsonResponse(["message" => "$model est mis àjour"],201);
+            }
+
+
+        }
+    }
+
+    public function delete(){
+        if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+            if (!isset(($_GET['id']))) {
+                return $this->jsonResponse(["error" => "ID non providé"], 400); //Best-practices with correct use of status codes
+            }
+            $id = $_GET['id'];
+            $model = $this->modelClass;
+            $stmt = $this->model::delete();
+
+            if ($stmt) {
+                return $this->jsonResponse(["message" => "$model est suuprimé"], 201);
+            } else {
+                return $this->jsonResponse(["error" => "Impossible de mettre à jour"], 500)
+            }
         }
     }
 }
