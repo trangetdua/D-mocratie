@@ -30,7 +30,7 @@ if ($path[0] == 'utilisateur' ) {
                 }
 
             } else {
-                $stmt = self::$pdo->query('select * from utilisateur;');
+                $stmt = $pdo->query('select * from utilisateur;');
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($result);
             }

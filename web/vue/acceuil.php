@@ -6,9 +6,10 @@
 
 	<h1> Mes groupes </h1>
 	<?php 
-		require_once("../controller/api.php");
-		$json = api::getJson();
-		echo $json;
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/?method=GET');
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+		$data = json_decode(curl_exec($curl));
+		print_r($data);
 	?>
 	
 
