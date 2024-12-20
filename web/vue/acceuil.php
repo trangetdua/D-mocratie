@@ -1,5 +1,6 @@
 	<?php 
 		require_once("header.html");
+		require_once("isConnected.php");
 	?>
 
 	<button type = "button"> Nouveau groupe <image src="./images/plus.png" alt="plus"> </button>

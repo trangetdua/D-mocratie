@@ -23,7 +23,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 	if ($user && $password==$user[0]['Login_Utilisateur'] ) {
         session_start();
         $_SESSION['user_id'] =$user[0]['Mail_Utilisateur'];
-        //header('Location: dashboard.php');
+        header('Location: acceuil.php');
         $message = "ça fonctionne";
         echo $message;
     } else {
