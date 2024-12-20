@@ -15,8 +15,8 @@ if ($path[0] == 'utilisateur' ) {
     try {
         if ($method == 'GET') {
             if (isset($path[1])) {
-                $id = intval($path[1]);
-                $stmt = $pdo->prepare('select * from utilisateur where id_utilisateur = :id');
+                $id = strval($path[1]);
+                $stmt = $pdo->prepare('select * from utilisateur where Mail_Utilisateur = :id');
                 $stmt->execute(['id' => $id]);
                 $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -34,6 +34,7 @@ if ($path[0] == 'utilisateur' ) {
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($result);
             }
+            
             //break;
     
         } elseif($method == 'POST') {
