@@ -11,31 +11,26 @@ $pdo = Connexion::getConnection();
 $method = $_SERVER['REQUEST_METHOD'];
 $path = explode('/', trim($_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'], '/'));
 
-if ($path[0] == 'utilisateur' ) {
+if (!is_null($path[0])){
+	$table=$path[0];
     try {
         if ($method == 'GET') {
-            if (isset($path[1])) {
-                $id = strval($path[1]);
-                $stmt = $pdo->prepare('select * from utilisateur where Mail_Utilisateur = :id');
-                $stmt->execute(['id' => $id]);
-                $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                if($user) {
-                    echo json_encode($user);
-                } else {
-                    http_response_code(404); //Best-practices with correct use of status codes 
-                    //400 means bad request from client. 
-                    //404 means not found : the endpoint is valid but the resource itself does not exist.
-                    echo json_encode(['message' => 'Utilisateur non trouvé']);
-                }
-
-            } else {
-                $stmt = $pdo->query('select * from utilisateur;');
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                echo json_encode($result);
-            }
+			$requete = "select * from $table";
+			$i=0;
+			$j=0;
+			//format : $table/$connection/$table2
+			while(isset($path[$i+2])){
+				$j=$i+1;
+				$k=$i;
+				$i=$i+2;
+				$requete = $requete . " inner join $path[$i] on $path[$i].$path[$j] = $path[$k].$path[$j]";
+				
+			}
+			$requete = $requete . ";";
+            $stmt = $pdo->query($requete);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($result);   
             
-            //break;
     
         } elseif($method == 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
