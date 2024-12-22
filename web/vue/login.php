@@ -17,18 +17,24 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if (is_null($user)){
         echo "je vais me defenestrer";
     }
+    echo "ldsch";
     print_r($user);
+    echo "hdsijhcds";
 
+    if ($user["message"] == "Utilisateur non trouvé"){
+        header('Location: conne.php?identifiant=faux');
+    }
     
-	if ($user && $password==$user[0]['Login_Utilisateur'] ) {
+    
+	elseif ($user && $password==$user[0]['Login_Utilisateur'] ) {
         session_start();
         $_SESSION['user_id'] =$user[0]['Mail_Utilisateur'];
         header('Location: acceuil.php');
         $message = "ça fonctionne";
         echo $message;
     } else {
-        $message = 'Mauvais identifiants';
-        echo $message;
+        header('Location: conne.php?identifiant=faux');
+
     }
 
 

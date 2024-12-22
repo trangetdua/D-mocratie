@@ -49,6 +49,28 @@ h1{
 	padding: 0px 0px ;
 }
 
+.bigBox{
+	background-color: #94c1d9;
+	margin-top : 3%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	top: 50%; left: 50%;
+	width: 90%;
+	height: 100%;
+}
+
+.boutonPropo{
+	width : 20%;
+	text-align: center;
+	float : right;
+	height : 40 px;
+	background-color : #2f6690;
+	margin-left : 2%;
+	margin-top: 1%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+}
+
 .active{
 	width : 25%;
 	text-align: center;
@@ -130,4 +152,17 @@ h1{
 	position : relative;
 	float : right;
 
+}
+
+#expand{
+	width:20px;
+	height:20px;
+	float : right;
+}
+
+#interagir{
+	width:55px;
+	height:55px;
+	float : right;
+	margin : 2%;
 }
