@@ -12,14 +12,24 @@ height : 100px;
 float:right;
 }
 
+body {
+	display:flex;
+	flex-direction: column ;
+	min-height: 100vh;
+	margin:0px;
+	padding: 0px 0px ;
+}
+
 main{
 	background : linear-gradient(#FFFFFF,#bfc1d4);
+	flex-grow :1;
 }
 footer{
-	display:flex;
-	justify-content:center;
-	color:#979797;
-	position-anchor: bottom;
+	text-align:center;
+	color: #e8e9ea ;
+	background-color: #2f6690;
+	
+	padding :0px;
 }
 
 #centered {
