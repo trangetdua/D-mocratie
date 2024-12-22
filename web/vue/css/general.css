@@ -73,7 +73,21 @@ border-radius : 15px 15px 15px 15px;}
   border : 0px none #000000; 
   border-radius : 15px 15px 15px 15px;
 }
-
+.grp{
+	height : 130px;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	margin : 20px;
+}
+.grp h2{
+	margin = 2px;
+}
+.grp p{
+	margin=5px;
+}
+.left{
+	float:left;
+}
 #plus{
 	width:15px;
 	height:15px;

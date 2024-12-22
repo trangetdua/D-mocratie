@@ -11,8 +11,8 @@
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$data = json_decode(curl_exec($curl),true);
 		foreach ($data as $value){
-			echo "<div class='grp'>";
-				echo "<image src='./images/iconImage.png' alt ='icon image'/>";
+			echo "<div class='grp'style='background-color:Teal'>";
+				echo "<image class ='left' src='./images/iconImage.png' alt ='icon image'/>";
 				echo "<h2>";
 				echo $value['Login_Utilisateur'];
 				echo "<h2/>";
