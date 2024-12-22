@@ -76,6 +76,15 @@ border-radius : 15px 15px 15px 15px;}
   border : 0px none #000000; 
   border-radius : 15px 15px 15px 15px;
 }
+.nouveauGroupe{
+	height : 50px;
+	background-color : #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	text-align: center;
+
+
+}
 .grp{
 	height : 130px;
 	border : 0px none #000000; 

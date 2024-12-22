@@ -3,8 +3,11 @@
 		require_once("isConnected.php");
 	?>
 
-	<button type = "button"> Nouveau groupe <image src="./images/plus.png" alt="plus"> </button>
-
+	<a href ="creer_groupe.php">
+	<div class = "nouveauGroupe">
+	Nouveau Groupe <image src="./images/plus.png" alt="plus"/>
+	</div>
+	</a>
 	<h1> Mes groupes </h1>
 	<?php 
 		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/?method=GET');
