@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    
+
+
     <style>
         body {
     font-family: Arial, sans-serif;
@@ -67,10 +70,16 @@ p {
 
 <div class="login-container">
     <h2>Connexion</h2>
+    <?php if ($_GET['identifiant']){
+        if ($_GET['identifiant']=="faux"){
+            echo "<p> identifiant/mot de pass incorrect </p>";
+        }
+    }?>
 
     <?php if (!empty($message)): ?>
         <p style="color:red"><?= $message ?></p>
     <?php endif; ?>
+
 
     <form action="login.php" method="post">
         <div>
