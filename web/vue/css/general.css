@@ -77,13 +77,19 @@ border-radius : 15px 15px 15px 15px;}
 .nouveauGroupe{
 	height : 100px;
 	width : 25%;
-	justify-content = right;
+	float:right;
 	background-color : #2f6690;
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
 	text-align: center;
+	margin-top:20px;
 
 
+}
+#plusGroupe{
+	float:right;
+	width : 70px;
+	height : 70px;
 }
 .grp{
 	height : 130px;
@@ -97,9 +103,7 @@ border-radius : 15px 15px 15px 15px;}
 .grp p{
 	margin :5px;
 }
-.left{
-	float:left;
-}
+
 #plus{
 	width:15px;
 	height:15px;
