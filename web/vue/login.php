@@ -27,7 +27,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $message = "ça fonctionne";
         echo $message;
     } else {
-        echo $user[0]['Login_Utilisateur'];
         $message = 'Mauvais identifiants';
         echo $message;
     }
