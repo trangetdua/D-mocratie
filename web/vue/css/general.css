@@ -38,13 +38,11 @@ footer{
 	align-items: center;
 }
 
-.box{
+#box{
 	float:right;
 	margin-left: 3%;
 	margin-right : 0px;
-	background-color : #2f6690;
-	display:flex;
-	flex-direction: column ;
+	background-color : white;
 	min-height: 100vh;
 	padding: 0px 0px ;
 }
@@ -54,7 +52,7 @@ footer{
 	text-align: center;
 height : 60 px;
 background-color : #2f6690;
-margin : 0px; 
+margin-top : 3%;
 border : 0px none #000000; 
 border-radius : 15px 15px 15px 15px;}
 
@@ -64,7 +62,7 @@ border-radius : 15px 15px 15px 15px;}
 	text-align: center;
   height : 60 px;
   background-color : #94c1d9;
-  margin : 0px; 
+  margin-top : 3%; 
   border : 0px none #000000; 
   border-radius : 15px 15px 15px 15px;}
 
@@ -105,4 +103,11 @@ border-radius : 15px 15px 15px 15px;}
 #plus{
 	width:15px;
 	height:15px;
+}
+#menu{
+	width:20px;
+	height:20px;
+	position : relative;
+	float : right;
+
 }
