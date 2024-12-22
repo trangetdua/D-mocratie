@@ -12,17 +12,25 @@
 	<h1> Mes groupes </h1>
 	<?php 
 		//$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/?method=GET');
-		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/apiTest.php/utilisateur/id_utilisateur/membre/id_groupe/groupe/id_Groupe/Thème/?method=GET');
-		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-		$data = json_decode(curl_exec($curl),true);
-		foreach ($data as $value){
+		$curlGroupes = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/membre/id_groupe/groupe/?method=GET');
+		curl_setopt($curlGroupes,CURLOPT_RETURNTRANSFER,1);
+		$groupes = json_decode(curl_exec($curlGroupes),true);
+		$curlThemes = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/id_groupe/Thème/?method=GET');
+		curl_setopt($curlThemes,CURLOPT_RETURNTRANSFER,1);
+		$themes = json_decode(curl_exec($curlThemes),true);
+		foreach ($groupes as $value){
 			if($value['Mail_Utilisateur']==$_SESSION['user_id'] && $value['Banni']==0){
 				$color = $value['Couleur_Groupe'];
 				echo "<div class='grp'style='background-color:$color'>";
 				echo "<image class ='left' src='./images/iconImage.png' alt ='icon image'/>";
 				echo "<h2>" . $value['Nom_Groupe'] . "</h2>";
-				
-				echo "<p> themes <p>";
+				foreach($themes as $t){
+					<div class='theme'>
+					if($value['Id_Groupe']==$t['Id_Groupe']){
+						echo "<p>" . $t['Nom_Theme']. "<p>";
+					}
+					</div>
+				}
 			echo "</div>";
 			}
 		}
