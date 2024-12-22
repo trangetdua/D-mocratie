@@ -2,13 +2,12 @@
 		require_once("header.html");
 		require_once("isConnected.php");
 	?>
-
-	<div class = "nouveauGroupe">
 	<a href ="creer_groupe.php">
-
-	<p>Nouveau Groupe </p> <image src="./images/plus.png" alt="plus" id=plusGroupe/>
-	</a>
+	<div class = "nouveauGroupe">
+	<h2> Nouveau Groupe  </h2>
+	<image src="./images/plus.png" alt="plus" id="plusGroupe"/>
 	</div>
+	</a>
 	
 	<h1> Mes groupes </h1>
 	<?php 
@@ -18,9 +17,7 @@
 		foreach ($data as $value){
 			echo "<div class='grp'style='background-color:Teal'>";
 				echo "<image class ='left' src='./images/iconImage.png' alt ='icon image'/>";
-				echo "<h2>";
-				echo $value['Login_Utilisateur'];
-				echo "<h2/>";
+				echo "<h2>" . $value['Login_Utilisateur'] . "</h2>";
 				echo "<p> themes <p>";
 			echo "</div>";
 			

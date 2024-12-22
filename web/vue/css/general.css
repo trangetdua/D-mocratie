@@ -31,7 +31,9 @@ footer{
 	
 	padding :0px;
 }
-
+h1{
+	margin:40px;
+}
 #centered {
 	display: flex;
 	justify-content: center;
@@ -50,11 +52,11 @@ footer{
 .active{
 	width : 25%;
 	text-align: center;
-height : 60 px;
-background-color : #2f6690;
-margin-top : 3%;
-border : 0px none #000000; 
-border-radius : 15px 15px 15px 15px;}
+	height : 60 px;
+	background-color : #2f6690;
+	margin-top : 3%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;}
 
 .nonactive{
  
@@ -75,35 +77,49 @@ border-radius : 15px 15px 15px 15px;}
   border-radius : 15px 15px 15px 15px;
 }
 .nouveauGroupe{
-	height : 100px;
-	width : 25%;
-	float:right;
+	display:flex;
+	height:70px;
+	width:20%;
 	background-color : #2f6690;
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
-	text-align: center;
-	margin-top:20px;
-
+	margin:20px;
+	padding:10px;
+	position:relative;
+	float:right;
+	
+	
+	
 
 }
 #plusGroupe{
-	float:right;
-	width : 70px;
-	height : 70px;
+	width :60px;
+	height :60px;
+	margin:auto;
+}
+
+.nouveauGroupe h2{
+	margin:auto;
 }
 .grp{
 	height : 130px;
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
 	margin : 20px;
+	clear:right;
+
 }
-.grp h2{
-	margin : 2px;
-}
-.grp p{
-	margin :5px;
+.grp > h2{
+	padding-top:20px;
 }
 
+.left{
+	float:left;
+	margin:20px;
+}
+.menuNotification{
+	float:right;
+}
 #plus{
 	width:15px;
 	height:15px;
