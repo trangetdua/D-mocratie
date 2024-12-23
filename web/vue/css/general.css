@@ -139,6 +139,11 @@ h1{
 	float:left;
 	margin:20px;
 }
+#ajouterPhotoGroupe{
+	float:left;
+	margin-left:30px;
+	margin-right: 20px;
+}
 .menuNotification{
 	float:right;
 }
@@ -147,6 +152,21 @@ h1{
 	width:30px;
 	height:30px;
 	margin:20px;
+}
+input{
+	margin-top: 10px;
+
+}
+form button{
+	height:70px;
+	width:15%;
+	background-color : #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	margin:20px;
+	padding:10px;
+	float:right;
+	font-size:20px;
 }
 #plus{
 	width:15px;

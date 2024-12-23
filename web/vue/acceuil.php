@@ -36,8 +36,7 @@
 			}
 		}
 		//print_r($data);
+		require_once("footer.html");
+
 	?>
 	
-
-	</body>
-	</html>
