@@ -25,11 +25,11 @@
 				echo "<image class ='left' src='./images/iconImage.png' alt ='icon image'/>";
 				echo "<h2>" . $value['Nom_Groupe'] . "</h2>";
 				foreach($themes as $t){
-					<div class='theme'>
+					echo "<div class='theme'>";
 					if($value['Id_Groupe']==$t['Id_Groupe']){
 						echo "<p>" . $t['Nom_Theme']. "<p>";
 					}
-					</div>
+					echo "</div>";
 				}
 			echo "</div>";
 			}
