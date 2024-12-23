@@ -135,14 +135,19 @@ h1{
 	padding-top:20px;
 }
 
-.left{
+.photoGroupe{
 	float:left;
 	margin:20px;
 }
 .menuNotification{
 	float:right;
 }
-
+.menuNotificationGroupe{
+	float:right;
+	width:30px;
+	height:30px;
+	margin:20px;
+}
 #plus{
 	width:15px;
 	height:15px;
