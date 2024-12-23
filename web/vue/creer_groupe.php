@@ -12,7 +12,7 @@
 		<input name = "nom" />
 		</label>
 		<br>
-		<label> Couleur (code HEX ou nom de couleur HTML) : </label>
+		<label> Couleur (code HEX avec # devant, par exemple #2f6690) : </label>
 		<input name = "couleur" />
 		</label>
 		<br>
