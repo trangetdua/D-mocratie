@@ -3,8 +3,6 @@ require_once ('../config/connexion.php');
 require_once ('../modele/modele.php');
 
 
-
-
     // Mettre en attribut ce qu'il y a en dessous
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 $pdo = Connexion::getConnection();

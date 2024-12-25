@@ -12,7 +12,7 @@ class modele {
     //constructeur générique
     public function __construct($donnees = NULL){
         if (!is_null($donnees)){
-            foreach($donnes as $attribut => $valeur){
+            foreach($donnees as $attribut => $valeur){
                 $this->set($attribut,$valeur);
             }
         }
@@ -21,7 +21,7 @@ class modele {
     public static function getAll(){
         $table = static::$objet;
         $requete = "SELECT * FROM $table;";
-        $resultat = connexion::pdo()->query($requete);
+        $resultat = connexion::getConnection()->query($requete);
         $resultat->setFetchmode(PDO::FETCH_CLASS, $table);
         $lesObjets = $resultat->fetchAll();
         return $lesObjets;
@@ -32,7 +32,7 @@ class modele {
         $cle = static::$cle;
 
         $requeteAvecTags = "SELECT * FROM $table WHERE $cle = :log;";
-        $requetePreparee = connexion::pdo()->prepare($requeteAvecTags);
+        $requetePreparee = connexion::getConnection()->prepare($requeteAvecTags);
         $valeurs = array("log" => $l);
 
         try{
@@ -52,11 +52,11 @@ class modele {
         $placeholders = array_map(function($col) {return ":$col";}, $colonnes);
 
         $sql =  $sql = "INSERT INTO $table (".implode(',', $colonnes).") VALUES (".implode(',', $placeholders).")";
-        $stmt = connexion::pdo()->prepare($sql);
+        $stmt = connexion::getConnection()->prepare($sql);
 
         try {
             $stmt->execute($data);
-            return connexion::pdo()->lastInsertId();
+            return connexion::getConnection()->lastInsertId();
         } catch (PDOException $e) {
             echo "Erreur lors de la création: " . $e->getMessage();
             return false;
@@ -72,7 +72,7 @@ class modele {
             $sets[] = "$col = :$col";
         }
         $sql = "UPDATE $table SET ".implode(',', $sets)." WHERE $cle = :id";
-        $stmt = connexion::pdo()->prepare($sql);
+        $stmt = connexion::getConnection()->prepare($sql);
         $data['id'] = $id; 
         try {
             return $stmt->execute($data);
@@ -87,7 +87,7 @@ class modele {
         $cle = static::$cle;
 
         $sql = "DELETE FROM $table WHERE $cle = :id";
-        $stmt = connexion::pdo()->prepare($sql);
+        $stmt = connexion::getConnection()->prepare($sql);
         try {
             return $stmt->execute(['id' => $id]);
         } catch (PDOException $e) {
@@ -99,7 +99,7 @@ class modele {
     public static function getAllByColumn($column, $value) {
         $table = static::$objet;
         $sql = "SELECT * FROM $table WHERE $column = :val";
-        $stmt = connexion::pdo()->prepare($sql);
+        $stmt = connexion::getConnection()->prepare($sql);
         try {
             $stmt->execute(['val' => $value]);
             $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
