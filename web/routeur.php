@@ -20,7 +20,7 @@ switch ($action) {
         break;
     case 'show':
         if ($method == 'GET') {
-            $controleur->show();   // GET /utilisateurs/show?id=xyz
+            $controleur->show();   // GET /utilisateurs/show&id=xyz
         }
         break;
     case 'create':

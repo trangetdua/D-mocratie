@@ -26,26 +26,39 @@
             </div>
         </nav>
     </header> 
-    <section class="content">
-        <h1>STOP LOOKING <br><span class="content-span">START BOOKING ! </span></h1>
-        <p class="par">Explorez notre site de réservation de billets de train captivant,<br> 
-            où chaque clic vous transporte vers une aventure ferroviaire inoubliable. </p>
 
+
+ <section class="hero">
+
+        <div class="content-wrapper">
             
-            <a class="button-wrapper">
-                <span class="dot dot-1"></span>
-                <span class="dot dot-2"></span>
-                <span class="dot dot-3"></span>
-                <span class="dot dot-4"></span>
-                <span class="dot dot-5"></span>
-                <span class="dot dot-6"></span>
-                <span class="dot dot-7"></span>
-                <span class="button bg-yellow-500 px-16 py-4 rounded-full uppercase" id="rechercheur">Chercher<span>
-              </a>
-                  
-              <div id="circle" class="circle bg-yellow-500"></div>
-        
+            <div class="content-left">
+                <h1> YOUR VOTE <br><span class="content-span"> OUR FUTURE ! </span></h1>
+                <p class="par">
+                    Explorez notre site de réservation de billets de train captivant,<br>
+                    où chaque clic vous transporte vers une aventure ferroviaire inoubliable.
+                </p>
+            </div>
+
+            <div class="content-right">
+                <form class="reservation-form">
+                    <h2>CONNEXION</h2>
+                    
+                    <label for="departure">Adresse mail : </label>
+                    <input type="text" id="departure" name="departure" placeholder="Saisir votre adresse mail">
+
+                    <label for="arrival">Password : </label>
+                    <input type="text" id="arrival" name="arrival" placeholder="Ex: Saisir votre mot de passe">
+
+                    <h4>Votre première connexion ? </h4>
+
+                    <button type="submit">Rechercher</button>
+                </form>
+            </div>
+        </div>
+    
     </section>
+
 
     <footer class="footer">
         <div class="container">
@@ -82,6 +95,4 @@
     
 
 </body>
-<script src="./scripts/accueil.js"></script>
-<script src="./scripts/indexRech.js"></script>
 </html>
