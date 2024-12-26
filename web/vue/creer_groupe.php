@@ -12,15 +12,19 @@
 		<input name = "nom" />
 		</label>
 		<br>
-		<label> Couleur (code HEX avec # devant, par exemple #2f6690) : </label>
-		<input name = "couleur" />
-		</label>
+		
+		<label> Couleur du groupe : </label>
+		<select name = "couleur" >
+			<option value ="#3a7ca5"> bleu </option>
+			<option value ="#0a9396"> vert </option>
+			<option value ="#780404"> rouge </option>
+			<option value ="#620581"> violet </option>
+		</select>
 		<br>
 		<label> Thèmes : </label>
 		<input name="Theme1"/>
 		<input name="Theme2"/>
 		<br>
-		</label>
 		<button> C'est parti ! </button>
 	 </form>
 	<?	
