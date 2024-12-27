@@ -35,24 +35,30 @@ if (!is_null($path[0])){
             
     
         } elseif($method == 'POST') {
-				echo "test1";
-			$requete = 'insert into '.$table .' values (';
+		
+			if($path[1]=='id'){
+				$requete = 'insert into '.$table .' values (DEFAULT,';
+				$i=1;
+			}
+			else{
+				$requete = 'insert into '.$table .' values (';
+				$i=0;
+			}
 			$execute = array();
-			$i=0;
+
 			while(isset($path[$i+1])){
 				$i=$i+1;
-				$requete = $requete . ':' .$path[$i];
+				$requete = $requete . ':' .'nom'.strval($i);
 				if (isset($path[$i+1])){
-					$requete = $requete . ',';
+					$requete = $requete . ', ';
 				}
-				$execute[$path[$i]] =$path[$i];
+				$var = 'nom'.strval($i);
+				$execute[$var] = $path[$i];
 			}
-			$requete = $requete . ')';
-			echo $requete;
-			
+			$requete = $requete . ');';
 			$stmt = $pdo->prepare($requete);
             $stmt->execute($execute);
-            http_response_code(201); // It means the request succeeded, a new resource was created as a result 
+			
             echo json_encode(['message' => 'Utilisateur ajouté avec succès']);
             //break;
             

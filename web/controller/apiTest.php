@@ -8,8 +8,8 @@ require_once ('../modele/modele.php');
     // Mettre en attribut ce qu'il y a en dessous
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 $pdo = Connexion::getConnection();
-$method = $_SERVER['REQUEST_METHOD'];
 $path = explode('/', trim($_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'], '/'));
+$method = $_GET['method'];
 
 if (!is_null($path[0])){
 	$table=$path[0];
