@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
         $response = curl_exec($curl);
 
-        if ($response === false) {
+        if ($response == false) {
             throw new Exception("Erreur API: " . curl_error($curl));
         }
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($users && is_array($users)) {
             foreach($users as $user) {
-                if($user['Mail_Utilisateur'] == $email && $user['Pdp_Utilisateur'] === $password) {
+                if($user['Mail_Utilisateur'] == $email && $user['Pdp_Utilisateur'] == $password) {
                     session_start();
                     $_SESSION['user_id'] =$user['Mail_Utilisateur'];
                     header('Location: acceuil.php');
