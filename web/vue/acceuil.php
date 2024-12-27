@@ -11,7 +11,6 @@
 	
 	<h1> Mes groupes </h1>
 	<?php 
-		//$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/?method=GET');
 		$curlGroupes = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/membre/id_groupe/groupe/?method=GET');
 		curl_setopt($curlGroupes,CURLOPT_RETURNTRANSFER,1);
 		$groupes = json_decode(curl_exec($curlGroupes),true);
