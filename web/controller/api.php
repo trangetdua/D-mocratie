@@ -1,22 +1,26 @@
 <?php
 require_once ('../config/connexion.php'); 
-require_once ('../modele/modele.php');
 
 
     // Mettre en attribut ce qu'il y a en dessous
 header("Content-Type:application/json"); // le format du corps de la requete est JSON
 $pdo = Connexion::getConnection();
-$method = $_SERVER['REQUEST_METHOD'];
+//$method = $_SERVER['REQUEST_METHOD'];
 $path = explode('/', trim($_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'], '/'));
+$method = $_GET['method'];
 
 if (!is_null($path[0])){
 	$table=$path[0];
+	echo $table;
+	echo $method;
     try {
+
         if ($method == 'GET') {
+			//format de la requete: $table/$connection/$table2
+
 			$requete = "select * from $table";
 			$i=0;
 			$j=0;
-			//format : $table/$connection/$table2
 			while(isset($path[$i+2])){
 				$j=$i+1;
 				$k=$i;
@@ -31,19 +35,23 @@ if (!is_null($path[0])){
             
     
         } elseif($method == 'POST') {
-            $data = json_decode(file_get_contents('php://input'), true);
-            $stmt = $pdo->prepare('insert into utilisateur (nom_utilisateur, prenom_utilisateur, adr_utilisateur, cp_utilisateur, mail_utilisateur, login_utilisateur, pdp_utilisateur 
-                                values (:nom, :prenom, :adr, :cp, :mail, :login, :pdp) ');
-            $stmt->execute([
-                ':id' => $data['id_utilisateur'],
-                ':nom' => $data['nom_utilisateur'],
-                ':prenom' => $data['prenom_utilisateur'],
-                ':adr' => $data['adr_utilisateur'],
-                ':cp' => $data['cp_utilisateur'],
-                ':mail' => $data['mail_utilisateur'],
-                ':login' => $data['login_utilisateur'],
-                ':pdp' => $data['pdp_utilisateur'],
-            ]);
+				echo "test1";
+			$requete = 'insert into '.$table .' values (';
+			$execute = array();
+			$i=0;
+			while(isset($path[$i+1])){
+				$i=$i+1;
+				$requete = $requete . ':' .$path[$i];
+				if (isset($path[$i+1])){
+					$requete = $requete . ',';
+				}
+				$execute[$path[$i]] =$path[$i];
+			}
+			$requete = $requete . ')';
+			echo $requete;
+			
+			$stmt = $pdo->prepare($requete);
+            $stmt->execute($execute);
             http_response_code(201); // It means the request succeeded, a new resource was created as a result 
             echo json_encode(['message' => 'Utilisateur ajouté avec succès']);
             //break;
