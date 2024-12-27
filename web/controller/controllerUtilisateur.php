@@ -1,6 +1,6 @@
 <?php
 
-require_once ('./modele/utilisateur.php');
+require_once ('../modele/utilisateur.php');
 
 class utilisateurControleur {
 
@@ -33,22 +33,25 @@ class utilisateurControleur {
 
     //Traitement du login (avoir déjà un compte)
     public function login() {
-        // Récupérer email + password
-        $mail = $_POST['Mail_Utilisateur'] ?? '';
-        $pass = $_POST['Password_Utilisateur'] ?? '';
-        
-        // Chercher user selon mail
-        $user = Utilisateur::getUserByEmail($mail); // A ajouter getUserByEmail(...) 
-        
-        //   (trong Utilisateur / repository)
-        if ($user && password_verify($pass, $user->get('Password_Utilisateur'))) {
-            // Lưu session
-            session_start();
-            $_SESSION['id_user'] = $user->get('Id_Utilisateur');
-            // ...
-            echo "Login success";
-        } else {
-            echo "Wrong email or pass";
+        // Kiểm tra xem dữ liệu POST có được gửi không
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            // Kiểm tra email và password (giả sử bạn có class Utilisateur)
+            $user = Utilisateur::getUserByEmail($email);
+
+            if ($user && $user->get('Password_Utilisateur') === md5($password)) {
+                // Login thành công, lưu session
+                session_start();
+                $_SESSION['user_id'] = $user->get('Id_Utilisateur');
+                header('Location: ../vue/dashboard.php'); // Chuyển hướng đến trang dashboard
+                exit;
+            } else {
+                // Login thất bại
+                echo "<script>alert('Email ou mot de passe incorrect');</script>";
+                echo "<script>window.location.href = '../vue/login.html';</script>";
+            }
         }
     }
 

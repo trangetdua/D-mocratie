@@ -38,6 +38,13 @@ switch ($action) {
             $controleur->delete();
         }
         break;
+
+    case 'login':
+        if ($method === 'POST') {
+            $controleur->login();
+        }
+        break;
+        
     default:
         echo "Aucune action correspondante.";
 }
