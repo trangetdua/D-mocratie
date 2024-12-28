@@ -12,7 +12,7 @@
 		<input name = "nom" id="nom" value="Nouveau groupe"/>
 		</label>
 		<br>
-		
+		<br>
 		<label> Couleur du groupe : </label>
 		<select name = "couleur" id="couleur">
 			<option value ="#3a7ca5"> bleu </option>

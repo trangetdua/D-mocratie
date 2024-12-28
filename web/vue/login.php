@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             strcasecmp(trim($user['Login_Utilisateur']), trim($password)) === 0) {
                 session_start();
                 $_SESSION['user_id'] = $user['Mail_Utilisateur'];
+				$_SESSION['user_number'] = $user['Id_utilisateur'];
                 header('Location: acceuil.php');
                 exit;
             }
