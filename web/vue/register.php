@@ -1,74 +1,70 @@
-<?php
-require_once ('../config/connexion.php');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="./css/stylers.css">
+</head>
+<body>
+    <header class="main">
+        <nav class="navbar">
+            <div class="icon">
+                <img src="images/logo.png" alt="Logo" class="logo">
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="./index.html">HOME</a></li>
+                    <li><a id="aide">AIDE</a></li>
+                    <li><a id="about">A PROPOS</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+    <section class="hero">
+        <div class="content-wrapper">
+            <div class="content-left">
+                <h1>YOUR VOTE <br><span class="content-span">OUR FUTURE</span></h1>
+            </div>
+            <div class="content-right">
+                <h2 class="form-title">REGISTER</h2>
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['Nom_Utilisateur']);
-    $prenom = trim($_POST['Prenom_Utilisateur']);
-    $adresse = trim($_POST['Adr_Utilisateur']);
-    $codePostal = intval($_POST['Cp_Utilisateur']);
-    $email = trim($_POST['Mail_Utilisateur']);
-    $login = trim($_POST['Login_Utilisateur']);
-    $password = trim($_POST['Pdp_Utilisateur']);
+                <?php if (isset($_GET['error']) && $_GET['error'] === "email_exists"): ?>
+                    <p style="color: red;">Email déjà utilisé. Veuillez utiliser un autre email.</p>
+                <?php endif; ?>
 
-    try {
-        // Kiểm tra email hoặc login đã tồn tại thông qua API
-        $checkUrl = "https://example.com/api.php/utilisateur/?method=GET";
-        $curl = curl_init($checkUrl);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($curl);
+                <form class="reservation-form" action="register.php" method="post">
+                    <div class="form-group">
 
-        if ($response === false) {
-            throw new Exception("Erreur lors de la connexion à l'API: " . curl_error($curl));
-        }
+                        <div class="form-group row">
+                            <div class="form-item">
+                                <label for="nom">Nom :</label>
+                                <input type="text" id="nom" name="Nom_Utilisateur" placeholder="Votre nom" required>
+                            </div>
 
-        $users = json_decode($response, true);
+                            <div class="form-item">
+                                <label for="prenom">Prénom :</label>
+                                <input type="text" id="prenom" name="Prenom_Utilisateur" placeholder="Votre prénom" required>
+                            </div>
+                        </div>
 
-        foreach ($users as $user) {
-            if ($user['Mail_Utilisateur'] === $email || $user['Login_Utilisateur'] === $login) {
-                // Email hoặc login đã tồn tại
-                header('Location: register.php?error=email_exists');
-                exit;
-            }
-        }
+                        
+                        <label for="adresse">Adresse :</label>
+                        <input type="text" id="adresse" name="Adr_Utilisateur" placeholder="Votre adresse" required>
 
-        // Gửi dữ liệu qua API POST
-        $registerUrl = "https://example.com/api.php/utilisateur/?method=POST";
-        $data = [
-            'Nom_Utilisateur' => $nom,
-            'Prenom_Utilisateur' => $prenom,
-            'Adr_Utilisateur' => $adresse,
-            'Cp_Utilisateur' => $codePostal,
-            'Mail_Utilisateur' => $email,
-            'Login_Utilisateur' => $login,
-            'Pdp_Utilisateur' => $password
-        ];
+                        <label for="code-postal">Code postal :</label>
+                        <input type="number" id="code-postal" name="Cp_Utilisateur" placeholder="Votre code postal" required>
 
-        $curl = curl_init($registerUrl);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-        $response = curl_exec($curl);
+                        <label for="email">Adresse email :</label>
+                        <input type="email" id="email" name="Mail_Utilisateur" placeholder="Votre email" required>
 
-        if ($response === false) {
-            throw new Exception("Erreur lors de l'envoi des données: " . curl_error($curl));
-        }
+                        <label for="login">Login :</label>
+                        <input type="text" id="login" name="Login_Utilisateur" placeholder="Votre login" required>
 
-        $result = json_decode($response, true);
-
-        if (isset($result['id'])) {
-            // Đăng ký thành công
-            header('Location: connection.php');
-            exit;
-        } else {
-            throw new Exception("Erreur lors de l'enregistrement: " . $result['message']);
-        }
-
-    } catch (Exception $e) {
-        echo "<p style='color:red;'>Erreur: " . $e->getMessage() . "</p>";
-    }
-}
-?>
+                    </div>
+                    <button type="submit">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
