@@ -26,13 +26,13 @@
                 <h1>YOUR VOTE <br><span class="content-span">OUR FUTURE</span></h1>
             </div>
             <div class="content-right">
-                <h2 class="form-title">REGISTER</h2>
+                <h2 class="form-title">INSCRIPTION</h2>
 
                 <?php if (isset($_GET['error']) && $_GET['error'] === "email_exists"): ?>
                     <p style="color: red;">Email déjà utilisé. Veuillez utiliser un autre email.</p>
                 <?php endif; ?>
 
-                <form class="reservation-form" action="register.php" method="post">
+                <form class="reservation-form" action="inscription.php" method="post">
                     <div class="form-group">
 
                         <div class="form-group row">
@@ -52,13 +52,13 @@
                         <input type="text" id="adresse" name="Adr_Utilisateur" placeholder="Votre adresse" required>
 
                         <label for="code-postal">Code postal :</label>
-                        <input type="number" id="code-postal" name="Cp_Utilisateur" placeholder="Votre code postal" required>
+                        <input type="text" id="code-postal" name="Cp_Utilisateur" placeholder="Votre code postal" required pattern="^[0-9]{5}$" title="Le code postal doit contenir exactement 5 chiffres.">
 
                         <label for="email">Adresse email :</label>
                         <input type="email" id="email" name="Mail_Utilisateur" placeholder="Votre email" required>
 
-                        <label for="login">Login :</label>
-                        <input type="text" id="login" name="Login_Utilisateur" placeholder="Votre login" required>
+                        <label for="login">Password :</label>
+                        <input type="password" id="login" name="Login_Utilisateur" placeholder="Votre mot de passe" required>
 
                     </div>
                     <button type="submit">S'inscrire</button>
@@ -66,5 +66,9 @@
             </div>
         </div>
     </section>
+
+    <script src="./js/validation.js"></script>
+
+
 </body>
 </html>
