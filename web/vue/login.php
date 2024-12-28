@@ -27,10 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Réponse API invalide: $response");
         }
 
+        $loginSuccess = false; //Vérifier l'existence du compte
+
         foreach ($users as $user) {
-            error_log("Dữ liệu API: " . print_r($user, true));
+            
             if (strcasecmp(trim($user['Mail_Utilisateur']), trim($email)) === 0 && 
-    strcasecmp(trim($user['Login_Utilisateur']), trim($password)) === 0) {
+            strcasecmp(trim($user['Login_Utilisateur']), trim($password)) === 0) {
                 session_start();
                 $_SESSION['user_id'] = $user['Mail_Utilisateur'];
                 header('Location: acceuil.php');
@@ -38,11 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-
-        error_log("Login failed for email: $email");
+        header('Location: connection.php?error=invalid');
+        exit;
 
     } else {
-        throw new Exception("Email ou mot de passe manquant.");
+        header('Location: connection.php?error=missing');
+        exit;
     }
 	
 }

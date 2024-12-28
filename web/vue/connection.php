@@ -34,9 +34,10 @@
 
             <div class="content-right">
                 <h2 class="form-title">CONNEXION</h2>
-                <?php if (isset($_GET['identifiant']) && $_GET['identifiant'] == "faux"): ?>
+                <?php if (isset($_GET['error']) && $_GET['error'] === 'invalid'): ?>
                     <p style="color: red;">Identifiant ou mot de passe incorrect.</p>
                 <?php endif; ?>
+
                 
                 <form class="reservation-form" action="login.php" method="post">
                     <div class="form-group">
