@@ -5,12 +5,18 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['Nom_Utilisateur']);
-    $prenom = trim($_POST['Prenom_Utilisateur']);
-    $adresse = trim($_POST['Adr_Utilisateur']);
-    $codePostal = intval($_POST['Cp_Utilisateur']);
-    $email = trim($_POST['Mail_Utilisateur']);
-    $login = trim($_POST['Login_Utilisateur']);
+    $nom = isset($_POST['Nom_Utilisateur']) ? trim($_POST['Nom_Utilisateur']) : null;
+    $prenom = isset($_POST['Prenom_Utilisateur']) ? trim($_POST['Prenom_Utilisateur']) : null;
+    $adresse = isset($_POST['Adr_Utilisateur']) ? trim($_POST['Adr_Utilisateur']) : null;
+    $codePostal = isset($_POST['Cp_Utilisateur']) ? intval($_POST['Cp_Utilisateur']) : null;
+    $email = isset($_POST['Mail_Utilisateur']) ? trim($_POST['Mail_Utilisateur']) : null;
+    $login = isset($_POST['Login_Utilisateur']) ? trim($_POST['Login_Utilisateur']) : null;
+
+    
+    if (empty($nom) || empty($prenom) || empty($adresse) || empty($codePostal) || empty($email) || empty($login)) {
+        throw new Exception("Données invalides ou incomplètes.");
+    }
+
 
     try {
         // Vérifier si email déjà existe
@@ -23,12 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Erreur lors de la connexion à l'API: " . curl_error($curl));
         }
 
-        echo "<pre>Response from API: " . htmlspecialchars($response) . "</pre>";
-        exit;
+        /*echo "<pre>Response from API: " . htmlspecialchars($response) . "</pre>";
+        exit;*/
 
         $users = json_decode($response, true);
 
-        foreach ($users as $user) {
+        if (!is_array($users)) {
+            throw new Exception("La réponse API n'est pas un tableau valide.");
+        }
+
+        $validUsers = array_filter($users, function ($user) {
+            return isset($user['Mail_Utilisateur'], $user['Login_Utilisateur']) &&
+                   !is_null($user['Mail_Utilisateur']) && !is_null($user['Login_Utilisateur']);
+        });
+
+        foreach ($validUsers as $user) {
             if ($user['Mail_Utilisateur'] === $email || $user['Login_Utilisateur'] === $login) {
                 header('Location: register.php?error=email_exists');
                 exit;
