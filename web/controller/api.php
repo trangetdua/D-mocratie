@@ -46,12 +46,18 @@ if (!is_null($path[0])){
 
 			while(isset($path[$i+1])){
 				$i=$i+1;
+				if($path[$i]!='null'){
 				$requete = $requete . ':' .'nom'.strval($i);
+				
+				$var = 'nom'.strval($i);
+				$execute[$var] = $path[$i];
+				}
+				else{
+					$requete =$requete . 'null';
+				}
 				if (isset($path[$i+1])){
 					$requete = $requete . ', ';
 				}
-				$var = 'nom'.strval($i);
-				$execute[$var] = $path[$i];
 			}
 			$requete = $requete . ');';
 			$stmt = $pdo->prepare($requete);
@@ -81,7 +87,10 @@ if (!is_null($path[0])){
 						$requete = $requete . ', ';
 					}
 				}
-				$requete = $requete . " Where " .$path[1] . " = ". $path[2] . ";";
+				$requete = $requete . " Where " . ':nom1' . " = ". ':nom2' . ";";
+				$execute[':nom1']=$path[1];
+				$execute[':nom2']=$path[2];
+
 				$stmt = $pdo->prepare($requete);
 				$stmt->execute($execute);
 
