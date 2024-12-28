@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($users as $user) {
             error_log("Dữ liệu API: " . print_r($user, true));
             if (strcasecmp(trim($user['Mail_Utilisateur']), trim($email)) === 0 && 
-    strcasecmp(trim($user['Pdp_Utilisateur']), trim($password)) === 0) {
+    strcasecmp(trim($user['Login_Utilisateur']), trim($password)) === 0) {
                 session_start();
                 $_SESSION['user_id'] = $user['Mail_Utilisateur'];
                 header('Location: acceuil.php');
