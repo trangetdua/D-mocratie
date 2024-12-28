@@ -11,8 +11,6 @@ $method = $_GET['method'];
 
 if (!is_null($path[0])){
 	$table=$path[0];
-	echo $table;
-	echo $method;
     try {
 
         if ($method == 'GET') {
@@ -58,32 +56,42 @@ if (!is_null($path[0])){
 			$requete = $requete . ');';
 			$stmt = $pdo->prepare($requete);
             $stmt->execute($execute);
-			
-            echo json_encode(['message' => 'Utilisateur ajouté avec succès']);
+			$stmt = $pdo->query("SELECT LAST_INSERT_ID()");
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode($result);   
             //break;
             
         } elseif ($method == 'PUT') {
-            if(isset($path[1])) {
-                $id = intval($path[1]);
-                $data = json_decode(file_get_contents('php://input'), true);
-                $stmt = $pdo->prepare('update utilisateurs set nom_utilisateur = :nom, prenom_utilisateur = :prenom, adr_utilisateur = :adr, cp_utilisateur = :cp, 
-                                        mail_utilisateur = :mail, login_utilisateur = :login, pdp_utilisateur = :pdp
-                                        where id_utilisateur = :id');
-                $stmt->execute([
-                    ':nom' => $data['nom_utilisateur'],
-                    ':prenom' => $data['prenom_utilisateur'],
-                    ':adr' => $data['adr_utilisateur'],
-                    ':cp' => $data['cp_utilisateur'],
-                    ':mail' => $data['mail_utilisateur'],
-                    ':login' => $data['login_utilisateur'],
-                    ':pdp' => $data['pdp_utilisateur'],
-                    ':id' => $id,
-                ]);
+			$requete = 'update '. $table . ' set';
+			if(isset($path[2])){
+				$i=2;
+				$execute = array();
+
+				while(isset($path[$i+2])){
+					$j=$i+1;
+					$i=$i+2;
+					$requete = $requete . " ". $path[$j] . ' = ' . ' :nom' .strval($i);
+					$var = 'nom'.strval($i);
+					$execute[$var] = $path[$i];
+
+
+
+					if (isset($path[$i+2])){
+						$requete = $requete . ', ';
+					}
+				}
+				$requete = $requete . " Where " .$path[1] . " = ". $path[2] . ";";
+				$stmt = $pdo->prepare($requete);
+				$stmt->execute($execute);
+
+
+
                 http_response_code(201); // Code status : POST/PUT succeeded
                 echo json_encode(['message' => 'Utilisateur mis à jour avec succès']);
             } else {
                 http_response_code(404);
-                echo json_encode(['message' => 'ID user demandé']);
+                echo json_encode(['message' => 'Veuillez rensigner la condition']);
             }
             //break;
     
