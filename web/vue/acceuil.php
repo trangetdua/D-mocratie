@@ -19,7 +19,7 @@
 		$themes = json_decode(curl_exec($curlThemes),true);
 		foreach ($groupes as $value){
 			if($value['Mail_Utilisateur']==$_SESSION['user_id'] && $value['Banni']==0){
-				$color = $value['Couleur_Groupe'];
+				$color = "#" .$value['Couleur_Groupe'];
 				echo "<div class='grp'style='background-color:$color'>";
 				echo "<image class ='photoGroupe' src='./images/iconImage.png' alt ='icon image'/>";
 				echo "<image class ='menuNotificationGroupe' src='./images/troisPoints.png' alt = 'menu de notification'/>";
