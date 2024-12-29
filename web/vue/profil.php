@@ -1,5 +1,14 @@
 <?php
+session_start(); 
 require_once("header.html");
+
+if (!isset($_SESSION['fullname'])) {
+  header("Location: connection.php?error=notlogged");
+  exit;
+}
+
+$fullname = $_SESSION['fullname'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +22,7 @@ require_once("header.html");
     <div class="sidebar">
 
       <div class="avatar"></div>
-      <div class="user-name">User</div>
+      <div class="user-name"><?php echo htmlspecialchars($fullname); ?></div>
 
       <div class="search-container">
         <input type="text" placeholder="Chercher une paramètre..." />
@@ -37,7 +46,7 @@ require_once("header.html");
       <div class="profile-header">
         <div class="big-avatar"></div>
         <div>
-          <h2>User</h2>
+          <h2><?php echo htmlspecialchars($fullname); ?></h2>
         </div>
       </div>
 
@@ -52,17 +61,17 @@ require_once("header.html");
       <div class="actions">
         <div class="action-item delete">
           <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="delete icon" />
-          <span>Supprimer le compte</span>
+          <a href="suppression.php">Supprimer le compte</a>
         </div>
 
         <div class="action-item">
           <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="add user icon" />
-          <span>Ajouter un autre compte</span>
+          <a href="register.php">Ajouter un autre compte</a>
         </div>
 
         <div class="action-item">
           <img src="https://cdn-icons-png.flaticon.com/512/159/159707.png" alt="logout icon" />
-          <span>Se déconnecter</span>
+          <a href="connection.php"> Se déconnecter</a>
         </div>
       </div>
   </div>

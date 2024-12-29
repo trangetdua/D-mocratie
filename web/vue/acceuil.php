@@ -1,6 +1,14 @@
 	<?php 
-		require_once("header.html");
-		require_once("isConnected.php");
+	require_once("header.html");
+	require_once("isConnected.php");
+
+	if (!isset($_SESSION['fullname'])) {
+		header("Location: connection.php?error=notlogged");
+		exit;
+	}
+
+	$fullname = $_SESSION['fullname'];
+
 	?>
 	<a href ="creer_groupe.php">
 	<div class = "nouveauGroupe">

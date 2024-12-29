@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ('../config/connexion.php'); 
 
 error_reporting(E_ALL);
@@ -33,9 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if (strcasecmp(trim($user['Mail_Utilisateur']), trim($email)) === 0 && 
             strcasecmp(trim($user['Login_Utilisateur']), trim($password)) === 0) {
-                session_start();
+                
                 $_SESSION['user_id'] = $user['Mail_Utilisateur'];
 				$_SESSION['user_number'] = $user['Id_Utilisateur'];
+
+                $_SESSION['fullname'] = $user['Nom_Utilisateur'] . ' ' . $user['Prenom_Utilisateur'];
+                
                 header('Location: acceuil.php');
                 exit;
             }

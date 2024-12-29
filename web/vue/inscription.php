@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ('../config/connexion.php');
 
 error_reporting(E_ALL);
@@ -80,8 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (isset($result['id'])) {
+            
+            $_SESSION['fullname'] = $nom . ' ' . $prenom;
+            
             header('Location: connection.php');
             exit;
+
         } else {
             if (is_array($result) && isset($result['message'])) {
                 throw new Exception("Erreur lors de l'enregistrement: " . $result['message']);

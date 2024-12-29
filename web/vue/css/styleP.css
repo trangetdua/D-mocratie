@@ -160,3 +160,13 @@
     color: red;
     font-weight: bold;
   }
+
+  .action-item a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .action-item a:hover {
+    color: #0096c7; 
+  }
