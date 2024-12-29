@@ -1,0 +1,83 @@
+* {
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f2f2f2;
+    color: #2c3e50;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .container-suppression {
+    max-width: 800px;
+    margin: 4rem auto; 
+    background: #E7EAF0; 
+    border-radius: 8px;
+    padding: 5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative; 
+  }
+
+  .container-suppression h1 {
+    font-size: 30px;
+    color: #496A8B;
+  }
+
+  h1 {
+    margin: 0px;
+    margin-bottom: 20px;
+}
+  .container-suppression p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+
+  .sad-icon {
+    position: absolute;
+    top: 12.5rem; 
+    right: 1.5rem;
+    width: auto;
+    height: 150px;
+  }
+
+
+  .btn-group {
+    display: flex;
+    gap: 5rem; 
+    margin-top: 3rem;
+  }
+
+
+  .btn-group button {
+    font-size: 1rem;
+    padding: 0.8rem 2rem;
+    width: 150px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .btn-supprimer {
+    background: #dbe9ff; 
+    color: #333;
+  }
+  .btn-supprimer:hover {
+    background: #c8ddf2;
+  }
+ 
+  .btn-annuler {
+    background: #4A6984; 
+    color: #fff;
+  }
+  .btn-annuler:hover {
+    background: #3b5670;
+  }

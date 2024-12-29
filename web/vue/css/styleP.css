@@ -161,6 +161,11 @@
     font-weight: bold;
   }
 
+.actions .delete a:hover {
+  color: #ff0000; 
+}
+
+
   .action-item a {
     color: #333;
     text-decoration: none;
