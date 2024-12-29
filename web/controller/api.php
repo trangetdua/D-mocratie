@@ -32,43 +32,83 @@ if (!is_null($path[0])){
             echo json_encode($result);   
             
     
-        } elseif($method == 'POST') {
-		
-			if($path[1]=='id'){
-				$requete = 'insert into '.$table .' values (DEFAULT,';
-				$i=1;
-			}
-			else{
-				$requete = 'insert into '.$table .' values (';
-				$i=0;
-			}
-			$execute = array();
+        } elseif ($method == 'POST') {
 
-			while(isset($path[$i+1])){
-				$i=$i+1;
-				if($path[$i]!='null'){
-				$requete = $requete . ':' .'nom'.strval($i);
-				
-				$var = 'nom'.strval($i);
-				$execute[$var] = $path[$i];
-				}
-				else{
-					$requete =$requete . 'null';
-				}
-				if (isset($path[$i+1])){
-					$requete = $requete . ', ';
-				}
-			}
-			$requete = $requete . ');';
-			$stmt = $pdo->prepare($requete);
-            $stmt->execute($execute);
-			$stmt = $pdo->query("SELECT LAST_INSERT_ID()");
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            /***************************************************************
+             * Essayer de lire les données Json 
+             ***************************************************************/
 
-            echo json_encode($result);   
-            //break;
-            
-        } elseif ($method == 'PUT') {
+            $jsonBody = file_get_contents('php://input');
+            $postData = json_decode($jsonBody, true);
+
+            if (json_last_error() === JSON_ERROR_NONE && !empty($postData)) {
+                // Récupérer les colonnes
+                $columns = array_keys($postData);
+                // Créer les placeholder :key
+                $placeholders = array_map(fn($col) => ':' . $col, $columns);
+
+                // Créer les requetes pour appliquer dans diffférentes tables
+                // VD: INSERT INTO utilisateur (col1, col2) VALUES (:col1, :col2)
+                $sql = sprintf(
+                    'INSERT INTO %s (%s) VALUES (%s)',
+                    $table,
+                    implode(', ', $columns),
+                    implode(', ', $placeholders)
+                );
+
+                // Préparer bind array
+                $bindParams = [];
+                foreach ($postData as $col => $val) {
+                    $bindParams[':'.$col] = $val;
+                }
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($bindParams);
+
+                // Récupérer ID vient d'être insert
+                $id = $pdo->lastInsertId();
+                echo json_encode(['id' => $id]);
+
+            } else {
+                /**
+                 * /***************************************************************
+					* Lire les données à travers Json (Ambre)
+					***************************************************************
+                 * JSON n'est pas correct => lire data depuis $path.
+                 */
+                if (isset($path[1]) && $path[1] == 'id') {
+                    $requete = 'INSERT INTO '.$table.' VALUES (DEFAULT,';
+                    $i = 1;
+                } else {
+                    $requete = 'INSERT INTO '.$table.' VALUES (';
+                    $i = 0;
+                }
+
+                $execute = array();
+                while (isset($path[$i+1])) {
+                    $i++;
+                    if ($path[$i] != 'null') {
+                        $requete .= ':' . 'nom' . strval($i);
+                        $var = 'nom' . strval($i);
+                        $execute[$var] = $path[$i];
+                    } else {
+                        $requete .= 'null';
+                    }
+                    if (isset($path[$i+1])) {
+                        $requete .= ', ';
+                    }
+                }
+                $requete .= ');';
+                
+                $stmt = $pdo->prepare($requete);
+                $stmt->execute($execute);
+
+                $stmt = $pdo->query("SELECT LAST_INSERT_ID()");
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                echo json_encode($result);
+            }
+
+        }  elseif ($method == 'PUT') {
 			$requete = 'update '. $table . ' set';
 			if(isset($path[2])){
 				$i=2;
