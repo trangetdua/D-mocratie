@@ -58,7 +58,7 @@
     </section>
 
 
-    <?php include 'footer.html'; ?>
+    <?php require_once("footer.html"); ?>
     
 
 </body>
