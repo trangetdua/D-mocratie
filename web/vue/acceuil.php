@@ -28,6 +28,8 @@
 		foreach ($groupes as $value){
 			if($value['Mail_Utilisateur']==$_SESSION['user_id'] && $value['Banni']==0){
 				$color = "#" .$value['Couleur_Groupe'];
+				$link = "transition_groupe.php?id=".$value['Id_Groupe'];
+				echo "<a href=$link>";
 				echo "<div class='grp'style='background-color:$color'>";
 				echo "<image class ='photoGroupe' src='./images/iconImage.png' alt ='icon image'/>";
 				echo "<image class ='menuNotificationGroupe' src='./images/troisPoints.png' alt = 'menu de notification'/>";
@@ -40,6 +42,7 @@
 					echo "</div>";
 				}
 			echo "</div>";
+			echo "</a>";
 			}
 		}
 		//print_r($data);

@@ -165,7 +165,7 @@ if (!is_null($path[0])){
         }
         
         
-        } catch (Exception $e) {
+        }catch (Exception $e){
             //http_response_code(500); //Method not allowed
             echo json_encode(['message' => 'Méthode non autorise']);
             echo $e->getMessage();
