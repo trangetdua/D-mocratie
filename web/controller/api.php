@@ -151,10 +151,6 @@ if (!is_null($path[0])){
                 $primaryKey = isset($_GET['key']) ? htmlspecialchars($_GET['key']) : 'Id_Utilisateur';
                 $primaryValue = isset($_GET['value']) ? htmlspecialchars($_GET['value']) : null;
 
-                //C'est juste pour debug
-                echo "<p>Table: " . htmlspecialchars($table) . "</p>";
-                echo "<p>Primary Key: " . htmlspecialchars($primaryKey) . "</p>";
-                echo "<p>Primary Value: " . htmlspecialchars($primaryValue) . "</p>";
 
                 if (empty($primaryValue)) {
                     http_response_code(400);
@@ -164,13 +160,10 @@ if (!is_null($path[0])){
                 
                     try {
                         $sql = "DELETE FROM $table WHERE $primaryKey = :primaryValue";
-                        echo "<p>SQL Query: " . htmlspecialchars($sql) . "</p>"; //debug
 
                         $stmt = $pdo->prepare($sql);
                 
                         $params = [':primaryValue' => $primaryValue];
-                        echo "<p>SQL Query: " . htmlspecialchars($sql) . "</p>";
-                        echo "<p>Bind Parameters: " . htmlspecialchars(print_r($params, true)) . "</p>";
                         
                         $stmt->bindParam(':primaryValue', $primaryValue, PDO::PARAM_INT); // Sử dụng PARAM_STR nếu là email, PARAM_INT nếu là ID
                 
