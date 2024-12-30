@@ -152,7 +152,6 @@ if (!is_null($path[0])){
                 }
                 
                     try {
-                        // Tạo truy vấn DELETE
                         $sql = "DELETE FROM $table WHERE $primaryKey = :primaryValue";
                         $stmt = $pdo->prepare($sql);
                 
@@ -160,12 +159,10 @@ if (!is_null($path[0])){
                         echo "<p>SQL Query: " . htmlspecialchars($sql) . "</p>";
                         echo "<p>Bind Parameters: " . htmlspecialchars(print_r($params, true)) . "</p>";
                         
-                        // Bind giá trị
                         $stmt->bindParam(':primaryValue', $primaryValue, PDO::PARAM_INT); // Sử dụng PARAM_STR nếu là email, PARAM_INT nếu là ID
                 
                         $stmt->execute();
                 
-                        // Kiểm tra số lượng bản ghi bị ảnh hưởng
                         if ($stmt->rowCount() > 0) {
                             http_response_code(200);
                             echo json_encode(['message' => 'Enregistrement supprimé avec succès']);
@@ -182,7 +179,6 @@ if (!is_null($path[0])){
                     }
                 
             }catch (Exception $ex) {
-                 // Xử lý các lỗi khác
                 http_response_code(500);
                 echo json_encode([
                     'message' => 'Erreur générale lors de la suppression',

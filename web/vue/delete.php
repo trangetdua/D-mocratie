@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 
 session_start();
 
-$table = $_GET['table'] ?? 'utilisateurs'; // Bảng mặc định
-$key = $_GET['key'] ?? 'Id_Utilisateur';  // Cột mặc định
-$value = $_SESSION['user_number'] ?? ($_GET['value'] ?? null); // Giá trị từ session hoặc URL (nếu có)
+$table = $_GET['table'] ?? 'utilisateurs'; 
+$key = $_GET['key'] ?? 'Id_Utilisateur';  
+$value = $_SESSION['user_number'] ?? ($_GET['value'] ?? null); 
 
 
 if (empty($table) || empty($key) || empty($value)) {
