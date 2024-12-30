@@ -209,3 +209,12 @@ form button{
 	
 	padding-top: 43vh;
 }
+
+.reaction{
+	background-color: #2f6690;
+}
+
+#emoji {
+	width:25px;
+	height:25px;
+}
