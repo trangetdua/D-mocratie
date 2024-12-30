@@ -8,7 +8,7 @@
 	<image src="./images/iconImage.png" alt="photo du groupe" id="ajouterPhotoGroupe"/>
 
 	<form action="creation_groupe.php" method="post">
-		<label> Nom du groupe (espaces non autorisés): </label>
+		<label> Nom du groupe : </label>
 		<input name = "nom" id="nom" value="Nouveau_groupe"/>
 		</label>
 		<br>
