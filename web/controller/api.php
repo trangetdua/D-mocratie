@@ -146,18 +146,51 @@ if (!is_null($path[0])){
     
     
         } elseif ($method == 'DELETE') {
-            if(isset($path[1])) {
-                $id = intval($path[1]);
-                $data = json_decode(file_get_contents('php://input'), true);
-                $stmt = $pdo->prepare('delete from utilisateurs where id_utilisateur = :id');
-                $stmt->execute(['id' => $id]);
-                http_response_code(201);
-                echo json_encode(['message' => 'Utilisateur supprime']);
-            } else {
-                http_response_code(400); // Bad request : ID User false
-                echo json_encode(['message' => 'ID User demandé']);
-            } 
-            //break;
+            try {
+                
+                $primaryKey = isset($_GET['key']) ? htmlspecialchars($_GET['key']) : 'Id_Utilisateur';
+                $primaryValue = isset($_GET['value']) ? htmlspecialchars($_GET['value']) : null;
+
+                if (empty($primaryValue)) {
+                    http_response_code(400);
+                    echo json_encode(['message' => 'Valeur de clé primaire manquante']);
+                    exit;
+                }
+                
+                    try {
+                        $sql = "DELETE FROM $table WHERE $primaryKey = :primaryValue";
+                        $stmt = $pdo->prepare($sql);
+                
+                        $params = [':primaryValue' => $primaryValue];
+                        echo "<p>SQL Query: " . htmlspecialchars($sql) . "</p>";
+                        echo "<p>Bind Parameters: " . htmlspecialchars(print_r($params, true)) . "</p>";
+                        
+                        $stmt->bindParam(':primaryValue', $primaryValue, PDO::PARAM_INT); // Sử dụng PARAM_STR nếu là email, PARAM_INT nếu là ID
+                
+                        $stmt->execute();
+                
+                        if ($stmt->rowCount() > 0) {
+                            http_response_code(200);
+                            echo json_encode(['message' => 'Enregistrement supprimé avec succès']);
+                        } else {
+                            http_response_code(404);
+                            echo json_encode(['message' => 'Aucun enregistrement trouvé pour suppression']);
+                        }
+                    } catch (PDOException $pdoEx) {
+                        http_response_code(500);
+                        echo json_encode([
+                            'message' => 'Erreur lors de la suppression - Problème base de données',
+                            'error' => $pdoEx->getMessage()
+                        ]);
+                    }
+                
+            }catch (Exception $ex) {
+                http_response_code(500);
+                echo json_encode([
+                    'message' => 'Erreur générale lors de la suppression',
+                    'error' => $ex->getMessage()
+                ]);
+            }
 
         } else {
             http_response_code(405);
