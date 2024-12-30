@@ -25,7 +25,7 @@
 		<input name="Theme1" id="Theme1"/>
 		<input name="Theme2" id="Theme2"/>
 		<br>
-		<button> C'est parti ! </button>
+		<button id="boutonParti"> C'est parti ! </button>
 
 
 	 </form>
