@@ -12,11 +12,11 @@ input, select, textarea, optgroup, button {
 /* optionnal or prefix with .js with modernizr */
 .expandmore__button[aria-expanded=false] > .expandmore__symbol:before,
 .expandmore__button[data-expanded=false] > .expandmore__symbol:before {
-  content : '+ ';
+  content : ' ';
 }
 .expandmore__button[aria-expanded=true] > .expandmore__symbol:before,
 .expandmore__button[data-expanded=true] > .expandmore__symbol:before {
-  content : '− ';
+  content : ' ';
 }
 
 .expandmore__button {
