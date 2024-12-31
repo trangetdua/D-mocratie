@@ -68,7 +68,7 @@ h1{
 #boiteCommentaire{
 	background-color: #2f6690;
 	min-height: 60vh;
-	margin : 5%;
+	margin : 1%;
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
 }
@@ -90,6 +90,20 @@ h1{
 	float : right;
 	height : 40 px;
 	background-color : #2f6690;
+	margin-left : 2%;
+	margin-right:2%;
+	margin-top: 2%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+}
+
+.boutonComment{
+	width : 15%;
+	text-align: center;
+	position : absolute;
+	right : 0;
+	height : 20 px;
+	background-color : #16425b;
 	margin-left : 2%;
 	margin-right:2%;
 	margin-top: 2%;
@@ -284,3 +298,43 @@ input{
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
 }
+
+tbody tr:nth-child(odd) {
+	background-color: #2f6690;
+  }
+  
+  tbody tr:nth-child(even) {
+	background-color: #16425b;
+  }
+
+  form{
+	margin-top: 2%;
+  }
+
+  input,
+textarea {
+  font: 1em sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #999;
+  background-color: #FFFFFF;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #000;
+  background-color: #FFFFFF;
+}
+
+textarea {
+
+	background: #FFFFFF !important;
+  	vertical-align: top;
+  	height: 5em;
+  	resize: vertical;
+}
+
+.button {
+  padding-left: 90px;
+}
+

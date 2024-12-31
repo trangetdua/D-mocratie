@@ -35,7 +35,7 @@
 
 	<div class="boutonPropo">
 		<a  href ="acceuil_groupe.html"> 
-		  <p>Propositions</p>
+		  <p>Retour</p>
 		</a>
 	</div>
 
@@ -58,10 +58,37 @@
 		</div>
     </div>
 	</div>
-	</div>
 
 	<div id = 'boiteCommentaire'>
+
+		<div class="boutonComment">
+			<a  href ="acceuil_groupe.html"> 
+			  <p>Retour</p>
+			</a>
+		</div>
+
 		<h1 id ='text'>Commentaire</h1> 
+
+
+		<form action="/ma-page-de-traitement" method="post">
+			
+			<div class="boutonComment">
+			<a  href ="acceuil_groupe.html"> 
+			  <p>Publier</p>
+			</a>
+			</div>
+			
+			<div>
+				<label for="msg"></label>
+				<textarea id="msg" name="user_message"></textarea>
+				
+			</div>
+
+			
+		  </form>
+
+
+		
 
 		<table>
 			<tbody>
@@ -76,10 +103,19 @@
 						<p>commentaire ..... . .  .... .</p>
 					</td>
 
+					<td>
+						<image src="./images/troisPoints.png" alt="plus" class="js-expandmore" id="expand" style="margin-top : 2px"/>
+						<div class = "js-to_expand">
+							<div class="boutonSignal">
+								<p>Signaler</p><!--incrementer une variable-->
+							</div>
+							</div>
+					</td>
+
 				</tr>
-
+			</tbody>
+		</table>
 	</div>
-
 
 	</div>
 	</div>
