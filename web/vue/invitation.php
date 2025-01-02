@@ -1,6 +1,5 @@
 <?php
 require_once("header.html");
-require_once("isConnected.php");
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@ require_once("isConnected.php");
         <div class="form-wrapper">
             <h2>Inviter un membre</h2>
             <form class="invite-form">
-                <div class="form-group">
+                <div class="form-group" method="POST" action="sendInvitation.php">
                     <label for="email">Inviter par e-mail :</label>
                     <input type="email" id="email" placeholder="Entrez l'adresse e-mail">
                     <button type="button" class="btn">Envoyer</button>
