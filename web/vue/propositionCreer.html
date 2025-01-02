@@ -47,14 +47,54 @@
     	</div>
 		</div>
 
-		<div class="boutonPropo">
+
+		<form action="/ma-page-de-traitement" method="post">
+			
+			<div>
+				<label for="msg"> </label>
+				<textarea class = 'textCreation' id="msg" name="user_message">Description de ma proposition...</textarea>
+				
+			</div>
+
+				<div class="boutonTheme">
+					<p>theme 1</p><!--incrementer une variable-->
+				</div>
+
+			<h2 class="js-expandmore">+</h2>
+			<div class = "js-to_expand">
+				<form method="get" action="#">
+					<p>
+						<label for="favoriteOnly">Sélectionnez votre préféré :</label>
+						<select name="favoriteOnly" id="favoriteOnly">
+						  <option>grincheux@menuisiers.fr</option>
+						  <option>joyeux@menuisiers.fr</option>
+						  <option>dormeur@menuisiers.fr</option>
+						  <option>timide@menuisiers.fr</option>
+						  <option>atchoum@menuisiers.fr</option>
+						  <option>simplet@menuisiers.fr</option>
+						  <option>doc@menuisiers.fr</option>
+						</select>
+					  </p>
+					  <p>
+						<input type="submit" value="Soumettre" />
+					  </p>
+				</form>
+			</div>
+
+			<div  class="boutonComment">
+				<a  href ="acceuil_groupe.html"> 
+				  <p>theme</p>
+				</a>
+				</div>
+
+			<div type="submit" class="boutonCreer">
 			<a  href ="acceuil_groupe.html"> 
 			  <p>Publier</p>
 			</a>
-		</div>
-		<div >
-	
-	</div>
+			</div>
+			
+		  </form>
+
 
 </div>
 

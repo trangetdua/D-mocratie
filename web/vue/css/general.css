@@ -320,6 +320,14 @@ textarea {
   background-color: #FFFFFF;
 }
 
+.textCreation{
+	width: 80%;
+	height:200px;
+	left : 50%;
+	right : 50%;
+	
+}
+
 input:focus,
 textarea:focus {
   border-color: #000;
