@@ -157,259 +157,252 @@ h1{
 	text-align: center;
 	float : right;
 	height : 40 px;
-		background-color : #2f6690;
-		margin-left : 2%;
-		margin-right:2%;
-		margin-top: 2%;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-	}
+	background-color : #2f6690;
+	margin-left : 2%;
+	margin-right:2%;
+	margin-top: 2%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+}
+
+.boutonComment{
+	width : 15%;
+	text-align: center;
+	position : absolute;
+	right : 0;
+	height : 20 px;
+	background-color : #16425b;
+	margin-left : 2%;
+	margin-right:2%;
+	margin-top: 2%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+}
+
+.boutonSignal{
+	box-shadow: 10px 5px 5px black;
+	width : 10%;
+	text-align: center;
+	height : 40 px;
+	background-color : #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	position: absolute;
+  	right: 10%;
+  	margin: 1em 0;
+}
+
+.active{
+	width : 25%;
+	text-align: center;
+	height : 60 px;
+	background-color : #2f6690;
+	margin-top : 3%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;}
+
+.nonactive{
+ 
+	width : 25%;
+	text-align: center;
+  height : 60 px;
+  background-color : #94c1d9;
+  margin-top : 3%; 
+  border : 0px none #000000; 
+  border-radius : 15px 15px 15px 15px;}
+
+.nouveauPropo{
 	
-	.boutonComment{
-		width : 15%;
-		text-align: center;
-		position : absolute;
-		right : 0;
-		height : 20 px;
-		background-color : #16425b;
-		margin-left : 2%;
-		margin-right:2%;
-		margin-top: 2%;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-	}
+	text-align: center;
+  height : 25 px;
+  background-color : #94c1d9; 
+  border : 0px none #000000; 
+  border-radius : 15px 15px 15px 15px;
+}
+.nouveauGroupe{
+	display:flex;
+	height:70px;
+	width:20%;
+	background-color : #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	margin:20px;
+	padding:10px;
+	position:relative;
+	float:right;
 	
-	.boutonSignal{
-		box-shadow: 10px 5px 5px black;
-		width : 10%;
-		text-align: center;
-		height : 40 px;
-		background-color : #2f6690;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-		position: absolute;
-		  right: 10%;
-		  margin: 1em 0;
-	}
 	
-	.active{
-		width : 25%;
-		text-align: center;
-		height : 60 px;
-		background-color : #2f6690;
-		margin-top : 3%;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;}
 	
-	.nonactive{
-	 
-		width : 25%;
-		text-align: center;
-	  height : 60 px;
-	  background-color : #94c1d9;
-	  margin-top : 3%; 
-	  border : 0px none #000000; 
-	  border-radius : 15px 15px 15px 15px;}
-	
-	.nouveauPropo{
-		
-		text-align: center;
-	  height : 25 px;
-	  background-color : #94c1d9; 
-	  border : 0px none #000000; 
-	  border-radius : 15px 15px 15px 15px;
-	}
-	.nouveauGroupe{
-		display:flex;
-		height:70px;
-		width:20%;
-		background-color : #2f6690;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-		margin:20px;
-		padding:10px;
-		position:relative;
-		float:right;
-		
-		
-		
-	
-	}
-	#plusGroupe{
-		width :60px;
-		height :60px;
-		margin:auto;
-	}
-	
-	.nouveauGroupe h2{
-		margin:auto;
-	}
-	.grp{
-		height : 130px;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-		margin : 20px;
-		clear:right;
-	
-	}
-	.grp > h2{
-		padding-top:20px;
-	}
-	
-	.photoGroupe{
-		float:left;
-		margin:20px;
-	}
-	#ajouterPhotoGroupe{
-		float:left;
-		margin-left:30px;
-		margin-right: 20px;
-	}
-	.menuNotification{
-		float:right;
-	}
-	.menuNotificationGroupe{
-		float:right;
-		width:30px;
-		height:30px;
-		margin:20px;
-	}
-	input{
-		margin-top: 10px;
-	
-	}
-	#boutonParti{
-		height:70px;
-		width:15%;
-		background-color : #2f6690;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-		margin:20px;
-		padding:10px;
-		float:right;
-		font-size:20px;
-	}
-	#plus{
-		width:15px;
-		height:15px;
-	}
-	#menu{
-		width:20px;
-		height:20px;
-		position : relative;
-		float : right;
-	
-	}
-	
-	#text{
-		padding : 10px;
-		padding-top: 15px;
-		margin-bottom: 0;
-		margin-top: 0;
-		margin-left: 5%;
-		margin-right: 5%;
-	}
-	
-	#expand{
-		width:20px;
-		height:20px;
-		float : right;
-		padding: 1%;
-		padding-top: 3%;
-	}
-	
-	#interagir{
-		position : absolute;
-		bottom : 0;
-		right : 0;
-	}
-	
-	.interagir{
-		width:55px;
-		height:55px;
-		padding-left: 2%;
-		margin : 2%;
-	
-	}
-	
-	.reaction{
-		background-color: #2f6690;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-		position: absolute;
-		right : 10%;
-	}
-	
-	#emoji {
-		width:30px;
-		height:30px;
-		padding-left: 2%;
-	}
-	#titreProposition{
+
+}
+#plusGroupe{
+	width :60px;
+	height :60px;
+	margin:auto;
+}
+
+.nouveauGroupe h2{
+	margin:auto;
+}
+.grp{
+	height : 130px;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	margin : 20px;
+	clear:right;
+
+}
+.grp > h2{
+	padding-top:20px;
+}
+
+.photoGroupe{
+	float:left;
+	margin:20px;
+}
+#ajouterPhotoGroupe{
+	float:left;
+	margin-left:30px;
+	margin-right: 20px;
+}
+.menuNotification{
+	float:right;
+}
+.menuNotificationGroupe{
+	float:right;
+	width:30px;
+	height:30px;
+	margin:20px;
+}
+input{
+	margin-top: 10px;
+
+}
+#boutonParti{
+	height:70px;
+	width:15%;
+	background-color : #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	margin:20px;
+	padding:10px;
+	float:right;
+	font-size:20px;
+}
+#plus{
+	width:15px;
+	height:15px;
+}
+#menu{
+	width:20px;
+	height:20px;
+	position : relative;
+	float : right;
+
+}
+
+#text{
+	padding : 10px;
+	padding-top: 15px;
+	margin-bottom: 0;
+	margin-top: 0;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+#expand{
+	width:20px;
+	height:20px;
+	float : right;
+	padding: 1%;
+	padding-top: 3%;
+}
+
+#interagir{
+	position : absolute;
+	bottom : 0;
+	right : 0;
+}
+
+.interagir{
+	width:55px;
+	height:55px;
+	padding-left: 2%;
+	margin : 2%;
+
+}
+
+.reaction{
+	background-color: #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	position: absolute;
+	right : 10%;
+}
+
+#emoji {
+	width:30px;
+	height:30px;
+	padding-left: 2%;
+}
+#titreProposition{
+	padding-top : 2%;
+	padding-left:2%;
+}
+.vote{
+		text-align:center;
 		padding-top : 2%;
-		padding-left:2%;
-	}
-	.vote{
-			text-align:center;
-			padding-top : 2%;
-	
-	}
-	#boutonSuivant{
-		width : 20%;
-		text-align: center;
-		float : right;
-		height : 40px;
-		background-color : #2f6690;
-		margin-left : 2%;
-		margin-right:2%;
-		margin-top: 1%;
-		border : 0px none #000000; 
-		border-radius : 15px 15px 15px 15px;
-	}
-	
-	tbody tr:nth-child(odd) {
-		background-color: #2f6690;
-	  }
-	  
-	  tbody tr:nth-child(even) {
-		background-color: #16425b;
-	  }
-	
-	  form{
-		margin-top: 2%;
-	  }
-	
-	  input,
-	textarea {
-	  font: 1em sans-serif;
-	  width: 100%;
-	  box-sizing: border-box;
-	  border: 1px solid #999;
-	  background-color: #FFFFFF;
-	}
-	
-	input:focus,
-	textarea:focus {
-	  border-color: #000;
-	  background-color: #FFFFFF;
-	}
-	
-	textarea {
-	
-		background: #FFFFFF !important;
-		  vertical-align: top;
-		  height: 5em;
-		  resize: vertical;
-	}
-	
-	.button {
-	  padding-left: 90px;
-	}
-	footer {
-		text-align: center;
-		color: #e8e9ea;
-		background-color: #2f6690;
-		padding: 10px 0; /* Điều chỉnh khoảng cách trong footer */
-		margin-top: auto; /* Đẩy footer xuống cuối trang */
-	}
-	
+
+}
+#boutonSuivant{
+	width : 20%;
+	text-align: center;
+	float : right;
+	height : 40px;
+	background-color : #2f6690;
+	margin-left : 2%;
+	margin-right:2%;
+	margin-top: 1%;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #2f6690;
+  }
+  
+  tbody tr:nth-child(even) {
+	background-color: #16425b;
+  }
+
+  form{
+	margin-top: 2%;
+  }
+
+  input,
+textarea {
+  font: 1em sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #999;
+  background-color: #FFFFFF;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #000;
+  background-color: #FFFFFF;
+}
+
+textarea {
+
+	background: #FFFFFF !important;
+  	vertical-align: top;
+  	height: 5em;
+  	resize: vertical;
+}
+
+.button {
+  padding-left: 90px;
+}
+
