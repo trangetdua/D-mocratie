@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user_number'])) {
-    echo "Erreur: L'utilisateur n'est pas connecté.";
+    header('Location: connection.php');
     exit;
 }
 
