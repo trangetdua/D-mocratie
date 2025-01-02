@@ -93,7 +93,7 @@ body {
 }
 	
 main{
-	background : linear-gradient(#FFFFFF,#bfc1d4);
+	background:linear-gradient(#FFFFFF,#bfc1d4);
 	flex-grow :1;
 	min-height: 800px;
 }
@@ -371,15 +371,15 @@ tbody tr:nth-child(odd) {
 	background-color: #2f6690;
   }
   
-  tbody tr:nth-child(even) {
+ tbody tr:nth-child(even) {
 	background-color: #16425b;
   }
 
-  form{
+ form{
 	margin-top: 2%;
   }
 
-  input,
+ input,
 textarea {
   font: 1em sans-serif;
   width: 100%;

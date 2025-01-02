@@ -10,7 +10,8 @@
 
 	?>
 	<div id= "bigBox">
-	
+			
+
 	<div class="boutonPropo">
 		<a  href ="proposition.php"> <!--incrementer une variable-->
 		  <p>annuler</p>
@@ -40,6 +41,9 @@
 		<label for="nbOptions"> Si il s'agit d'un vote avec plus de deux options, nombres d'options qu'aura votre vote: </label>
 		<input type="number" id="nbOptions" name="nbOptions" min="2" max="10" value="2" />
 		</div>
+			<label for="temps">Durée du vote (en heure) </label>
+			<input type="number" id="temps" name="temps" min="12" value="24" />
+
 		<button id="boutonSuivant"> Suivant </button>
 
 	 </form>
