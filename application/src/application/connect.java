@@ -42,7 +42,7 @@ public class connect {
 		}
 		   }
 	
-		  public static JSONObject con(String donnees) throws JSONException {
+		  public static JSONObject con(String donnees, String identifiant) throws JSONException {
 			  URL url;
 			  JSONObject jsonFinal = new JSONObject();
 			try {
@@ -84,7 +84,7 @@ public class connect {
 					  
 					  while(info.length() > 3) {
 						  json = new JSONObject(info);//transoformer le string en json
-						  id = json.getString("Id_Utilisateur");
+						  id = json.getString(identifiant);
 						  jsonFinal.put(id, json);
 						  if(info.length()-json.toString(0).length()-(json.length()*2)>0) {
 						  info = info.substring(json.toString(0).length()-(json.length()*2), info.length());
@@ -110,7 +110,7 @@ public class connect {
 		  
 		  public static void main(String[] args) throws JSONException {
 			    
-			  JSONObject jojo = con("utilisateur");
+			  JSONObject jojo = con("Proposition","Id_Proposition");
 			  
 			  
 			  System.out.println("ce qui est sencé fonctionner");
@@ -119,10 +119,9 @@ public class connect {
 			  
 				System.out.println("partie test");
 				
-			  String blabla = "[{\"Id_Utilisateur\":1,\"Nom_Utilisateur\":\"Doe\",\"Prenom_Utilisateur\":\"John\",\"Adr_Utilisateur\":\"123 Rue Principale\",\"Cp_Utilisateur\":75001,\"Mail_Utilisateur\":\"john.doe@example.com\",\"Login_Utilisateur\":\"johndoe\",\"Pdp_Utilisateur\":\"dncjsknjkvdsk\"},{\"Id_Utilisateur\":2,\"Nom_Utilisateur\":\"Smith\",\"Prenom_Utilisateur\":\"Jane\",\"Adr_Utilisateur\":\"456 Avenue des Champs\",\"Cp_Utilisateur\":75002,\"Mail_Utilisateur\":\"jane.smith@example.com\",\"Login_Utilisateur\":\"janesmith\",\"Pdp_Utilisateur\":\"njdksvjknd\"},{\"Id_Utilisateur\":3,\"Nom_Utilisateur\":\"Brown\",\"Prenom_Utilisateur\":\"Alice\",\"Adr_Utilisateur\":\"789 Boulevard Haussmann\",\"Cp_Utilisateur\":75008,\"Mail_Utilisateur\":\"alice.brown@example.com\",\"Login_Utilisateur\":\"alicebrown\",\"Pdp_Utilisateur\":\"nvjksjkdjkfd\"},{\"Id_Utilisateur\":4,\"Nom_Utilisateur\":\"Taylor\",\"Prenom_Utilisateur\":\"Bob\",\"Adr_Utilisateur\":\"321 Rue Lafayette\",\"Cp_Utilisateur\":75010,\"Mail_Utilisateur\":\"bob.taylor@example.com\",\"Login_Utilisateur\":\"bobtaylor\",\"Pdp_Utilisateur\":\"ikoezkfoie\"},{\"Id_Utilisateur\":5,\"Nom_Utilisateur\":\"Johnson\",\"Prenom_Utilisateur\":\"Emily\",\"Adr_Utilisateur\":\"654 Avenue Montaigne\",\"Cp_Utilisateur\":75016,\"Mail_Utilisateur\":\"emily.johnson@example.com\",\"Login_Utilisateur\":\"emilyjohnson\",\"Pdp_Utilisateur\":\"jnkckdsfveji\"}]";
-			  String bla = "java8";
-			  
-			  
+			  //String blabla = "[{\"Id_Utilisateur\":1,\"Nom_Utilisateur\":\"Doe\",\"Prenom_Utilisateur\":\"John\",\"Adr_Utilisateur\":\"123 Rue Principale\",\"Cp_Utilisateur\":75001,\"Mail_Utilisateur\":\"john.doe@example.com\",\"Login_Utilisateur\":\"johndoe\",\"Pdp_Utilisateur\":\"dncjsknjkvdsk\"},{\"Id_Utilisateur\":2,\"Nom_Utilisateur\":\"Smith\",\"Prenom_Utilisateur\":\"Jane\",\"Adr_Utilisateur\":\"456 Avenue des Champs\",\"Cp_Utilisateur\":75002,\"Mail_Utilisateur\":\"jane.smith@example.com\",\"Login_Utilisateur\":\"janesmith\",\"Pdp_Utilisateur\":\"njdksvjknd\"},{\"Id_Utilisateur\":3,\"Nom_Utilisateur\":\"Brown\",\"Prenom_Utilisateur\":\"Alice\",\"Adr_Utilisateur\":\"789 Boulevard Haussmann\",\"Cp_Utilisateur\":75008,\"Mail_Utilisateur\":\"alice.brown@example.com\",\"Login_Utilisateur\":\"alicebrown\",\"Pdp_Utilisateur\":\"nvjksjkdjkfd\"},{\"Id_Utilisateur\":4,\"Nom_Utilisateur\":\"Taylor\",\"Prenom_Utilisateur\":\"Bob\",\"Adr_Utilisateur\":\"321 Rue Lafayette\",\"Cp_Utilisateur\":75010,\"Mail_Utilisateur\":\"bob.taylor@example.com\",\"Login_Utilisateur\":\"bobtaylor\",\"Pdp_Utilisateur\":\"ikoezkfoie\"},{\"Id_Utilisateur\":5,\"Nom_Utilisateur\":\"Johnson\",\"Prenom_Utilisateur\":\"Emily\",\"Adr_Utilisateur\":\"654 Avenue Montaigne\",\"Cp_Utilisateur\":75016,\"Mail_Utilisateur\":\"emily.johnson@example.com\",\"Login_Utilisateur\":\"emilyjohnson\",\"Pdp_Utilisateur\":\"jnkckdsfveji\"}]";
+			  String blabla = "[{\"Id_Groupe\":1,\"Nom_Groupe\":\"Club Environnement\",\"Image_Groupe\":\"environnement.png\",\"Couleur_Groupe\":\"3a7ca5\",\"Limite_Budget_Global\":\"10000\",\"Id_Utilisateur\":1},{\"Id_Groupe\":2,\"Nom_Groupe\":\"Association Sportive\",\"Image_Groupe\":\"sport.png\",\"Couleur_Groupe\":\"0a9396\",\"Limite_Budget_Global\":\"20000\",\"Id_Utilisateur\":2},{\"Id_Groupe\":3,\"Nom_Groupe\":\"Club Technologie\",\"Image_Groupe\":\"tech.png\",\"Couleur_Groupe\":\"780404\",\"Limite_Budget_Global\":\"15000\",\"Id_Utilisateur\":3},{\"Id_Groupe\":4,\"Nom_Groupe\":\"Groupe Sante\",\"Image_Groupe\":\"sante.png\",\"Couleur_Groupe\":\"620581\",\"Limite_Budget_Global\":\"12000\",\"Id_Utilisateur\":4},{\"Id_Groupe\":5,\"Nom_Groupe\":\"Collectif Education\",\"Image_Groupe\":\"education.png\",\"Couleur_Groupe\":\"0a9396\",\"Limite_Budget_Global\":\"18000\",\"Id_Utilisateur\":5},{\"Id_Groupe\":6,\"Nom_Groupe\":\"Club Voyage\",\"Image_Groupe\":\"voyage.png\",\"Couleur_Groupe\":\"3a7ca5\",\"Limite_Budget_Global\":\"10000\",\"Id_Utilisateur\":3},{\"Id_Groupe\":7,\"Nom_Groupe\":\"Club Gastronomie\",\"Image_Groupe\":\"gastronomie.png\",\"Couleur_Groupe\":\"0a9396\",\"Limite_Budget_Global\":\"12000\",\"Id_Utilisateur\":3},{\"Id_Groupe\":8,\"Nom_Groupe\":\"Club Science\",\"Image_Groupe\":\"science.png\",\"Couleur_Groupe\":\"3a7ca5\",\"Limite_Budget_Global\":\"15000\",\"Id_Utilisateur\":5},{\"Id_Groupe\":9,\"Nom_Groupe\":\"Groupe IUT\",\"Image_Groupe\":\"sience.png\",\"Couleur_Groupe\":\"3a7ca5\",\"Limite_Budget_Global\":\"150000\",\"Id_Utilisateur\":5},{\"Id_Groupe\":26,\"Nom_Groupe\":\"Nouveau_groupe\",\"Image_Groupe\":null,\"Couleur_Groupe\":\"3a7ca5\",\"Limite_Budget_Global\":null,\"Id_Utilisateur\":1}]";
+			  System.out.println(blabla);
 			  
 			  String info = blabla.substring(1, blabla.length()-1);
 			  
@@ -131,7 +130,8 @@ public class connect {
 			  JSONObject jsonFinal = new JSONObject();
 			  while(info.length() > 3) {
 				  json = new JSONObject(info);//transoformer le string en json
-				  id = json.getString("Id_Utilisateur");
+				  id = json.getString("Id_Groupe");
+				  System.out.println(json);
 				  jsonFinal.put(id, json);
 				  if(info.length()-json.toString(0).length()-(json.length()*2)>0) {
 				  info = info.substring(json.toString(0).length()-(json.length()*2), info.length());
@@ -139,7 +139,14 @@ public class connect {
 				  else {
 					  info = info.substring(json.toString(0).length()-(json.length()*2)-1, info.length());
 				  }
+				  System.out.println(info);
 			  }
+			  
+			  System.out.println(jsonFinal.getString("1"));
+			  
+			  //recuperer une donnée precise 
+			  //JSONObject jsonUti1 = new JSONObject(jsonFinal.getString("1"));
+			  //System.out.println(jsonUti1.getString("Mail_Utilisateur"));
 			  
 			  System.out.println(jsonFinal);
 			  /*

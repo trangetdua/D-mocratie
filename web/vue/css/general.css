@@ -87,7 +87,7 @@ a {
 body {
 	display:flex;
 	flex-direction: column ;
-	min-height: 100vh;
+	min-height: 50vh;
 	margin:0px;
 	padding: 0px 0px ;
 }
@@ -95,7 +95,7 @@ body {
 main{
 	background:linear-gradient(#FFFFFF,#bfc1d4);
 	flex-grow :1;
-	min-height: 800px;
+	min-height: 550px;
 }
 footer{
 	text-align:center;
@@ -239,10 +239,22 @@ h1{
 .nouveauPropo{
 	
 	text-align: center;
-  height : 25 px;
-  background-color : #94c1d9; 
+  height :  50px;
+  background-color : #94c1d9;
+  margin: 20px; 
   border : 0px none #000000; 
   border-radius : 15px 15px 15px 15px;
+}
+
+.Propo{
+	
+	text-align: center;
+  height :  130px;
+  background-color : #94c1d9;
+  margin: 20px; 
+  border : 0px none #000000; 
+  border-radius : 15px 15px 15px 15px;
+  
 }
 .nouveauGroupe{
 	display:flex;

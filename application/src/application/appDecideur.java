@@ -76,7 +76,7 @@ public class appDecideur {
 		frame.getContentPane().add(list);
 		
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("Propositions votées");
 		lblNewLabel.setBounds(10, 10, 168, 23);
 		frame.getContentPane().add(lblNewLabel);
 		

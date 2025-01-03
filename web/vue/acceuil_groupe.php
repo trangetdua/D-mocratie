@@ -1,7 +1,16 @@
 <?php 
 		require_once("header.php");
+
+		if (!isset($_SESSION['fullname'])) {
+			header("Location: connection.php?error=notlogged");
+			exit;
+		}
+	
+		$fullname = $_SESSION['fullname'];
 	?>
 
+<main>
+<!--
 <div id = "box">
 <image src="./images/menuDepliant.png" alt="plus" class="js-expandmore" id="menu"/>
 <div class = "js-to_expand">
@@ -11,6 +20,7 @@
 	</div>
 	</div>
 	</div>
+	-->
 
 
 <!--navigation-->
@@ -44,20 +54,22 @@
 
 
 <?php
-	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/membre/id_groupe/groupe/id_groupe/proposition?method=GET');
+	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/id_groupe/Proposition?method=GET');
 	curl_setopt($curlPropos,CURLOPT_RETURNTRANSFER,1);
 	$propos = json_decode(curl_exec($curlPropos),true);
 		foreach ($propos as $value){
+			if($value['Id_Groupe']==$_SESSION['groupe']){
 				$titre = $value['Titre_Proposition'];
-				$descr = $value['Description_Propostion'];
-				echo "<div style='margin-top:20px;' id='centered' class = 'nouveauPropo'>";
-				echo "<h2>$titre</h2>";
-				echo $descr;
+				$descr = $value['Description_Proposition'];
+				echo "<div  id='centered' class = 'Propo'>";
+				echo "<div><h2>$titre</h2> </div><br>";
+				echo "<div><p>$descr</p></div>";
 			echo "</div>";
+			}
 		}
 
 
-
+echo "</main>";
 
 require_once("footer.html");
 ?>
