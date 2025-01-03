@@ -1,6 +1,5 @@
 <?php
-require_once("header.html");
-require_once("isConnected.php");
+require_once("header.php");
 ?>
 
 <!DOCTYPE html>
@@ -11,11 +10,11 @@ require_once("isConnected.php");
     <link rel="stylesheet" href="./css/styleI.css">
 </head>
 <body>
-<main class="container">
+<main class="container" style="min-height: unset !important;" >
         <div class="form-wrapper">
             <h2>Inviter un membre</h2>
             <form class="invite-form">
-                <div class="form-group">
+                <div class="form-group" method="POST" action="sendInvitation.php">
                     <label for="email">Inviter par e-mail :</label>
                     <input type="email" id="email" placeholder="Entrez l'adresse e-mail">
                     <button type="button" class="btn">Envoyer</button>

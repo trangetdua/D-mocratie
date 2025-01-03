@@ -1,5 +1,5 @@
 <?php
-require_once("header.html");
+require_once("header.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

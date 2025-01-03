@@ -1,20 +1,88 @@
 header{
-background: #2f6690;
-height : 110px;
+	display: flex;
+    justify-content: space-between; 
+    align-items: center;
+	background: #2f6690;
+	height : 110px;
 }
-
+	
 img{
 width : 100px;
 height : 100px;
 }
 
+.header-right {
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
+	
+/* Định nghĩa container riêng biệt */
+.notification-container {
+    position: relative; /* Đặt vị trí để dropdown hiển thị đúng */
+}
+
+/* Dropdown */
+.notification-container .notification-dropdown {
+    position: absolute;
+    top: 110%; /* Hiển thị ngay dưới biểu tượng */
+    right: 0; /* Căn phải */
+    width: 300px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: none; /* Ẩn mặc định */
+    flex-direction: column;
+    z-index: 10;
+}
+
+.notification-container .notification-dropdown .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f4f8;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.notification-container .notification-dropdown .mark-all {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.notification-container .notification-dropdown .notification-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.notification-container .notification-dropdown .notification-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.notification-container .notification-dropdown .notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-container .notification-dropdown .notification-item:hover {
+    background-color: #f0f0f0;
+}
+
+
 #p{
 float:right;
 }
 a {
-  color: black;
-   text-decoration: none;
-
+	color: black;
+	text-decoration: none;
 }
 body {
 	display:flex;
@@ -23,27 +91,27 @@ body {
 	margin:0px;
 	padding: 0px 0px ;
 }
-
+	
 main{
-	background : linear-gradient(#FFFFFF,#bfc1d4);
+	background:linear-gradient(#FFFFFF,#bfc1d4);
 	flex-grow :1;
+	min-height: 800px;
 }
 footer{
 	text-align:center;
 	color: #e8e9ea ;
-	background-color: #2f6690;
-	
+	background-color: #2f6690;	
 	padding :0px;
 }
 h1{
-	margin:40px;
+	margin: 15px 20px; 
 }
 #centered {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
+	
 #box{
 	margin-left: 3%;
 	margin-right : 0px;
@@ -51,7 +119,7 @@ h1{
 	min-height: 100vh;
 	padding: 0px 0px ;
 }
-
+	
 #bigBox{
 	background-color: #94c1d9;
 	position: relative;
@@ -64,7 +132,7 @@ h1{
 	top: 50%;
 	width: 90%;
 }
-
+	
 #boiteCommentaire{
 	background-color: #2f6690;
 	min-height: 60vh;
@@ -72,18 +140,18 @@ h1{
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
 }
-
+	
 .propo{
 	position: static;
 	float :left ;
 	padding :1% ;
 }
-
+	
 .propotexte{
 	float :left;
 	margin-top :3% ;
 }
-
+	
 .boutonPropo{
 	width : 20%;
 	text-align: center;
@@ -330,15 +398,15 @@ tbody tr:nth-child(odd) {
 	background-color: #2f6690;
   }
   
-  tbody tr:nth-child(even) {
+ tbody tr:nth-child(even) {
 	background-color: #16425b;
   }
 
-  form{
+ form{
 	margin-top: 2%;
   }
 
-  input,
+ input,
 textarea {
   font: 1em sans-serif;
   width: 100%;

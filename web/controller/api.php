@@ -23,8 +23,17 @@ if (!is_null($path[0])){
 				$j=$i+1;
 				$k=$i;
 				$i=$i+2;
-				$requete = $requete . " inner join $path[$i] on $path[$i].$path[$j] = $path[$k].$path[$j]";
-				
+
+                // Kiểm tra cột trước khi thêm INNER JOIN
+                $stmt = $pdo->prepare("SHOW COLUMNS FROM $path[$i] LIKE ?");
+                $stmt->execute([$path[$j]]);
+
+                if ($stmt->rowCount() > 0) {
+                    $requete = $requete . " inner join $path[$i] on $path[$i].$path[$j] = $path[$k].$path[$j]";
+                }else {
+                    echo json_encode(['message' => "Colonne '$path[$j]' introuvable dans '$path[$i]'"]);
+                    exit;
+                }
 			}
 			$requete = $requete . ";";
             $stmt = $pdo->query($requete);

@@ -1,6 +1,5 @@
 	<?php 
-		require_once("header.html");
-		require_once("isConnected.php");
+		require_once("header.php");
 	?>
 		
 

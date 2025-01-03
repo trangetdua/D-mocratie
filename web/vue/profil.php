@@ -1,6 +1,5 @@
 <?php
-session_start(); 
-require_once("header.html");
+require_once("header.php");
 
 if (!isset($_SESSION['fullname'])) {
   header("Location: connection.php?error=notlogged");
