@@ -1,0 +1,80 @@
+	<?php 
+	require_once("header.php");
+
+	if (!isset($_SESSION['fullname'])) {
+		header("Location: connection.php?error=notlogged");
+		exit;
+	}
+
+	$fullname = $_SESSION['fullname'];
+
+	?>
+	<div id= "bigBox">
+	<div class="boutonPropo">
+		<a  href ="proposition.php"> 
+		  <p>valider le vote</p>
+		</a>
+	</div>
+
+	<div class="boutonPropo">
+		<a  href ="proposition.php"> 
+		  <p>retour</p>
+		</a>
+	</div>
+		<?php
+		//$_SESSION['vote']=1;
+			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/vote/id_proposition/proposition/?method=GET');
+			curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+			$infos = json_decode(curl_exec($curl),true);
+			foreach($infos as $info){
+				if($info['Id_Vote']==$_SESSION['vote']){
+					echo '<h2 id ="titreProposition" >'. $info['Titre_proposition'] .'</h2> ';
+					echo '<p class="vote">'. $info['Description_proposition'] .'</p>';
+				}
+			}
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/choisi/id_choix/choix/?method=GET');
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+		$verif = json_decode(curl_exec($curl),true);
+		$premierVote = true;
+		$vote = "null";
+		foreach($verif as $v){
+				if($v['Id_Vote']==$_SESSION['vote']&&$_SESSION['user_id']==$v[id_utilisateur]){
+					$premierVote = false;
+					$vote=$v['Nom_Choix'];
+				}
+		}
+		if($premierVote){
+
+			echo '<form action="voter.php" method="post">';
+			echo '<div class="choix">';
+			echo '<label for="choix"> Votre avis : </label>';
+			echo '<select name = "choix" id="choix">';
+		
+
+			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/vote/id_vote/choix/?method=GET');
+			curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+			$choix = json_decode(curl_exec($curl),true);	
+			foreach($choix as $info){
+				if($info['Id_Vote']==$_SESSION['vote']){
+							echo "<option value = ". $info['Id_choix'] .">" . $value['nom_choix'] ."</option>";
+				}
+			}
+		
+
+		echo '</select>';
+		echo '</div>';
+		echo '<button id="boutonVoter"> Voter </button>';
+
+		echo '</form>';
+		}
+		else{
+			echo '<p> Vous avez déjà voté : '.$vote.'</p>';
+		}
+		$temps = 
+		echo '<p> Temps restant : '.$temps .'</p>';
+	
+		echo '</div>';
+	require_once("footer.html");
+
+	?>
+	

@@ -41,7 +41,7 @@
 		<label for="nbOptions"> Si il s'agit d'un vote avec plus de deux options, nombres d'options qu'aura votre vote: </label>
 		<input type="number" id="nbOptions" name="nbOptions" min="2" max="10" value="2" />
 		</div>
-			<label for="temps">Durée du vote (en heure) </label>
+			<label for="temps">Durée du vote (en jours) </label>
 			<input type="number" id="temps" name="temps" min="12" value="24" />
 
 		<button id="boutonSuivant"> Suivant </button>

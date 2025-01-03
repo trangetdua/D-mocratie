@@ -108,10 +108,14 @@ h1{
 }
 #centered {
 	display: flex;
+
 	justify-content: center;
-	align-items: center;
 }
-	
+#centeredColumn {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
 #box{
 	margin-left: 3%;
 	margin-right : 0px;

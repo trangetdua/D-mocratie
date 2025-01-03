@@ -61,8 +61,8 @@
 			if($value['Id_Groupe']==$_SESSION['groupe']){
 				$titre = $value['Titre_Proposition'];
 				$descr = $value['Description_Proposition'];
-				echo "<div  id='centered' class = 'Propo'>";
-				echo "<div><h2>$titre</h2> </div><br>";
+				echo "<div  id='centeredColumn' class = 'Propo'>";
+				echo "<div><h2>$titre</h2> </div>";
 				echo "<div><p>$descr</p></div>";
 			echo "</div>";
 			}
