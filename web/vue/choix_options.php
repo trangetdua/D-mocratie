@@ -18,10 +18,14 @@
 		<h2 id ="titreProposition" >Proposition 1</h2> 
 		<p id="textProposition"> Description de ma proposition Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nos... </p>
 		<?php
+			date_default_timezone_set('Europe/Paris');
+			$dateActuelle = date('Y-m-d H:i:s');
+
 			$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/?method=POST";
 			$data = [
             'Titre_vote' => REPLACE,
             'Duree_vote' => $_POST['temps'],
+			'Date_debut_vote'=>$dateActuelle,
             'valide' => false,
 			'id_proposition' => REPLACE,
 			'id_type_vote' => $_POST['typeVote'],

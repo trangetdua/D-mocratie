@@ -42,7 +42,7 @@
 		<input type="number" id="nbOptions" name="nbOptions" min="2" max="10" value="2" />
 		</div>
 			<label for="temps">Durée du vote (en jours) </label>
-			<input type="number" id="temps" name="temps" min="12" value="24" />
+			<input type="number" id="temps" name="temps" min="1" value="7" />
 
 		<button id="boutonSuivant"> Suivant </button>
 

@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href = "./css/stylejs.css">
 		<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 		<script src="./js/jquery-accessible-hide-show-aria.js"></script>
+		
 	</head>	
 	<body>
 
@@ -52,4 +53,5 @@
     </a>
 
 	</header>
+
 	<script src="./js/noti.js"></script>

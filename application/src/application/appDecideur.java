@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -84,6 +85,13 @@ public class appDecideur {
 		comboBox.setBounds(327, 48, 85, 21);
 		frame.getContentPane().add(comboBox);
 		
-		
+		int y = 40;
+		for(int i=0;i<5;i++) {
+		JPanel panel = new JPanel();
+		panel.setBounds(10, y, 300, 50);
+		frame.getContentPane().add(panel);
+		panel.setBackground(Color.white);
+		y=y+60;
+		}
 	}
 }
