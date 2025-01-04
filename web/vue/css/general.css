@@ -192,8 +192,19 @@ h1{
 	border : 0px none #000000; 
 	border-radius : 15px 15px 15px 15px;
 	position: absolute;
-  	right: 10%;
-  	margin: 1em 0;
+  	right: 5%;
+}
+
+.boutonSignalNom{
+	box-shadow: 10px 5px 5px black;
+	width : 10%;
+	text-align: center;
+	height : 40 px;
+	background-color : #2f6690;
+	border : 0px none #000000; 
+	border-radius : 15px 15px 15px 15px;
+	position: absolute;
+  	left: 10%;
 }
 
 .boutonTheme{
@@ -377,15 +388,14 @@ input{
 
 .reaction{
 	background-color: #2f6690;
-	border : 0px none #000000; 
-	border-radius : 15px 15px 15px 15px;
 	position: absolute;
-	right : 10%;
+	bottom: 50%;
+	right: 10%;
 }
 
 #emoji {
-	width:30px;
-	height:30px;
+	width:50px;
+	height:50px;
 	padding-left: 2%;
 }
 #titreProposition{

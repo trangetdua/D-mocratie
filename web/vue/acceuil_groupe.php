@@ -59,12 +59,15 @@
 	$propos = json_decode(curl_exec($curlPropos),true);
 		foreach ($propos as $value){
 			if($value['Id_Groupe']==$_SESSION['groupe']){
+				$link = "transition_propo.php?id=".$value['id_proposition'];
 				$titre = $value['Titre_Proposition'];
 				$descr = $value['Description_Proposition'];
+				echo "<a href=$link>";
 				echo "<div  id='centeredColumn' class = 'Propo'>";
 				echo "<div><h2>$titre</h2> </div>";
 				echo "<div><p>$descr</p></div>";
 			echo "</div>";
+			echo "</a>";
 			}
 		}
 
