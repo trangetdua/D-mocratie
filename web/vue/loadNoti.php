@@ -24,6 +24,8 @@ $response = curl_exec($curl);
 $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 curl_close($curl);
 
+header('Content-Type: application/json');
+
 if ($httpCode === 200) {
     $allNotifications = json_decode($response, true);
 
@@ -31,11 +33,15 @@ if ($httpCode === 200) {
     foreach ($allNotifications as $notification) {
         if ($notification['Id_Utilisateur'] == $userId) {
             $notifications[] = [
+                'notification_id' => $notification['Id_Notification'],
                 'title' => $notification['Nom_Groupe'], 
                 'message' => $notification['Regularite_Notification'], 
             ];
         }
     }
+
+    echo json_encode(['notifications' => $notifications]);
+
 } else {
     echo "Erreur: Impossible de récupérer les notifications.";
 }

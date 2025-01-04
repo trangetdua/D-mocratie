@@ -43,7 +43,11 @@
     <p>Votes validés</p>
   </a>
 </div>
-
+<div class="nonactive" style="margin-left:20px;">
+    <a href="invitation.php"> 
+      <p>Inviter un membre</p>
+    </a>
+  </div>
 </div>
 
 <a href ="creer_proposition.php">
