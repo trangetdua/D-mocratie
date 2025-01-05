@@ -23,30 +23,29 @@
 	</div>
 		<?php
 		$_SESSION['vote']=1;
-			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/vote/id_proposition/proposition/?method=GET');
+			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Vote/id_proposition/Proposition/?method=GET');
 			curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 			$infos = json_decode(curl_exec($curl),true);
 			foreach($infos as $info){
 				if($info['Id_Vote']==$_SESSION['vote']){
-					echo '<h2 id ="titreProposition" >'. $info['Titre_proposition'] .'</h2> ';
-					echo '<p class="vote">'. $info['Description_proposition'] .'</p>';
+					echo '<h2 id ="titreProposition" >'. $info['Titre_Proposition'] .'</h2> ';
+					echo '<p class="vote">'. $info['Description_Proposition'] .'</p>';
 					$dateVote = $info['Date_debut_vote'];
-					$duree = $info['Duree_vote'];
+					$duree = $info['Duree_Vote'];
 				}
 			}
-		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/choisi/id_choix/choix/?method=GET');
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/choisi/id_choix/Choix/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$verif = json_decode(curl_exec($curl),true);
 		$premierVote = true;
 		$vote = "null";
 		foreach($verif as $v){
-				if($v['Id_Vote']==$_SESSION['vote']&&$_SESSION['user_id']==$v[id_utilisateur]){
+				if($v['Id_Vote']==$_SESSION['vote']&&$_SESSION['user_id']==$v['Id_Utilisateur']){
 					$premierVote = false;
 					$vote=$v['Nom_Choix'];
 				}
 		}
 		if($premierVote){
-			$date2=date_create("2013-12-12");
 			date_default_timezone_set('Europe/Paris');
 			$dateActuelle = date('Y-m-d H:i:s');
 			$diff=date_diff($dateVote,$dateActuelle);
@@ -60,7 +59,7 @@
 				echo '<select name = "choix" id="choix">';
 		
 
-			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/vote/id_vote/choix/?method=GET');
+			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/vote/id_vote/Choix/?method=GET');
 			curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 			$choix = json_decode(curl_exec($curl),true);	
 			foreach($choix as $info){
@@ -75,12 +74,12 @@
 		echo '<button id="boutonVoter"> Voter </button>';
 
 		echo '</form>';
-		}
+			}
 			else{
 				echo '<p> Ce vote est terminé. </p>';
 
 			}
-		else{
+		}else{
 			echo '<p> Vous avez déjà voté : '.$vote.'</p>';
 		}
 		echo '<p> Temps restant : '.$temps .' jours </p>';

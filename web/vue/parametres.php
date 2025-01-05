@@ -12,7 +12,6 @@
 	<a href ="acceuil.php">
 	<div class = "nouveauGroupe">
 	<h2> Retour  </h2>
-	<image src="./images/plus.png" alt="plus" id="plusGroupe"/>
 	</div>
 	</a>
 	
@@ -26,21 +25,24 @@
 			<th> Signalements </th>
 		</tr>
 	<?php 
-		$curlPropositions = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/proposition/id_utilisateur/utilisateur/?method=GET');
+		$curlPropositions = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/id_utilisateur/utilisateur/?method=GET');
 		curl_setopt($curlPropositions,CURLOPT_RETURNTRANSFER,1);
 		$propo = json_decode(curl_exec($curlPropositions),true);
-		$curlCom = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/commentaire/id_proposition/proposition/?method=GET');
-		curl_setopt($curlCom,CURLOPT_RETURNTRANSFER,1);
-		$com = json_decode(curl_exec($curlCom),true);
 		
+		$_SESSION['groupe']=1;
 		foreach ($propo as $p){
-			if($p['id_Groupe']==$_SESSION['groupe'] && $p['Signaler']>0){
-				echo '<tr>'
+			if($p['Id_Groupe']==$_SESSION['groupe'] && $p['Signaler']>0){
+				echo '<tr>';
 				echo '<td>' . p['id_proposition'] . '</td>';
 				echo '<td>' . p['titre_proposition'] . '</td>';
 				echo '<td>' . p['Nom_utilisateur']. ' ' .p['Prenom_utilisateur'] . '</td>';
 				echo '<td>' . p['Signaler'] . '</td>';
 				echo '</tr>';
+				echo '<div class="boutonPropo">';
+				echo '<a  href ="proposition.php"> ';
+				echo '<p>supprimer</p>';
+				echo '</a>';
+				echo '</div>';
 			}
 		}
 	?>
@@ -56,17 +58,17 @@
 
 		</tr>
 	<?php 
-		$curlCom = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/commentaire/id_proposition/proposition/?method=GET');
+		$curlCom = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/commentaire/id_proposition/Proposition/?method=GET');
 		curl_setopt($curlCom,CURLOPT_RETURNTRANSFER,1);
 		$com = json_decode(curl_exec($curlCom),true);
 		
 		foreach ($com as $c){
-			if($c['id_Groupe']==$_SESSION['groupe'] && $c['Signaler']>0){ //FAIRE DES TESTS POUR VOIR LE TITRE 
-				echo '<tr>'
-				echo '<td>' . p['id_commentaire'] . '</td>';
-				echo '<td>' . p['contenue_commentaire'] . '</td>';
-				echo '<td>' . p['Nom_utilisateur']. ' ' .p['Prenom_utilisateur'] . '</td>';
-				echo '<td>' . p['titre_proposition']. '</td>';
+			if($c['Id_Groupe']==$_SESSION['groupe'] && $c['Signaler']>0){ 
+				echo '<tr>';
+				echo '<td>' . p['Id_commentaire'] . '</td>';
+				echo '<td>' . p['Contenue_Commentaire'] . '</td>';
+				echo '<td>' . p['Nom_Utilisateur']. ' ' .p['Prenom_Utilisateur'] . '</td>';
+				echo '<td>' . p['Titre_Proposition']. '</td>';
 				echo '<td>' . p['Signaler'] . '</td>';
 				echo '</tr>';
 			}

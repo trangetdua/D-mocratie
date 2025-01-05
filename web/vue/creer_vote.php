@@ -17,9 +17,19 @@
 		  <p>annuler</p>
 		</a>
 	</div>
-
-		<h2 id ="titreProposition" >Proposition 1</h2> 
-		<p class="vote"> Description de ma proposition Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nos... </p>
+	<?php 
+	
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+		$prop = json_decode(curl_exec($curl),true);
+		foreach($prop as $p){
+			if($p['id_proposition']==$_SESSION['proposition']){
+				
+				echo '<h2 id ="titreProposition" >'.$p['Titre_Proposition'].'</h2> ';
+				echo '<p class="vote">'.	$p['Description_Proposition'] .'</p>';
+			}
+		}
+		?>
 		<form action="choix_options.php" method="post">
 		<div class="vote">
 
@@ -32,7 +42,7 @@
 			curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 			$types = json_decode(curl_exec($curl),true);
 			foreach($types as $value){
-				echo "<option value = ". $value['Id_Type_Vote'] .">" . $value['Nom_Type_Vote'] ."</option>";
+				echo "<option value = ". $value['Id_Type_vote'] .">" . $value['Nom_Type_Vote'] ."</option>";
 			}
 			?>
 		</select>

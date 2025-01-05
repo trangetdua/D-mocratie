@@ -15,19 +15,29 @@
 		  <p>annuler</p>
 		</a>
 	</div>
-		<h2 id ="titreProposition" >Proposition 1</h2> 
-		<p id="textProposition"> Description de ma proposition Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nos... </p>
 		<?php
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+		$prop = json_decode(curl_exec($curl),true);
+		foreach($prop as $p){
+			if($p['id_proposition']==$_SESSION['proposition']){
+				$titre = $p['Titre_Proposition'];
+				echo '<h2 id ="titreProposition" >'.$titre.'</h2> ';
+				
+				echo '<p class="vote">'.	$p['Description_Proposition'] .'</p>';
+			}
+		}
+
 			date_default_timezone_set('Europe/Paris');
 			$dateActuelle = date('Y-m-d H:i:s');
 
 			$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/?method=POST";
 			$data = [
-            'Titre_vote' => REPLACE,
+            'Titre_vote' => $titre,
             'Duree_vote' => $_POST['temps'],
 			'Date_debut_vote'=>$dateActuelle,
             'valide' => false,
-			'id_proposition' => REPLACE,
+			'id_proposition' => $_SESSION['proposition'],
 			'id_type_vote' => $_POST['typeVote'],
 			];
 			
@@ -42,13 +52,13 @@
 			$_SESSION['vote'] = $id;
 
 			if($_POST['typeVote']==1){
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/choix/id/Oui/$id/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Oui/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 				curl_exec($curl);
 				
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/choix/id/Non/$id/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Non/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
@@ -58,13 +68,13 @@
 
 			}
 			else if($_POST['typeVote']==2){
-				 $url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/choix/id/Pour/$id/?method=POST";
+				 $url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Pour/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 				curl_exec($curl);
 				
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/choix/id/Contre/$id/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Contre/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
