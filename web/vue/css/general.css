@@ -432,14 +432,7 @@ tbody tr:nth-child(odd) {
 	margin-top: 2%;
   }
 
- input,
-textarea {
-  font: 1em sans-serif;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #999;
-  background-color: #FFFFFF;
-}
+
 
 .textCreation{
 	margin-left: auto;
@@ -458,7 +451,10 @@ textarea:focus {
 }
 
 textarea {
-
+	font: 1em sans-serif;
+  	width: 100%;
+  	box-sizing: border-box;
+  	border: 1px solid #999;
 	background: #FFFFFF !important;
   	vertical-align: top;
   	height: 5em;
