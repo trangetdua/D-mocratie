@@ -39,8 +39,6 @@ if ($httpCode === 200) {
         }
     }
 
-    echo json_encode(['notifications' => $notifications]);
-
 } else {
     echo "Erreur: Impossible de récupérer les notifications.";
 }
