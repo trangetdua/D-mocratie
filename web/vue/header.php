@@ -48,6 +48,7 @@
             <?php endif; ?>
         </ul>
     </div>
+	
         </div>
 	
     <a href="profil.php">

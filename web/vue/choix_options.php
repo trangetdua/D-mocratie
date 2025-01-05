@@ -19,6 +19,7 @@
 		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$prop = json_decode(curl_exec($curl),true);
+		$_SESSION['proposition']=6;
 		foreach($prop as $p){
 			if($p['id_proposition']==$_SESSION['proposition']){
 				$titre = $p['Titre_Proposition'];
@@ -31,12 +32,12 @@
 			date_default_timezone_set('Europe/Paris');
 			$dateActuelle = date('Y-m-d H:i:s');
 
-			$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/?method=POST";
+			$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Vote/?method=POST";
 			$data = [
-            'Titre_vote' => $titre,
+            'Titre_Vote' => $titre,
             'Duree_vote' => $_POST['temps'],
 			'Date_debut_vote'=>$dateActuelle,
-            'valide' => false,
+            'valide' => 0,
 			'id_proposition' => $_SESSION['proposition'],
 			'id_type_vote' => $_POST['typeVote'],
 			];
@@ -47,7 +48,9 @@
 			curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 
-			$response = json_decode(curl_exec($curl), true);
+        $res = curl_exec($curl);		
+
+        $response = json_decode($res, true);
 			$id = $response['id'];
 			$_SESSION['vote'] = $id;
 
@@ -84,14 +87,17 @@
 			}
 			else{
 			echo '<form action="creer_options.php" method="post">';
-
-			for($i=2;i<POST['nbOptions'];i++){
+			$nb=$_POST['nbOptions'];
+			for($i=0;$i<$nb;$i++){
 					$name = "choix".$i;
 					echo '<label for="'.$name.'">'.$name.'</label>';
-					echo '<input type="text" id="'.$name.'" name="'.$name .' />';
+					echo '<input type="text" id="'.$name.'" name="'.$name .' "/>';
 			}
+			
 			echo '<button id="boutonSuivant"> Suivant </button>';
+
 			echo '</form>';
+			}
 	?>
 	</div>
 	<?php
