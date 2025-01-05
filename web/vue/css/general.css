@@ -444,11 +444,7 @@ tbody tr:nth-child(odd) {
 	
 }
 
-input:focus,
-textarea:focus {
-  border-color: #000;
-  background-color: #FFFFFF;
-}
+
 
 textarea {
 	font: 1em sans-serif;
