@@ -19,7 +19,6 @@
 		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$prop = json_decode(curl_exec($curl),true);
-		$_SESSION['proposition']=6;
 		foreach($prop as $p){
 			if($p['id_proposition']==$_SESSION['proposition']){
 				$titre = $p['Titre_Proposition'];

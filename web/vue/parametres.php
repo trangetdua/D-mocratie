@@ -16,6 +16,7 @@
 	</a>
 	
 	<h1> Signalements </h1>
+	<br>
 	<h2> Propositons <h2>
 	<table>
 		<tr>
@@ -37,12 +38,22 @@
 				echo '<td>' . $p['Titre_Proposition'] . '</td>';
 				echo '<td>' . $p['Nom_Utilisateur']. ' ' .$p['Prenom_Utilisateur'] . '</td>';
 				echo '<td>' . $p['Signaler'] . '</td>';
-				echo '</tr>';
-				echo '<div class="boutonPropo">';
-				echo '<a  href ="proposition.php"> ';
-				echo '<p>supprimer</p>';
+				echo '<td>';
+				echo '<div class="boutonPara">';
+				echo '<a  href ="signalSuppr.php"> ';
+				echo '<p>supprimer la proposition</p>';
+				echo '</a>';
+				echo '</td>';
+				echo '<td>';
+
+				echo '<div class="boutonPara">';
+				echo '<a  href ="signalSafe.php"> ';
+				echo '<p>ne plus signaler</p>';
 				echo '</a>';
 				echo '</div>';
+				echo '</td>';
+				echo '</tr>';
+
 			}
 		}
 	?>
@@ -70,8 +81,21 @@
 				echo '<td>' . $c['Nom_Utilisateur']. ' ' .$c['Prenom_Utilisateur'] . '</td>';
 				echo '<td>' . $c['Titre_Proposition']. '</td>';
 				echo '<td>' . $c['Signaler'] . '</td>';
-				echo '</tr>';
-			}
+				echo '<td>';
+				echo '<div class="boutonPara">';
+				echo '<a  href ="signalSuppr.php"> ';
+				echo '<p>supprimer la proposition</p>';
+				echo '</a>';
+				echo '</td>';
+				echo '<td>';
+
+				echo '<div class="boutonPara">';
+				echo '<a  href ="signalSafe.php"> ';
+				echo '<p>ne plus signaler</p>';
+				echo '</a>';
+				echo '</div>';
+				echo '</td>';
+				echo '</tr>';			}
 		}
 		echo '</table>';
 

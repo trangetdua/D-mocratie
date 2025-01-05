@@ -462,3 +462,14 @@ textarea {
   padding-left: 90px;
 }
 
+.boutonPara{
+	width : 90%;
+	text-align: center;
+	height : 90%;
+	background-color:#3a7ca5;
+	margin:4%;
+	border : 2px solid #000000; 
+	border-radius : 15px 15px 15px 15px;
+	padding:1%;
+
+}
