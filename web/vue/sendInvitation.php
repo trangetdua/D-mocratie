@@ -1,53 +1,47 @@
 <?php
+session_start();
 require_once('../config/connexion.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!isset($_SESSION['groupe'])) {
+        echo json_encode(['success' => false, 'message' => 'Aucun groupe sélectionné']);
+        exit;
+    }
+
+    $groupeId = $_SESSION['groupe'];
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
     if (empty($email)) {
-        header("Location: invitation.php?error=empty_email");
+        echo json_encode(['success' => false, 'message' => 'Veuillez entrer une adresse e-mail.']);
         exit;
     }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header("Location: invitation.php?error=invalid_email");
-        exit;
-    }
-
-    // Lấy thông tin người mời từ session
-    if (!isset($_SESSION['user_number'])) {
-        header("Location: invitation.php?error=not_logged_in_or_no_group");
-        exit;
-    }
-
-    $inviter_id = $_SESSION['user_number'];
 
     try {
-        $apiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur?method=GET";
+        // Lấy tên nhóm thông qua API
+        $groupeApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe?method=GET";
+        $groupeResponse = file_get_contents($groupeApiUrl);
+        $groupes = json_decode($groupeResponse, true);
+        $nomGroupe = null;
 
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $apiUrl,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json"
-            ]
-        ]);
-
-        $response = curl_exec($curl);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-
-        if ($httpCode !== 200) {
-            throw new Exception("Erreur lors de la récupération des utilisateurs.");
+        foreach ($groupes as $groupe) {
+            if ($groupe['Id_Groupe'] == $groupeId) {
+                $nomGroupe = $groupe['Nom_Groupe'];
+                break;
+            }
         }
 
-        $allUsers = json_decode($response, true);
+        if (!$nomGroupe) {
+            echo json_encode(['success' => false, 'message' => 'Nom du groupe introuvable']);
+            exit;
+        }
 
-        // Tìm người dùng theo email
+        // Gọi API để tìm người dùng theo email
+        $utilisateurApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur?method=GET";
+        $utilisateurResponse = file_get_contents($utilisateurApiUrl);
+        $users = json_decode($utilisateurResponse, true);
         $invitee = null;
-        foreach ($allUsers as $user) {
+
+        foreach ($users as $user) {
             if ($user['Mail_Utilisateur'] === $email) {
                 $invitee = $user;
                 break;
@@ -55,180 +49,102 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if (!$invitee) {
-            header("Location: invitation.php?error=user_not_found");
+            echo json_encode(['success' => false, 'message' => 'Utilisateur non trouvé.']);
             exit;
         }
 
-        $invitee_id = $invitee['Id_Utilsateur'];
+        $inviteeId = $invitee['Id_Utilisateur'];
 
-        $groupApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/membre/Id_Utilisateur/$inviter_id?method=GET";
+        // Lấy ID của loại thông báo "Invitation au groupe" nếu đã tồn tại thông qua API
+        $typeNotificationGetUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification/Regularite_Notification/Invitation%20au%20groupe%20$nomGroupe/Id_Groupe/$groupeId?method=GET";
+        $typeNotificationResponse = file_get_contents($typeNotificationGetUrl);
+        $typeNotifications = json_decode($typeNotificationResponse, true);
+        $typeNotificationId = null;
 
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $groupApiUrl,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json"
-            ]
-        ]);
+        if (!empty($typeNotifications)) {
+            // Nếu đã tồn tại, lấy ID
+            $typeNotificationId = $typeNotifications[0]['Id_Notification'];
+        } else {
+            // Nếu chưa tồn tại, tạo mới thông qua API
+            $typeNotificationPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification?method=POST";
+            $typeNotificationData = [
+                'Regularite_Notification' => "Invitation au groupe $nomGroupe",
+                'Id_Groupe' => $groupeId
+            ];
 
-        $groupResponse = curl_exec($curl);
-        $groupHttpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
+            $ch = curl_init($typeNotificationPostUrl);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($typeNotificationData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $typeNotificationResponse = curl_exec($ch);
+            $typeNotificationHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
 
-        if ($groupHttpCode !== 200) {
-            throw new Exception("Erreur lors de la récupération des groupes de l'utilisateur.");
+            if ($typeNotificationHttpCode !== 200 && $typeNotificationHttpCode !== 201) {
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de la création du type de notification']);
+                exit;
+            }
+
+            $typeNotificationResult = json_decode($typeNotificationResponse, true);
+            if (isset($typeNotificationResult['id'])) {
+                $typeNotificationId = $typeNotificationResult['id'];
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de la récupération de l\'ID du type de notification']);
+                exit;
+            }
         }
 
-        $groups = json_decode($groupResponse, true);
-
-        if (empty($groups)) {
-            // Người mời không thuộc nhóm nào
-            header("Location: invitation.php?error=not_logged_in_or_no_group");
-            exit;
-        }
-
-        // Giả sử người mời chỉ thuộc một nhóm
-        $group_id = $groups[0]['Id_Groupe'];
-
-        // Sử dụng API để kiểm tra xem đã có thông báo mời chưa
-        $checkApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications?method=GET";
-
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $checkApiUrl,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json"
-            ]
-        ]);
- 
-        $notificationsResponse = curl_exec($curl);
-        $notificationsHttpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
- 
-        if ($notificationsHttpCode !== 200) {
-            throw new Exception("Erreur lors de la récupération des notifications.");
-        }
-        $allNotifications = json_decode($notificationsResponse, true);
-
-        // Tìm xem đã có thông báo mời chưa
+        // Kiểm tra xem đã có thông báo mời chưa thông qua API
+        $checkNotificationUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications?method=GET";
+        $checkNotificationResponse = file_get_contents($checkNotificationUrl);
+        $allNotifications = json_decode($checkNotificationResponse, true);
         $invitationAlreadySent = false;
+    
         foreach ($allNotifications as $notification) {
-            if ($notification['Id_Utilisateur'] == $invitee_id && $notification['Regularite_Notification'] == 'Invitation au groupe' && $notification['Id_Groupe'] == $group_id) {
+            if (
+                $notification['Id_Utilisateur'] == $inviteeId &&
+                $notification['Id_Notification'] == $typeNotificationId &&
+                $notification['status'] == 'unread'
+            ) {
                 $invitationAlreadySent = true;
                 break;
             }
         }
+    
         if ($invitationAlreadySent) {
-            header("Location: invitation.php?error=invitation_already_sent");
+            echo json_encode(['success' => false, 'message' => 'Une invitation a déjà été envoyée à cette adresse e-mail.']);
             exit;
         }
 
-        // Sử dụng API để lấy Id_Notification cho 'Invitation au groupe' và nhóm tương ứng
-        $typeNotificationApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification/Regularite_Notification/Invitation au groupe/Id_Groupe/$group_id?method=GET";
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $typeNotificationApiUrl,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json"
-            ]
-        ]);
-
-        $typeNotificationResponse = curl_exec($curl);
-        $typeNotificationHttpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-
-        if ($typeNotificationHttpCode !== 200) {
-            throw new Exception("Erreur lors de la récupération du type de notification.");
+        $notificationsPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications?method=POST";
+        $notificationData = [
+            'Id_Utilisateur' => $inviteeId,
+            'Id_Notification' => $typeNotificationId,
+        ];
+            
+        $ch = curl_init($notificationsPostUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($notificationData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $notificationResponse = curl_exec($ch);
+        $notificationHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($notificationHttpCode !== 200 && $notificationHttpCode !== 201) {
+            echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'invitation']);
+            exit;
         }
-
-        $typeNotifications = json_decode($typeNotificationResponse, true);
-
-        if (empty($typeNotifications)) {
-            // Nếu loại thông báo chưa tồn tại, thêm mới bằng API
-            $addTypeNotificationApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification";
-            $postData = [
-                'Regularite_Notification' => 'Invitation au groupe',
-                'Id_Groupe' => $group_id
-            ];
-
-            $curl = curl_init();
-            curl_setopt_array($curl, [
-                CURLOPT_URL => $addTypeNotificationApiUrl,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT => 10,
-                CURLOPT_HTTPHEADER => [
-                    "Content-Type: application/json"
-                ],
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => json_encode($postData)
-            ]);
-
-            $addTypeNotificationResponse = curl_exec($curl);
-            $addTypeNotificationHttpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            curl_close($curl);
-
-            if ($addTypeNotificationHttpCode !== 200 && $addTypeNotificationHttpCode !== 201) {
-                throw new Exception("Erreur lors de l'ajout du type de notification.");
-            }
-
-            $addedTypeNotification = json_decode($addTypeNotificationResponse, true);
-            $type_notification_id = $addedTypeNotification['id'] ?? null;
-
-            if (!$type_notification_id) {
-                throw new Exception("Impossible de récupérer l'ID du type de notification ajouté.");
-            }
-        } else {
-            // Lấy Id_Notification từ kết quả API
-            $type_notification_id = $typeNotifications[0]['Id_Notification'];
-        }
-
-        // Sử dụng API để thêm thông báo mới
-        $addNotificationApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications";
-            $postData = [
-                'Id_Utilisateur' => $invitee_id,
-                'Id_Notification' => $type_notification_id
-            ];
     
-            $curl = curl_init();
-            curl_setopt_array($curl, [
-                CURLOPT_URL => $addNotificationApiUrl,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT => 10,
-                CURLOPT_HTTPHEADER => [
-                    "Content-Type: application/json"
-                ],
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => json_encode($postData)
-            ]);
-
-            $addNotificationResponse = curl_exec($curl);
-        $addNotificationHttpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-
-        if ($addNotificationHttpCode !== 200 && $addNotificationHttpCode !== 201) {
-            throw new Exception("Erreur lors de l'ajout de la notification.");
-        }
-
-        // Chuyển hướng trở lại form với thông báo thành công
-        header("Location: invitation.php?success=invitation_sent");
+        echo json_encode(['success' => true, 'message' => 'Invitation envoyée avec succès']);
         exit;
         
+        
     } catch (Exception $e) {
-        // Nếu có lỗi, ghi log và chuyển hướng với thông báo lỗi
-        error_log("Erreur lors de l'envoi de l'invitation: " . $e->getMessage());
-        header("Location: invitation.php?error=database_error");
-        exit;
+        echo json_encode(['success' => false, 'message' => 'Erreur: ' . $e->getMessage()]);
     }
-
 } else {
-    // Nếu không phải là yêu cầu POST, chuyển hướng trở lại form
-    header("Location: invitation.php");
-    exit;
+    echo json_encode(['success' => false, 'message' => 'Méthode non autorisée']);
 }
 ?>
