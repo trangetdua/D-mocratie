@@ -24,7 +24,6 @@ $response = curl_exec($curl);
 $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 curl_close($curl);
 
-header('Content-Type: application/json');
 
 if ($httpCode === 200) {
     $allNotifications = json_decode($response, true);

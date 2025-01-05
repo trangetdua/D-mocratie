@@ -2,7 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const notificationIcon = document.getElementById("notification-icon");
     const notificationDropdown = document.getElementById("notification-dropdown");
 
-    // Toggle dropdown khi nhấn vào biểu tượng thông báo
+    if (!notificationIcon || !notificationDropdown) {
+        console.error("Các phần tử không tồn tại trong DOM.");
+        return;
+    }
+
     notificationIcon.addEventListener('click', function () {
         notificationDropdown.style.display =
             notificationDropdown.style.display === 'none' || notificationDropdown.style.display === '' 
@@ -10,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 : 'none';
     });
 
-    // Ẩn dropdown khi click ra ngoài
     document.addEventListener("click", (e) => {
         if (!notificationDropdown.contains(e.target) && !notificationIcon.contains(e.target)) {
             notificationDropdown.style.display = "none";
