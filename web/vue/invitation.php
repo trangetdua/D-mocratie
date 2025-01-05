@@ -50,11 +50,11 @@ require_once("header.php");
             }
         ?>
 
-            <form class="invite-form">
-                <div class="form-group" method="POST" action="sendInvitation.php">
+            <form class="invite-form"  method="POST" action="sendInvitation.php">
+                <div class="form-group">
                     <label for="email">Inviter par e-mail :</label>
-                    <input type="email" id="email" placeholder="Entrez l'adresse e-mail">
-                    <button type="button" class="btn">Envoyer</button>
+                    <input type="email" id="email" name="email" placeholder="Entrez l'adresse e-mail">
+                    <button type="submit" class="btn">Envoyer</button>
                 </div>
 
                 <div class="form-group">
