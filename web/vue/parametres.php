@@ -33,10 +33,10 @@
 		foreach ($propo as $p){
 			if($p['Id_Groupe']==$_SESSION['groupe'] && $p['Signaler']>0){
 				echo '<tr>';
-				echo '<td>' . p['id_proposition'] . '</td>';
-				echo '<td>' . p['titre_proposition'] . '</td>';
-				echo '<td>' . p['Nom_utilisateur']. ' ' .p['Prenom_utilisateur'] . '</td>';
-				echo '<td>' . p['Signaler'] . '</td>';
+				echo '<td>' . $p['id_proposition'] . '</td>';
+				echo '<td>' . $p['Titre_Proposition'] . '</td>';
+				echo '<td>' . $p['Nom_Utilisateur']. ' ' .$p['Prenom_Utilisateur'] . '</td>';
+				echo '<td>' . $p['Signaler'] . '</td>';
 				echo '</tr>';
 				echo '<div class="boutonPropo">';
 				echo '<a  href ="proposition.php"> ';
@@ -65,11 +65,11 @@
 		foreach ($com as $c){
 			if($c['Id_Groupe']==$_SESSION['groupe'] && $c['Signaler']>0){ 
 				echo '<tr>';
-				echo '<td>' . p['Id_commentaire'] . '</td>';
-				echo '<td>' . p['Contenue_Commentaire'] . '</td>';
-				echo '<td>' . p['Nom_Utilisateur']. ' ' .p['Prenom_Utilisateur'] . '</td>';
-				echo '<td>' . p['Titre_Proposition']. '</td>';
-				echo '<td>' . p['Signaler'] . '</td>';
+				echo '<td>' . $c['Id_commentaire'] . '</td>';
+				echo '<td>' . $c['Contenue_Commentaire'] . '</td>';
+				echo '<td>' . $c['Nom_Utilisateur']. ' ' .$c['Prenom_Utilisateur'] . '</td>';
+				echo '<td>' . $c['Titre_Proposition']. '</td>';
+				echo '<td>' . $c['Signaler'] . '</td>';
 				echo '</tr>';
 			}
 		}
