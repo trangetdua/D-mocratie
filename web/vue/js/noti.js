@@ -19,4 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
             notificationDropdown.style.display = "none";
         }
     });
+    window.removeNotification = function (button) {
+        const notificationItem = button.closest(".notification-item"); 
+        if (notificationItem) {
+            notificationItem.remove(); 
+        }
+    };
+    
 });
+

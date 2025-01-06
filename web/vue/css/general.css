@@ -481,3 +481,35 @@ textarea {
 	padding:1%;
 
 }
+
+.accept-button {
+    background-color: #48cae4 !important;; 
+    color: white !important;; 
+    border: none !important;;
+    padding: 10px 20px !important;;
+    margin: 5px !important;;
+    border-radius: 5px !important;;
+    font-size: 14px !important;;
+    cursor: pointer !important;;
+    transition: background-color 0.3s ease !important;;
+}
+
+.accept-button:hover {
+    background-color: #0077b6 !important; 
+}
+
+.decline-btn {
+    background-color: #f44336; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.decline-btn:hover {
+    background-color: #d32f2f; 
+}

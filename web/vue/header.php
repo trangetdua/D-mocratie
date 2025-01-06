@@ -7,8 +7,7 @@
 		<link rel="stylesheet" href = "./css/stylejs.css">
 		<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 		<script src="./js/jquery-accessible-hide-show-aria.js"></script>
-		<script src="./js/noti.js"></script>
-
+        <script src="./js/noti.js"></script>
 		
 	</head>	
 	<body>
@@ -51,7 +50,9 @@
                         <input type="hidden" name="sender_id" value="<?= htmlspecialchars($notification['sender_id']) ?>">
                         <button type="submit" class="accept-button">Accepter</button>
                     </form>
-                    <button class="decline-btn" data-notification-id="<?= $notificationId ?>">Refuser</button>
+
+                    <button type="button" class="decline-btn" onclick="removeNotification(this)">Refuser</button>
+
                 <?php else: ?>
                     <p>Erreur : Informations manquantes.</p>
                 <?php endif; ?>
@@ -71,7 +72,6 @@
     <a href="profil.php">
          <img src="./images/pdpUtilisateur.png" alt="photo de profil utilisateur, lien vers la page profil" id="p">
     </a>
-
 	</header>
 	<main>
 
