@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
+    $currentUserId = $_SESSION['user_number']; // emetteur
     $groupeId = $_SESSION['groupe'];
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
@@ -17,25 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     try {
-        // Lấy tên nhóm thông qua API
         $groupeApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe?method=GET";
         $groupeResponse = file_get_contents($groupeApiUrl);
         $groupes = json_decode($groupeResponse, true);
-        $nomGroupe = null;
+
+        $nomGroupeBrut = null;
 
         foreach ($groupes as $groupe) {
             if ($groupe['Id_Groupe'] == $groupeId) {
-                $nomGroupe = $groupe['Nom_Groupe'];
+                $nomGroupeBrut = $groupe['Nom_Groupe'];
                 break;
             }
         }
 
-        if (!$nomGroupe) {
+        if (!$nomGroupeBrut) {
             echo json_encode(['success' => false, 'message' => 'Nom du groupe introuvable']);
             exit;
         }
 
-        // Gọi API để tìm người dùng theo email
         $utilisateurApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur?method=GET";
         $utilisateurResponse = file_get_contents($utilisateurApiUrl);
         $users = json_decode($utilisateurResponse, true);
@@ -53,22 +53,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        $inviteeId = $invitee['Id_Utilisateur'];
+        $inviteeId = $invitee['Id_Utilisateur']; //Recepteur
 
-        // Lấy ID của loại thông báo "Invitation au groupe" nếu đã tồn tại thông qua API
-        $typeNotificationGetUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification/Regularite_Notification/Invitation%20au%20groupe%20$nomGroupe/Id_Groupe/$groupeId?method=GET";
+        $regularite = urlencode("Invitation au groupe $nomGroupeBrut");
+        $typeNotificationGetUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification/Regularite_Notification/$regularite/Id_Groupe/$groupeId?method=GET";
+
         $typeNotificationResponse = file_get_contents($typeNotificationGetUrl);
         $typeNotifications = json_decode($typeNotificationResponse, true);
         $typeNotificationId = null;
 
         if (!empty($typeNotifications)) {
-            // Nếu đã tồn tại, lấy ID
             $typeNotificationId = $typeNotifications[0]['Id_Notification'];
         } else {
-            // Nếu chưa tồn tại, tạo mới thông qua API
             $typeNotificationPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification?method=POST";
             $typeNotificationData = [
-                'Regularite_Notification' => "Invitation au groupe $nomGroupe",
+                'Regularite_Notification' => "Invitation au groupe $nomGroupeBrut",
                 'Id_Groupe' => $groupeId
             ];
 
@@ -103,9 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
         foreach ($allNotifications as $notification) {
             if (
-                $notification['Id_Utilisateur'] == $inviteeId &&
-                $notification['Id_Notification'] == $typeNotificationId &&
-                $notification['status'] == 'unread'
+                isset($notification['Id_Emetteur'], $notification['Id_Notification'], $notification['Id_Recepteur'])
+                && $notification['Id_Emetteur'] == $currentUserId
+                && $notification['Id_Recepteur'] == $inviteeId
+                && $notification['Id_Notification'] == $typeNotificationId
             ) {
                 $invitationAlreadySent = true;
                 break;
@@ -118,25 +118,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $notificationsPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications?method=POST";
-        $notificationData = [
-            'Id_Utilisateur' => $inviteeId,
-            'Id_Notification' => $typeNotificationId,
-        ];
-            
-        $ch = curl_init($notificationsPostUrl);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($notificationData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $notificationResponse = curl_exec($ch);
+            $notificationData = [
+                'Id_Emetteur'    => $currentUserId,
+                'Id_Notification' => $typeNotificationId,
+                'Id_Recepteur'   => $inviteeId
+            ];
+    
+            $ch = curl_init($notificationsPostUrl);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($notificationData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $notificationResponse = curl_exec($ch);
         $notificationHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        
+
         if ($notificationHttpCode !== 200 && $notificationHttpCode !== 201) {
             echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'invitation']);
             exit;
         }
-    
+
         echo json_encode(['success' => true, 'message' => 'Invitation envoyée avec succès']);
         exit;
         
