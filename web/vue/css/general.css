@@ -398,6 +398,14 @@ input{
 	height:50px;
 	padding-left: 2%;
 }
+
+#rouage{
+	position: fixed;
+	left: 2%;
+	width:50px;
+	height:50px;
+}
+
 #titreProposition{
 	padding-top : 2%;
 	padding-left:2%;
@@ -438,7 +446,7 @@ tbody tr:nth-child(odd) {
 	margin-left: auto;
     margin-right: auto;
 	width: 80%;
-	height:200px;
+	height:100px;
 	left : 50%;
 	right : 50%;
 	

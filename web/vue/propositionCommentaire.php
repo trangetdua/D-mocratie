@@ -11,16 +11,28 @@
 
 <main>
 
+<?php
+if($_SESSION['role'] = "administrateur"){
+	echo "<a href='parametres.php'>";
+	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
+	echo "</a>";
+}
 
+?>
 
 
 <div id= "bigBox"> <!--la boite bleu de la proposition -->
 	<div class = 'centered'>
 	<image src="./images/troisPoints.png" alt="plus" class="js-expandmore" id="expand" style="margin-top : 2px"/>
 		<div class = "js-to_expand">
+			<?php
+			$link = "signalement.php?page=propositionCommentaire&id='.$_SESSION['proposition']";
+			echo "<a href = $link>";
+			?>
 			<div class="boutonSignal">
 				<p>Signaler</p><!--incrementer une variable-->
 			</div>
+			</a>
 		</div>
 
 	<div class="boutonPropo">
@@ -86,17 +98,18 @@
 		<h1 id ='text'>Commentaire</h1> 
 
 
-		<form action="/ma-page-de-traitement" method="post">
+		<form action="creation_Commentaire.php" method="post">
 			
+			<button id="boutonComment"> Publier </button>
 			<div type="submit" class="boutonComment">
-			<a  href ="acceuil_groupe.html"> 
+			<a  href ="creation_commentaire.php"> 
 			  <p>Publier</p>
 			</a>
 			</div>
 			
 			<div>
-				<label for="msg"></label>
-				<textarea id="msg" name="user_message"></textarea>
+				<label for="commentaire"></label>
+				<textarea id="commentaire" name="commentaire"></textarea>
 				
 			</div>
 
