@@ -40,7 +40,7 @@
 				echo '<td>' . $p['Signaler'] . '</td>';
 				echo '<td>';
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSuppr.php"> ';
+				echo '<a  href ="signalSuppr.php?id="'."$p['id_proposition']".'"&table=Proposition&key=id_proposition"> ';
 				echo '<p>supprimer la proposition</p>';
 				echo '</a>';
 				echo '</td>';
@@ -83,7 +83,7 @@
 				echo '<td>' . $c['Signaler'] . '</td>';
 				echo '<td>';
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSuppr.php"> ';
+				echo '<a  href ="signalSuppr.php?id="'.$p['Id_commentaire'].'"&table=commentaire&key=Id_commentaire"> ';
 				echo '<p>supprimer la proposition</p>';
 				echo '</a>';
 				echo '</td>';
