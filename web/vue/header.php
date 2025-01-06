@@ -34,19 +34,36 @@
             <button class="mark-all" onclick="markAllAsRead()">Mark all as read</button>
         </div>
         <ul class="notification-list">
-            <?php if (!empty($notifications)): ?>
-                <?php foreach ($notifications as $notification): ?>
-                    <li class="notification-item">
-                        <p><strong><?= htmlspecialchars($notification['title']) ?></strong></p>
-                        <p><?= htmlspecialchars($notification['message']) ?></p>
-                    </li>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <li class="notification-item">
-                    <p>No notifications available</p>
-                </li>
-            <?php endif; ?>
-        </ul>
+    <?php if (!empty($notifications)): ?>
+        <?php foreach ($notifications as $notification): ?>
+            <?php 
+            $groupId = isset($notification['title']) ? htmlspecialchars($notification['title']) : null;
+            $notificationId = isset($notification['notification_id']) ? htmlspecialchars($notification['notification_id']) : null;
+            ?>
+            <li class="notification-item">
+                <p><strong><?= htmlspecialchars($notification['title']) ?></strong></p>
+                <p><?= htmlspecialchars($notification['message']) ?></p>
+
+                <?php if ($groupId && $notificationId): ?>
+                    <form action="handleAccept.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="group_id" value="<?= $groupId ?>">
+                        <input type="hidden" name="notification_id" value="<?= $notificationId ?>">
+                        <input type="hidden" name="sender_id" value="<?= htmlspecialchars($notification['sender_id']) ?>">
+                        <button type="submit" class="accept-button">Accepter</button>
+                    </form>
+                    <button class="decline-btn" data-notification-id="<?= $notificationId ?>">Refuser</button>
+                <?php else: ?>
+                    <p>Erreur : Informations manquantes.</p>
+                <?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <li class="notification-item">
+            <p>No notifications available</p>
+        </li>
+    <?php endif; ?>
+</ul>
+
     </div>
 	
         </div>

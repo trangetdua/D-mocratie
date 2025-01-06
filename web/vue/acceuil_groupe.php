@@ -7,6 +7,18 @@
 		}
 	
 		$fullname = $_SESSION['fullname'];
+
+		if (isset($_GET['group_id']) && !empty($_GET['group_id'])) {
+			$groupName = trim($_GET['group_id']);
+		} else {
+			// utiliser session s'il manque id
+			if (!isset($_SESSION['groupe']) || empty($_SESSION['groupe'])) {
+				echo "Erreur: Aucun groupe sélectionné.";
+				exit;
+			}
+			$groupName = $_SESSION['groupe'];
+		}
+
 	?>
 
 <main>
@@ -62,7 +74,7 @@
 	curl_setopt($curlPropos,CURLOPT_RETURNTRANSFER,1);
 	$propos = json_decode(curl_exec($curlPropos),true);
 		foreach ($propos as $value){
-			if($value['Id_Groupe']==$_SESSION['groupe']){
+			if($value['Nom_Groupe'] === $groupName || $value['Id_Groupe'] == $groupName){
 				$link = "transition_propo.php?id=".$value['id_proposition'];
 				$titre = $value['Titre_Proposition'];
 				$descr = $value['Description_Proposition'];

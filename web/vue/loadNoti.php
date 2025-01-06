@@ -34,6 +34,7 @@ if ($httpCode === 200) {
                 'notification_id' => $notification['Id_Notification'], 
                 'title' => $notification['Nom_Groupe'],                
                 'message' => $notification['Regularite_Notification'], 
+                'sender_id' => $notification['Id_Emetteur'] 
             ];
         }
     }
