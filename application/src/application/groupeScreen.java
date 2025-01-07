@@ -39,15 +39,16 @@ public class groupeScreen extends JPanel {
 	 * Create the panel.
 	 */
 	public groupeScreen(int idGroupe) throws JSONException {
-    	System.out.println("test0");
+    	
 
 		JSONObject jsonPropo = connect.con("Proposition");
+		
+		
         //créer le modèle et ajouter des éléments
     	
 		  //System.out.println(jsonUti1.getString("Mail_Utilisateur"));
         DefaultListModel<String> model = new DefaultListModel<>();
-    	System.out.println("test1");
-
+    	
         for(int i = 0 ; i<jsonPropo.length(); i++) {
         	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
         	int groupe = Integer.parseInt(jsonUti1.getString("Id_Groupe"));
@@ -56,8 +57,6 @@ public class groupeScreen extends JPanel {
         		listPropo.add(jsonUti1.getString("id_proposition"));
         		model.addElement(jsonUti1.getString("Titre_Proposition"));
         	}
-        	System.out.println("test2");
-        	
         }
         JButton bntAlgo = new JButton("Algorithme");
         bntAlgo.setBounds(640, 11, 184, 21);
@@ -86,8 +85,22 @@ public class groupeScreen extends JPanel {
 		
 		
 		JLabel lblBudget = new JLabel("Budget total du groupe :");
-		lblBudget.setBounds(44, 38, 272, 13);
+		lblBudget.setBounds(36, 40, 184, 13);
 		add(lblBudget);
+
+		JSONObject jsonGroupes = connect.con("groupe");
+		JSONObject grp = new JSONObject();
+        for(int i = 0 ; i<jsonGroupes.length(); i++) {
+        	JSONObject groupe = new JSONObject(jsonGroupes.getString(String.valueOf(i)));
+        	if(groupe.getInt("Id_Groupe")==idGroupe) {
+        		grp = groupe;
+        	}
+        }
+
+		float budgetActuel = Float.valueOf(grp.getString("Limite_Budget_Global"));
+		JLabel lblBudgetdef = new JLabel(String.valueOf(budgetActuel));
+		lblBudgetdef.setBounds(202, 39, 89, 14);
+		add(lblBudgetdef);
  
         //créer la liste 
         propos = new JList<>(model);
