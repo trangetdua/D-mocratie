@@ -44,9 +44,7 @@ public class groupeScreen extends JPanel {
 		JSONObject jsonPropo = connect.con("Proposition");
 		
 		
-        //créer le modèle et ajouter des éléments
     	
-		  //System.out.println(jsonUti1.getString("Mail_Utilisateur"));
         DefaultListModel<String> model = new DefaultListModel<>();
     	
         for(int i = 0 ; i<jsonPropo.length(); i++) {
@@ -69,11 +67,14 @@ public class groupeScreen extends JPanel {
 		lblTitrePropo.setBounds(26, 15, 235, 13);
 		add(lblTitrePropo);
 		
-		
+		JComboBox comboBoxAlgo = new JComboBox();
+		comboBoxAlgo.setBounds(650, 30, 168, 21);
+		add(comboBoxAlgo);
+		comboBoxAlgo.setVisible(false);
 		
 		bntAlgo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				comboBoxAlgo.setVisible(true);
 				
 			}
 		});
@@ -98,9 +99,7 @@ public class groupeScreen extends JPanel {
 		JLabel lblBudgetdef = new JLabel(String.valueOf(budgetActuel));
 		lblBudgetdef.setBounds(202, 39, 89, 14);
 		add(lblBudgetdef);
- 
-        //créer la liste 
-        propos = new JList<>(model);
+         propos = new JList<>(model);
         propos.setBounds(44, 82, 500, 230);
         add(propos);
         
@@ -113,17 +112,10 @@ public class groupeScreen extends JPanel {
         btnInfo.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		for( int i =0; i<propos.getSelectedValuesList().size() ; i++  ) {
-        		//	JFrame jFrame = new JFrame();
         			String index = listPropo.get(propos.getSelectedIndex());
             		propScreen propScreen_;
 
-        			
-        				/*propScreen_ = new propScreen(Integer.parseInt(index));
-    					propScreen_.setSize(870, 554);
-    					propScreen_.setLocation(0, 0);*/
-    					panel.setVisible(false);
-    					/*jFrame.getContentPane().add(propScreen_);
-    					jFrame.setBackground(Color.BLACK);*/
+        			    					panel.setVisible(false);
     					appDecideur.addPanel(Integer.parseInt(index));
         		
         		}
@@ -141,14 +133,19 @@ public class groupeScreen extends JPanel {
         
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//put
-        		//connect.update("groupe",, , , );
-        		JLabel lblBudget = new JLabel("Budget modifié. Nouveau budget :");
-        		lblBudget.setBounds(170, 49, 106, 22);
-        		add(lblBudget);
+                int nouveauBudget1 = Integer.parseInt(textArea.getText());
+
+                
+                
+				
+    						connect.update("groupe", "Limite_Budget_Global", "Id_Groupe", idGroupe, nouveauBudget1);
+    						JLabel lblBudget1 = new JLabel("Budget modifié avec succès!");
+    						lblBudget1.setBounds(289, 0, 225, 22);
+    						add(lblBudget1);
 
         	}
         });
+
         btnNewButton.setBounds(407, 33, 89, 23);
         add(btnNewButton);
         this.setVisible(true);
