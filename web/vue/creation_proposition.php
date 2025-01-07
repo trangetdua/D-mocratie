@@ -34,13 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception("Erreur de décode JSON: " . json_last_error_msg());
         }
-		$id = $response['id'];
-		$_SESSION['groupe'] = $id;
+
 
 	
 
 		if(isset($_POST['Theme'])){
-			$theme2 = $_POST['Theme2'];
+			$theme2 = $_POST['Theme'];
 						$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Thème/?method=POST";
 			$data = [
             'Nom_Theme' => $theme2,
@@ -57,9 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		}
 
-
-		$_SESSION['role'] = "administrateur";
-		header('Location: acceuil_groupe.php');
+		$id = $response['id'];
+		$_SESSION['proposition']=$id;
+		
+		header('Location: proposition.php');
 }
 } catch (Exception $e) {
     echo $e->getMessage();

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception("Erreur de décode JSON: " . json_last_error_msg());
         }
-		$id = $response['id'];
+		
 
 	
 

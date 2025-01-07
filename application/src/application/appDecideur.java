@@ -4,10 +4,19 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
@@ -39,59 +48,79 @@ public class appDecideur {
 
 	/**
 	 * Create the application.
+	 * @throws JSONException 
 	 */
-	public appDecideur() {
+	public appDecideur() throws JSONException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws JSONException 
 	 */
-	private void initialize() {
+	private void initialize() throws JSONException {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 870, 554);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(79, 114, 297, -70);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton changePage = new JButton("Algorithme");
-		
-		
-		
-		changePage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JPanel panel = new JPanel();
-				panel.setBounds(0, 0, 436, 253);
-				frame.getContentPane().add(panel);
-				
-			}
-		});
-		changePage.setBounds(327, 17, 85, 21);
-		frame.getContentPane().add(changePage);
-		
-		JList list = new JList();
-		list.setBounds(56, 85, 0, 1);
-		frame.getContentPane().add(list);
-		
-		
-		JLabel lblNewLabel = new JLabel("Propositions votées");
-		lblNewLabel.setBounds(10, 10, 168, 23);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(327, 48, 85, 21);
-		frame.getContentPane().add(comboBox);
-		
-		int y = 40;
-		for(int i=0;i<5;i++) {
 		JPanel panel = new JPanel();
-		panel.setBounds(10, y, 300, 50);
-		frame.getContentPane().add(panel);
-		panel.setBackground(Color.white);
-		y=y+60;
-		}
+		panel.setBounds(0, 0, 870, 554);
+		panel.setLayout(null);
+		
+		JLabel lblTitrePropo = new JLabel("Groupes");
+		lblTitrePropo.setBounds(26, 15, 235, 13);
+		panel.add(lblTitrePropo);
+		
+		JList<String> groupes;
+		List<String> listGroupe = new ArrayList();
+		
+		JSONObject jsonPropo = connect.con("groupe","Id_Groupe");
+        
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(int i = 1 ; i<=jsonPropo.length()-1; i++) {
+        	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
+        		listGroupe.add(jsonUti1.getString("Id_Groupe"));
+        		model.addElement(jsonUti1.getString("Nom_Groupe"));
+        	
+        }
+        System.out.println(listGroupe.get(2));
+        
+        groupes = new JList<>(model);
+        groupes.setBounds(44, 82, 500, 180);
+        panel.add(groupes);
+		
+        frame.getContentPane().add(panel);
+        
+        JButton btnGroupe = new JButton("Sélectionner");
+        btnGroupe.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		groupeScreen groupeScreen_;
+				try {
+					groupeScreen_ = new groupeScreen(Integer.parseInt(listGroupe.get(groupes.getSelectedIndex())));
+					groupeScreen_.setSize(870, 554);
+					groupeScreen_.setLocation(0, 0);
+					panel.setVisible(false);
+					frame.getContentPane().add(groupeScreen_);
+				} catch (NumberFormatException | JSONException e1) {
+					
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		
+        		
+        	}
+        });
+        btnGroupe.setBounds(563, 239, 126, 21);
+        panel.add(btnGroupe);
+		/*
+		
+		*/
+		
+		new JListExemple(1);
+	        
+	    
+		
+		
 	}
 }
