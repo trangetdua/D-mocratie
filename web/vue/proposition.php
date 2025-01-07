@@ -26,8 +26,15 @@ if($_SESSION['role'] = "administrateur"){
 	<image src="./images/troisPoints.png" alt="plus" class="js-expandmore" id="expand" style="margin-top : 2px"/>
 		<div class = "js-to_expand">
 			<div class="boutonSignal">
+			<?php
+			$link = "signalement.php?page=proposition&nom=id_proposition&table=Proposition&id=".$_SESSION['proposition'];
+			echo "<a href = $link>";
+			?>
+
+
 				<p>Signaler</p><!--incrementer une variable-->
 			</div>
+			</a>
 		</div>
 
 <a  href ="acceuil_groupe.php"> 
