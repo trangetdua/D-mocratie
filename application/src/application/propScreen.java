@@ -11,14 +11,47 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class propScreen extends JPanel{
 	public propScreen(int idProp) throws JSONException {
-
+		List<String> themes = null;
 		JSONObject prop = new JSONObject();
+		JSONObject Theme1 = new JSONObject();
+		JSONObject Theme2 = new JSONObject();
+		Theme2 =null;
+		
+		int nb = 0;
+		JSONObject jsonThemePoste = connect.con("theme_poste");
+		for(int i = 0 ; i<jsonThemePoste.length(); i++) {
+        	JSONObject jsonUti1 = new JSONObject(jsonThemePoste.getString(String.valueOf(i)));
+        	if(jsonUti1.getInt("id_proposition")==idProp) {
+        		
+        		themes.add(jsonThemePoste.getString("Id_Theme"));
+        	}
+        }
+		
+		JSONObject jsonTheme = connect.con("Thème");
+		for(int i = 0 ; i<jsonTheme.length(); i++) {
+        	JSONObject jsonUti1 = new JSONObject(jsonThemePoste.getString(String.valueOf(i)));
+        	while(!themes.isEmpty()) {
+        	if(jsonUti1.getInt("id_proposition")== Integer.parseInt(themes.get(0))) {
+        		if (nb == 0) {
+        			Theme1 = jsonUti1;
+        		themes.remove(0);
+        		nb++;
+        		}
+        		else {
+        			Theme2 = jsonUti1;
+        		}
+        		
+        	}}
+        }
+		
 		JSONObject jsonPropo = connect.con("Proposition");
+		
         for(int i = 0 ; i<jsonPropo.length(); i++) {
         	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
         	if(jsonUti1.getInt("id_proposition")==idProp) {
@@ -77,12 +110,55 @@ public class propScreen extends JPanel{
 		add(lblBudget_1);
 		
 		JLabel lblInfo_2 = new JLabel("Options :");
-		lblInfo_2.setBounds(299, 216, 290, 33);
+		lblInfo_2.setBounds(10, 54, 290, 33);
 		add(lblInfo_2);
 		
 		JLabel lblModifierLeBudget = new JLabel("Modifier le budget: ");
 		lblModifierLeBudget.setBounds(20, 181, 117, 14);
 		add(lblModifierLeBudget);
+		
+		JLabel lblTheme = new JLabel("Themes :");
+		lblTheme.setBounds(21, 216, 45, 13);
+		add(lblTheme);
+		
+		JLabel lblBudgetTheme = new JLabel("Modifier Budget Thème");
+		lblBudgetTheme.setBounds(20, 239, 117, 13);
+		add(lblBudgetTheme);
+		
+		JTextArea NvBudgetTheme = new JTextArea();
+		NvBudgetTheme.setBounds(136, 233, 89, 22);
+		add(NvBudgetTheme);
+		
+		String titre1 = Theme1.getString("Nom_Theme");
+		JLabel lblThemeDef1 = new JLabel(titre1);
+		lblThemeDef1.setBounds(136, 216, 45, 13);
+		add(lblThemeDef1);
+		
+		JButton btnModifBudget1 = new JButton("Modifier");
+		btnModifBudget1.setBounds(140, 269, 85, 21);
+		add(btnModifBudget1);
+		
+		if(!(Theme2==null)) {
+		String titre2 = Theme1.getString("Nom_Theme");
+		JLabel lblThemeDef2 = new JLabel(titre2);
+		lblThemeDef2.setBounds(323, 216, 45, 13);
+		add(lblThemeDef2);}
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(323, 233, 89, 22);
+		add(textArea_1);
+		
+		JButton btnNewButton_1 = new JButton("Modifier");
+		btnNewButton_1.setBounds(323, 269, 85, 21);
+		add(btnNewButton_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setBounds(191, 216, 45, 13);
+		add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(381, 216, 45, 13);
+		add(lblNewLabel_3);
 		int idVote =0;
 		JSONObject jsonVote= new JSONObject();
 		jsonVote = connect.con("Vote");

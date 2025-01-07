@@ -39,14 +39,16 @@ public class groupeScreen extends JPanel {
 	 * Create the panel.
 	 */
 	public groupeScreen(int idGroupe) throws JSONException {
-    	System.out.println("test0");
+    	
 
 		JSONObject jsonPropo = connect.con("Proposition");
+		
+		
         //créer le modèle et ajouter des éléments
     	
 		  //System.out.println(jsonUti1.getString("Mail_Utilisateur"));
         DefaultListModel<String> model = new DefaultListModel<>();
-    	System.out.println("test1");
+    	
 
         for(int i = 0 ; i<jsonPropo.length(); i++) {
         	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
@@ -88,6 +90,11 @@ public class groupeScreen extends JPanel {
 		JLabel lblBudget = new JLabel("Budget total du groupe :");
 		lblBudget.setBounds(44, 38, 272, 13);
 		add(lblBudget);
+		
+		float budgetActuel = Float.valueOf(jsonPropo.getString("evaluation_budgetaire"));
+		JLabel lblBudgetdef = new JLabel(String.valueOf(budgetActuel));
+		lblBudgetdef.setBounds(157, 38, 126, 14);
+		add(lblBudgetdef);
  
         //créer la liste 
         propos = new JList<>(model);
