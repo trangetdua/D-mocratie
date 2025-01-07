@@ -26,7 +26,7 @@ if($_SESSION['role'] = "administrateur"){
 	<image src="./images/troisPoints.png" alt="plus" class="js-expandmore" id="expand" style="margin-top : 2px"/>
 		<div class = "js-to_expand">
 			<?php
-			$link = "signalement.php?page=propositionCommentaire&type=proposition&id=".$_SESSION['proposition'];
+			$link = "signalement.php?page=propositionCommentaire&nom=id_proposition&table=Proposition&id=".$_SESSION['proposition'];
 			echo "<a href = $link>";
 			?>
 			<div class="boutonSignal">
@@ -133,8 +133,12 @@ if($_SESSION['role'] = "administrateur"){
 						echo "<image src='./images/troisPoints.png' alt='plus' class='js-expandmore' id='expand' style='margin-top : 2px'/>";
 						echo "<div class = 'js-to_expand'>";
 							echo "<div class='boutonSignal'>";
+							$link = "signalement.php?page=propositionCommentaire&nom=Id_commentaire&table=commentaire&id=".$value['Id_commentaire'];
+							echo "<a href = $link>";
+			
 								echo "<p>Signaler</p>";
 							echo "</div>";
+							echo "</a>";
 							echo "</div>";
 					echo "</td>";
 
