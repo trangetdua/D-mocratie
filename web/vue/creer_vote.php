@@ -18,7 +18,16 @@
 		</a>
 	</div>
 	<?php 
-	
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Vote?method=GET');
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+		$verif = json_decode(curl_exec($curl),true);
+		foreach($verif as $v){
+			if($v['id_proposition']==$_SESSION['proposition']){
+				$_SESSION['vote']=$v['Id_Vote'];
+				header('Location:vote.php');
+			}
+		}
+
 		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$prop = json_decode(curl_exec($curl),true);
