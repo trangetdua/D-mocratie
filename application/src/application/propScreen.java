@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
@@ -54,7 +55,10 @@ public class propScreen extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 	            int nouveauBudget = Integer.parseInt(textArea.getText());
 	            //vérification
-	            connect.update("Proposition", "evaluation_budgetaire", "id_proposition", idProp, nouveauBudget);
+	            
+					connect.update("Proposition", "evaluation_budgetaire", "id_proposition", idProp, nouveauBudget);
+				
+				
 	            System.out.println("test4");
 				JLabel lblNewLabel_1 = new JLabel("Budget modifié. Nouveau budget : "+nouveauBudget);
 				lblNewLabel_1.setBounds(195, 136, 221, 14);

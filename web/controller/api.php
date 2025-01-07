@@ -118,7 +118,7 @@ if (!is_null($path[0])){
             }
 
         }  elseif ($method == 'PUT') {
-			$requete = 'update '. $table . ' set';
+			$requete = 'UPDATE '. $table . ' SET';
 			if(isset($path[2])){
 				$i=2;
 				$execute = array();

@@ -16,31 +16,42 @@ import java.sql.Statement;
 import org.json.*;
 
 public class connect {
-	public static void start() { 
-		Connection connection;
-		Statement statement ;
-		 
-		ResultSet resultSet ;
-		ResultSetMetaData metaData ;
-		int numberOfColumns = 0;
-		
-		try
-		 
-		{
-		 
-		Class.forName("com.mysql.jdbc.Driver");
-		
-		connection = DriverManager.getConnection("jdbc:mysql://projets.iut-orsay.fr/phpmyadmin/:3306/saes3-aviau" ,"saes3-aviau","ymPVbOHi9IjBplOm"); 
-		 System.out.println("Con");
-		statement = connection.createStatement();
-		 
-		System.out.println("Connection Established");
-		 
-		 
-		}catch(ClassNotFoundException | SQLException e){
-		    System.err.println(e);
+	
+	static void sendPOST(String table, String colloneModif, String colloneWhere, int condition, float valeur) throws IOException {
+		URL obj = new URL("https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/" + table + "/"+ colloneWhere + "/"+ condition+"/"+colloneModif+ "/"+valeur +"/?method=PUT");
+		System.out.println(obj);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+		// For POST only - START
+		con.setDoOutput(true);
+		OutputStream os = con.getOutputStream();
+		os.write("id=1".getBytes());
+		os.flush();
+		os.close();
+		// For POST only - END
+
+		int responseCode = con.getResponseCode();
+		System.out.println("POST Response Code :: " + responseCode);
+
+		if (responseCode == HttpURLConnection.HTTP_OK) { //success
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			System.out.println("yipeeee.");
+			// print result
+			System.out.println(response.toString());
+		} else {
+			System.out.println("POST request did not work.");
 		}
-		   }
+	}
+
 			public static void update(String table, String colloneModif, String colloneWhere, int condition, float valeur) {
 				  URL url;
 				  JSONObject jsonFinal = new JSONObject();
@@ -60,6 +71,19 @@ public class connect {
 					  out.close();
 					  
 					  int status = con.getResponseCode();
+					  
+					  BufferedReader in = new BufferedReader(
+							  new InputStreamReader(con.getInputStream()));
+							String inputLine;
+							StringBuffer content = new StringBuffer();
+							
+							
+							while ((inputLine = in.readLine()) != null) {
+							    content.append(inputLine);
+							}
+							System.out.println(content);
+							in.close();
+							con.disconnect();
 
 
 				} catch (MalformedURLException e) {
