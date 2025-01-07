@@ -17,11 +17,14 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class propScreen extends JPanel{
+	
 	public propScreen(int idProp) throws JSONException {
+		try {
+
 		System.out.println("test1");
 		List<String> themes = new ArrayList<>();
 		JSONObject prop = new JSONObject();
-		JSONObject Theme1 = new JSONObject();
+		 JSONObject Theme1=new JSONObject();
 		JSONObject Theme2 = new JSONObject();
 		Theme2 =null;
 		
@@ -34,6 +37,7 @@ public class propScreen extends JPanel{
         		themes.add(jsonUti1.getString("Id_Theme"));
         	}
         }
+		
 
 		JSONObject jsonTheme = connect.con("Thème");
 		boolean T2Existe = false;
@@ -59,16 +63,17 @@ public class propScreen extends JPanel{
         	}}
         	}
         }
-
 		JSONObject jsonPropo = connect.con("Proposition");
-		
         for(int i = 0 ; i<jsonPropo.length(); i++) {
         	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
         	if(jsonUti1.getInt("id_proposition")==idProp) {
         		prop = jsonUti1;
         	}
-        }
-
+        	}
+        
+        
+		
+       
 		String texteTitre = prop.getString("Titre_Proposition");
 		String texteDescription = prop.getString("Description_Proposition");
 		setLayout(null);
@@ -81,7 +86,7 @@ public class propScreen extends JPanel{
 
 		float budgetActuel = Float.valueOf(prop.getString("evaluation_budgetaire"));
 		JLabel lblBudget = new JLabel(String.valueOf(budgetActuel));
-		lblBudget.setBounds(149, 150, 126, 14);
+		lblBudget.setBounds(143, 150, 126, 14);
 		add(lblBudget);
 		
 		JLabel lblNewLabel = new JLabel("Budget actuel : ");
@@ -93,19 +98,139 @@ public class propScreen extends JPanel{
 		add(textArea);
 		JPanel panel = this;
 
+		JLabel lblModifierLeBudget = new JLabel("Modifier le budget: ");
+		lblModifierLeBudget.setBounds(20, 181, 117, 14);
+		add(lblModifierLeBudget);
+		
+		JLabel lblTheme = new JLabel("Themes :");
+		lblTheme.setBounds(21, 216, 67, 13);
+		add(lblTheme);
+		
+		JLabel lblBudgetTheme = new JLabel("Modifier Budget Thème");
+		lblBudgetTheme.setBounds(20, 273, 179, 13);
+		add(lblBudgetTheme);
+		Float budget1F = Float.valueOf(0);
+
+		String budget1= Theme1.getString("Limite_Budget_Thematique");
+		 budget1F = Float.valueOf(budget1);
+		JLabel lblThemeBud1 = new JLabel(budget1);
+		lblThemeBud1.setBounds(209, 240, 126, 13);
+		add(lblThemeBud1);
+
+
+		JTextArea NvBudgetTheme = new JTextArea();
+		NvBudgetTheme.setBounds(209, 267, 89, 22);
+		add(NvBudgetTheme);
+		
+		String titre1 = Theme1.getString("Nom_Theme");
+		final int id1 = Theme1.getInt("Id_Theme");
+
+		JLabel lblThemeDef1 = new JLabel(titre1);
+		lblThemeDef1.setBounds(209, 216, 103, 13);
+		add(lblThemeDef1);
+		JButton btnModifBudget1 = new JButton("Modifier");
+		btnModifBudget1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+            int nouveauBudget1 = Integer.parseInt(NvBudgetTheme.getText());
+
+            
+            
+					
+						connect.update("Thème", "Limite_Budget_Thematique", "Id_Theme", id1, nouveauBudget1);
+				
+			
+			
+						JLabel lblNewLabel_1 = new JLabel("Budget modifié avec succes ! ");
+						lblNewLabel_1.setBounds(321, 329, 267, 14);
+						add(lblNewLabel_1);
+
+			}
+		});
+	
+
+	
+		btnModifBudget1.setBounds(213, 300, 85, 21);
+		add(btnModifBudget1);
+		
+		 float budget2F = Float.valueOf(0);
+
+		if(T2Existe) {
+		String titre2 = Theme2.getString("Nom_Theme");
+		JLabel lblThemeDef2 = new JLabel(titre2);
+		lblThemeDef2.setBounds(445, 216, 126, 13);
+		add(lblThemeDef2);
+		String budget2 = Theme2.getString("Limite_Budget_Thematique");
+		budget2F = Float.valueOf(budget2);
+		JLabel lblThemeBud2 = new JLabel(budget2);
+		lblThemeBud2.setBounds(445, 240, 126, 13);
+		add(lblThemeBud2);
+
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(445, 267, 89, 22);
+		add(textArea_1);
+
+		JButton btnNewButton_1 = new JButton("Modifier");
+		btnNewButton_1.setBounds(445, 300, 85, 21);
+		add(btnNewButton_1);
+		final int id2 = Theme2.getInt("Id_Theme");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+	            int nouveauBudget2 = Integer.parseInt(textArea_1.getText());
+
+	            
+	            
+					
+							connect.update("Thème", "Limite_Budget_Thematique", "Id_Theme", id2, nouveauBudget2);
+					
+				
+							JLabel lblNewLabel_1 = new JLabel("Budget modifié avec succes ! ");
+							lblNewLabel_1.setBounds(321, 329, 267, 14);
+							add(lblNewLabel_1);
+			}
+			
+		
+			
+		});
+
+		}
+		
+		for(int i = 0 ; i<jsonThemePoste.length(); i++) {
+        	JSONObject jsonUti1 = new JSONObject(jsonThemePoste.getString(String.valueOf(i)));
+        	if(jsonUti1.getInt("Id_Theme")==Theme1.getInt("Id_Theme")) {
+                for(int j = 0 ; j<jsonPropo.length(); j++) {
+                	JSONObject jsonP = new JSONObject(jsonPropo.getString(String.valueOf(i)));
+                	if(jsonP.getInt("id_proposition")==jsonUti1.getInt("id_proposition")) {
+                		budget1F -= Float.valueOf(jsonP.getString("evaluation_budgetaire"));
+                	}
+        	}
+            
+            if(T2Existe){
+        	if(jsonUti1.getInt("Id_Theme")==Theme2.getInt("Id_Theme")) {
+        		JSONObject jsonP = new JSONObject(jsonPropo.getString(String.valueOf(i)));
+            	if(jsonP.getInt("id_proposition")==jsonUti1.getInt("id_proposition")) {
+            		budget2F -= Float.valueOf(jsonP.getString("evaluation_budgetaire"));
+            	}
+        	}
+            }
+        }
+		}
+		
 		JButton btnNewButton = new JButton("Modifier");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	            int nouveauBudget = Integer.parseInt(textArea.getText());
-	            //vérification
+
+	            
 	            
 					connect.update("Proposition", "evaluation_budgetaire", "id_proposition", idProp, nouveauBudget);
 				
 				
-				JLabel lblNewLabel_1 = new JLabel("Budget modifié. Nouveau budget : "+nouveauBudget);
-				lblNewLabel_1.setBounds(195, 136, 221, 14);
-				add(lblNewLabel_1);
+					JLabel lblNewLabel_1_1 = new JLabel("Budget modifié avec succes ! ");
+					lblNewLabel_1_1.setBounds(339, 176, 267, 14);
+					add(lblNewLabel_1_1);
 			}
+			
 		
 			
 		});
@@ -122,65 +247,16 @@ public class propScreen extends JPanel{
 		lblInfo_2.setBounds(285, 346, 290, 33);
 		add(lblInfo_2);
 		
-		JLabel lblModifierLeBudget = new JLabel("Modifier le budget: ");
-		lblModifierLeBudget.setBounds(20, 181, 117, 14);
-		add(lblModifierLeBudget);
-		
-		JLabel lblTheme = new JLabel("Themes :");
-		lblTheme.setBounds(21, 216, 67, 13);
-		add(lblTheme);
-		
-		JLabel lblBudgetTheme = new JLabel("Modifier Budget Thème");
-		lblBudgetTheme.setBounds(20, 273, 179, 13);
-		add(lblBudgetTheme);
-		
-		String budget1= Theme1.getString("Limite_Budget_Thematique");
-		JLabel lblThemeBud1 = new JLabel(budget1);
-		lblThemeBud1.setBounds(209, 240, 126, 13);
-		add(lblThemeBud1);
 
-		
-		JTextArea NvBudgetTheme = new JTextArea();
-		NvBudgetTheme.setBounds(209, 267, 89, 22);
-		add(NvBudgetTheme);
-		
-		String titre1 = Theme1.getString("Nom_Theme");
-		JLabel lblThemeDef1 = new JLabel(titre1);
-		lblThemeDef1.setBounds(209, 216, 103, 13);
-		add(lblThemeDef1);
-		JButton btnModifBudget1 = new JButton("Modifier");
-		btnModifBudget1.setBounds(213, 300, 85, 21);
-		add(btnModifBudget1);
-
-		if(T2Existe) {
-		String titre2 = Theme2.getString("Nom_Theme");
-		JLabel lblThemeDef2 = new JLabel(titre2);
-		lblThemeDef2.setBounds(445, 216, 126, 13);
-		add(lblThemeDef2);
-	
-		String budget2 = Theme2.getString("Limite_Budget_Thematique");
-		JLabel lblThemeBud2 = new JLabel(budget2);
-		lblThemeBud2.setBounds(445, 240, 126, 13);
-		add(lblThemeBud2);
-
-		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(445, 267, 89, 22);
-		add(textArea_1);
-
-		JButton btnNewButton_1 = new JButton("Modifier");
-		btnNewButton_1.setBounds(445, 300, 85, 21);
-		add(btnNewButton_1);
-		}
 		int idVote =0;
 		JSONObject jsonVote= new JSONObject();
 		jsonVote = connect.con("Vote");
 
-        for(int i = 0 ; i<jsonVote.length(); i++) {
-        	JSONObject jsonUti1 = new JSONObject(jsonVote.getString(String.valueOf(i)));
+        for(int n = 0 ; n<jsonVote.length(); n++) {
+        	JSONObject jsonUti3= new JSONObject(jsonVote.getString(String.valueOf(n)));
 
-        	if(jsonUti1.getInt("id_proposition")==idProp) {
-        		idVote = jsonUti1.getInt("Id_Vote");
+        	if(jsonUti3.getInt("id_proposition")==idProp) {
+        		idVote = jsonUti3.getInt("Id_Vote");
         	}
 
         }
@@ -193,17 +269,18 @@ public class propScreen extends JPanel{
 		JLabel lblBudgetActuel = new JLabel("Budget actuel :");
 		lblBudgetActuel.setBounds(20, 240, 132, 13);
 		add(lblBudgetActuel);
+		
 
 
 		JSONObject jsonChoix = connect.con("Choix");
 		int variable = 384;
 		JLabel lblChoix;
-        for(int i = 0 ; i<jsonChoix.length(); i++) {
-        	JSONObject jsonUti1 = new JSONObject(jsonChoix.getString(String.valueOf(i)));
+        for(int f = 0 ; f<jsonChoix.length(); f++) {
+        	JSONObject jsonUti4 = new JSONObject(jsonChoix.getString(String.valueOf(f)));
         	
 
-        	if(jsonUti1.getInt("Id_Vote")==idVote) {
-        		String nomChoix = jsonUti1.getString("Nom_Choix");
+        	if(jsonUti4.getInt("Id_Vote")==idVote) {
+        		String nomChoix = jsonUti4.getString("Nom_Choix");
         		
         		lblChoix= new JLabel(nomChoix);
         		lblChoix.setBounds(256, variable, 221, 33);
@@ -227,5 +304,11 @@ public class propScreen extends JPanel{
 		float bu= Float.parseFloat(s);*/
 		//un input pour le budget, un lien avec themes pour les themes
 		//lien avec vote et choix et tout 
+	
+	} catch (JSONException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	}
 }
+
