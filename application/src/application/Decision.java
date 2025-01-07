@@ -6,8 +6,9 @@ public class Decision {
     float budgetTotal = 100000.0f;
     float budget = 0;
 
-    int comparerPropo(Proposition propo, List<Utilisateur> satisfaction) {
+    static int comparerPropo(Proposition propo, List<Utilisateur> satisfaction) {
         int nbCommun = 0;
+        // Compte combien d'utilisateurs de la proposition sont déjà satisfaits
         for (Utilisateur user : propo.getVotePour()) {
             if (satisfaction.contains(user)) {
                 nbCommun += 1;
@@ -15,48 +16,54 @@ public class Decision {
         }
         return nbCommun;
     }
-    int propoRepartie(List<Proposition> propos, List<Utilisateur> satisfaction) {
-        int indexFinal = 0;
-        int maxi = 0;
-        if (satisfaction.isEmpty()) {
-            for (int i = 0; i < propos.size(); i++) {
-                if (propos.get(i).getVotePour().size() > maxi) {
-                    maxi = propos.get(i).getVotePour().size();
-                    indexFinal = i;
-                }
-            }
-        } else {
-            int commun;
-            for (int i = 0; i < propos.size(); i++) {
-                commun = comparerPropo(propos.get(i), satisfaction);
-                if (commun > maxi) {
-                    maxi = commun;
-                    indexFinal = i;
-                }
-            }
-        }
-        return indexFinal;
-    }
 
-    int propoMax(List<Proposition> propos, List<Utilisateur> satisfaction) {
-        int indexFinal = 0;
-        int maxi = 0;
+    static int propoRepartie(List<Proposition> propos, List<Utilisateur> satisfaction, float budgetTotal, float currentBudget) {
+        int indexFinal = -1;
+        int maxiSatisfaction = 0;
+        float maxBudgetEvaluation = 0;
+
         for (int i = 0; i < propos.size(); i++) {
-            if (propos.get(i).getVotePour().size() > maxi) {
-                maxi = propos.get(i).getVotePour().size();
-                indexFinal = i;
+            Proposition propo = propos.get(i);
+            // Vérifie que la proposition peut être ajoutée sans dépasser le budget
+            if (propo.getEvaluationBudgetaire() + currentBudget <= budgetTotal) {
+                int satisfactionCount = comparerPropo(propo, satisfaction);
+                if (satisfactionCount > maxiSatisfaction || (satisfactionCount == maxiSatisfaction && propo.getEvaluationBudgetaire() < maxBudgetEvaluation)) {
+                    maxiSatisfaction = satisfactionCount;
+                    indexFinal = i;
+                    maxBudgetEvaluation = propo.getEvaluationBudgetaire();
+                }
             }
         }
         return indexFinal;
     }
 
-    List<Utilisateur> updateSatisfaction(Proposition propo, List<Utilisateur> satisfaction, VotePour votes) {
+    static int propoMax(List<Proposition> propos, float budgetTotal, float currentBudget) {
+        int indexFinal = -1;
+        int maxiSatisfaction = 0;
+        float maxBudgetEvaluation = 0;
+
+        for (int i = 0; i < propos.size(); i++) {
+            Proposition propo = propos.get(i);
+ 
+            if (propo.getEvaluationBudgetaire() + currentBudget <= budgetTotal) {
+                int satisfactionCount = propo.getVotePour().size();
+                if (satisfactionCount > maxiSatisfaction || (satisfactionCount == maxiSatisfaction && propo.getEvaluationBudgetaire() < maxBudgetEvaluation)) {
+                    maxiSatisfaction = satisfactionCount;
+                    indexFinal = i;
+                    maxBudgetEvaluation = propo.getEvaluationBudgetaire();
+                }
+            }
+        }
+        return indexFinal;
+    }
+
+    static List<Utilisateur> updateSatisfaction(Proposition propo, List<Utilisateur> satisfaction, VotePour votes) {
         List<Integer> userIds = votes.getUsersByProposition(propo.getId());
         for (Integer userId : userIds) {
             Utilisateur user = satisfaction.stream()
-                    .filter(u -> u.getId() == userId)
-                    .findFirst()
-                    .orElse(null);
+                .filter(u -> u.getId() == userId)
+                .findFirst()
+                .orElse(null);
             if (user != null) {
                 satisfaction.remove(user);
             }
@@ -65,57 +72,69 @@ public class Decision {
     }
 
     @SuppressWarnings("null")
-    List<Proposition> descisionGlouton(List<Proposition> propos, float budgetTotal, VotePour votes, Map<Integer, Utilisateur> userMap) {
+	static List<Proposition> descisionGlouton(List<Proposition> propos, float budgetTotal, VotePour votes) {
         List<Proposition> listFinal = new ArrayList<>();
-        List<Utilisateur> satisfaction = new ArrayList<>(userMap.values());
+        List<Utilisateur> satisfaction = new ArrayList<>();
         float budget = 0f;
-
-        while (!propos.isEmpty()) {
-            int indexPropo = propoMax(propos, satisfaction);
-            if (propos.get(indexPropo).getEvaluationBudgetaire() + budget <= budgetTotal) {
-                budget += propos.get(indexPropo).getEvaluationBudgetaire();
-                satisfaction = updateSatisfaction(propos.get(indexPropo), satisfaction, votes);
-                listFinal.add(propos.get(indexPropo));
-            }
-            propos.remove(indexPropo);
-        }
-        return listFinal;
-    }
-
-    @SuppressWarnings("null")
-    ArrayList<Proposition> descisionGlouton2 (ArrayList<Proposition> propos , float budgetTotal){
-        //votes repartie
-        ArrayList<Proposition> listFinal = null;
-        List<Utilisateur> satisfaction = null;
-        float budget = 0f;
-        for (int i=0; i<propos.size(); i++) {
-            for(int j=0; j<propos.get(i).getVotePour().size(); j++) {
-                if (!satisfaction.contains(propos.get(i).getVotePour().get(j))){
-                    satisfaction.add(propos.get(i).getVotePour().get(j));
+        for (Proposition propo : propos) {
+            for (Utilisateur user : propo.getVotePour()) {
+                if (!satisfaction.contains(user)) {
+                    satisfaction.add(user);
                 }
             }
         }
+
         while (!propos.isEmpty()) {
-            int indexPropo = propoMax(propos, satisfaction);
-            if (propos.get(indexPropo).getEvaluationBudgetaire() + budget <= budgetTotal) {
-                budget += propos.get(indexPropo).getEvaluationBudgetaire();
-                satisfaction = updateSatisfaction(propos.get(indexPropo), satisfaction,new VotePour());
-                listFinal.add(propos.get(indexPropo));
+            int indexPropo = propoMax(propos, budgetTotal, budget);
+            if (indexPropo == -1) break;
+
+            Proposition propo = propos.get(indexPropo);
+            if (propo.getEvaluationBudgetaire() + budget <= budgetTotal) {
+                budget += propo.getEvaluationBudgetaire();
+                satisfaction = updateSatisfaction(propo, satisfaction, votes);
+                listFinal.add(propo);
             }
             propos.remove(indexPropo);
         }
+
+        return listFinal;
+    }
+
+    static ArrayList<Proposition> descisionGlouton2(List<Proposition> propositions, float budgetTotal) {
+        ArrayList<Proposition> listFinal = new ArrayList<>();
+        List<Utilisateur> satisfaction = new ArrayList<>();
+        float budget = 0f;
+        for (Proposition propo : propositions) {
+            for (Utilisateur user : propo.getVotePour()) {
+                if (!satisfaction.contains(user)) {
+                    satisfaction.add(user);
+                }
+            }
+        }
+        while (!propositions.isEmpty()) {
+            int indexPropo = propoRepartie(propositions, satisfaction, budgetTotal, budget);
+            if (indexPropo == -1) break; 
+
+            Proposition propo = propositions.get(indexPropo);
+            if (propo.getEvaluationBudgetaire() + budget <= budgetTotal) {
+                budget += propo.getEvaluationBudgetaire();
+                satisfaction = updateSatisfaction(propo, satisfaction, new VotePour());
+                listFinal.add(propo);
+            }
+            propositions.remove(indexPropo);
+        }
+
         return listFinal;
     }
 
     public static int nbSatisfait(List<Proposition> propos, VotePour votes) {
         Set<Integer> satisfiedUsers = new HashSet<>();
-
         for (Proposition prop : propos) {
             satisfiedUsers.addAll(votes.getUsersByProposition(prop.getId()));
         }
-
         return satisfiedUsers.size();
     }
+
 
     public static ArrayList<Proposition> FBSatisfaction(ArrayList<Proposition> propos, float budgetTotal, VotePour votes) {
         /* Cas de base. */
