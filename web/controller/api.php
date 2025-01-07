@@ -120,37 +120,27 @@ if (!is_null($path[0])){
         }  elseif ($method == 'PUT') {
 			$requete = 'UPDATE '. $table . ' SET';
 			if(isset($path[2])){
-				$i=2;
 				$execute = array();
-
-				while(isset($path[$i+2])){
-					$j=$i+1;
-					$i=$i+2;
-					$requete = $requete . " ". $path[$j] . ' = ' . ' :nom' .strval($i);
-					$var = 'nom'.strval($i);
-					$execute[$var] = $path[$i];
-
-
-
-					if (isset($path[$i+2])){
-						$requete = $requete . ', ';
-					}
-				}
-				$requete = $requete . " Where " . ':nom1' . " = ". ':nom2' . ";";
-				$execute[':nom1']=$path[1];
+				$requete = $requete . " ". $path[3] . " = " . $path[4];
+				
+				$requete = $requete . " Where $path[1]  = $path[2] ;";
+				/*$execute[':nom1']=$path[1];
 				$execute[':nom2']=$path[2];
+				$execute[':nom4']=$path[4];
+				//echo 'UPDATE '. $table . ' SET'  . ' '. $path[3] . ' = ' . $path[4]. ' Where'. $path[1].' ='. $path[2].' ;' ;
 
-				$stmt = $pdo->prepare($requete);
-				$stmt->execute($execute);
-
-
-
-                http_response_code(201); // Code status : POST/PUT succeeded
-                echo json_encode(['message' => 'Utilisateur mis à jour avec succès']);
-            } else {
-                http_response_code(404);
-                echo json_encode(['message' => 'Veuillez rensigner la condition']);
-            }
+				//echo $path[4];*/
+				//$stmt = $pdo->prepare($requete);
+				//$stmt->execute($execute);
+				$stmt = $pdo->query($requete);
+				if ($stmt->rowCount() > 0) {
+					http_response_code(200);  // Code 200 pour succès
+					echo json_encode(['message' => 'Utilisateur mis à jour avec succès']);
+			} else {
+					http_response_code(400);  // Code 400 si aucune ligne n'est mise à jour
+				echo json_encode(['message' => 'Aucune mise à jour effectuée']);
+}
+			}
             //break;
     
     

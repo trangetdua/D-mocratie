@@ -35,12 +35,22 @@ if($_SESSION['role'] = "administrateur"){
 		  <p>retour</p>
 	</div>
 </a>
+<?php
+	if($_SESSION['role'] = "administrateur"){
+		echo '<a  href ="creer_vote.php">'; 
+		echo '<div class="boutonPropo">'; 
+		echo"	  <p>Créer un vote</p>";
+		echo "</div>";
+	}
+	else{
 
-	<div class="boutonPropo"> <!--incrementer une variable-->
-		  <p>demander un vote</p>
-	</div>
+	echo '<div class="boutonPropo">'; 
+	echo"	  <p>demander un vote</p>";
+	echo "</div>";
+	}
+?>
 	<div >
-	
+
 	<?php
 	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition?method=GET');
 	curl_setopt($curlPropos,CURLOPT_RETURNTRANSFER,1);
