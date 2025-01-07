@@ -126,9 +126,13 @@ public class appDecideur {
         );
         btnGroupe.setBounds(563, 239, 126, 21);
         panel.add(btnGroupe);
+        
+        
 		/*
 		
 		*/
+        
+        
 		
 	        
 	    

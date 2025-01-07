@@ -61,8 +61,14 @@ if($_SESSION['role'] = "administrateur"){
 			$dateVote = $value['Date_debut_vote'];
 			$duree = $value['Duree_Vote'];
 			$dateVote=date_create($dateVote);
-			$diff=date_diff($dateVote,$dateActuelle);
-			$temps = $diff->format("%R%a ")+$duree;
+			if (var_dump($dateVote>$dateActuelle)){
+				$temps = $diff->format("%R%a ")+$duree;
+			}
+
+			else{
+				$temps = 0;
+			}
+
 
 			if( $value['Id_Groupe'] == $_SESSION['groupe']&& $temps<=0){
 				$link = "transition_vote1.php?id=".$value['Id_Vote'];

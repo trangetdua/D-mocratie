@@ -69,14 +69,11 @@ public class groupeScreen extends JPanel {
 		lblTitrePropo.setBounds(26, 15, 235, 13);
 		add(lblTitrePropo);
 		
-		JComboBox comboBoxAlgo = new JComboBox();
-		comboBoxAlgo.setBounds(650, 30, 168, 21);
-		add(comboBoxAlgo);
-		comboBoxAlgo.setVisible(false);
+		
 		
 		bntAlgo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comboBoxAlgo.setVisible(true);
+				
 				
 			}
 		});
