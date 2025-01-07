@@ -24,7 +24,6 @@ public class Decision {
 
         for (int i = 0; i < propos.size(); i++) {
             Proposition propo = propos.get(i);
-            // Vérifie que la proposition peut être ajoutée sans dépasser le budget
             if (propo.getEvaluationBudgetaire() + currentBudget <= budgetTotal) {
                 int satisfactionCount = comparerPropo(propo, satisfaction);
                 if (satisfactionCount > maxiSatisfaction || (satisfactionCount == maxiSatisfaction && propo.getEvaluationBudgetaire() < maxBudgetEvaluation)) {
