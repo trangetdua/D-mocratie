@@ -16,7 +16,7 @@ public class JListExemple extends JFrame implements ListSelectionListener
   
     public JListExemple(int idGroupe) throws JSONException 
     {
-    	JSONObject jsonPropo = connect.con("Proposition","id_proposition");
+    	JSONObject jsonPropo = connect.con("Proposition");
         //créer le modèle et ajouter des éléments
     	
 		  //System.out.println(jsonUti1.getString("Mail_Utilisateur"));

@@ -41,8 +41,38 @@ public class connect {
 		    System.err.println(e);
 		}
 		   }
-	
-		  public static JSONObject con(String donnees, String identifiant) throws JSONException {
+			public static void update(String table, String colloneModif, String colloneWhere, int condition, float valeur) {
+				  URL url;
+				  JSONObject jsonFinal = new JSONObject();
+				try {
+					url = new URL("https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/" + table + "/"+ colloneWhere + "/"+ condition+"/"+colloneModif+ "/"+valeur +"/?method=PUT");
+					  HttpURLConnection con = (HttpURLConnection) url.openConnection();
+					  con.setRequestMethod("PUT");
+					  Map<String, String> parameters = new HashMap<>();
+					  parameters.put("param1", "val");
+					  
+					  
+					  con.setDoOutput(true);
+					  DataOutputStream out = new DataOutputStream(con.getOutputStream());
+					  out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
+					  
+					  out.flush();
+					  out.close();
+					  
+					  int status = con.getResponseCode();
+
+
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+			}
+		  public static JSONObject con(String donnees) throws JSONException {
 			  URL url;
 			  JSONObject jsonFinal = new JSONObject();
 			try {
@@ -78,12 +108,15 @@ public class connect {
 					String info = content.substring(1, content.length()-1);
 					  
 					  JSONObject json;
-					  String id ;
-					  
+					  String id;
+					  int i = 0;
 					  while(info.length() > 3) {
 						  json = new JSONObject(info);//transoformer le string en json
-						  id = json.getString(identifiant);
+						  
+						  id = String.valueOf(i);
+						  i+=1;
 						  jsonFinal.put(id, json);
+						  
 						  if(info.length()-json.toString(0).length()-(json.length()*2)>0) {
 						  info = info.substring(json.toString(0).length()-(json.length()*2), info.length());
 						  }
@@ -108,7 +141,7 @@ public class connect {
 		  
 		  public static void main(String[] args) throws JSONException {
 			    
-			  JSONObject jojo = con("Proposition","id_proposition");
+			  JSONObject jojo = con("Proposition");
 			  
 			  
 			  System.out.println("ce qui est sencé fonctionner");

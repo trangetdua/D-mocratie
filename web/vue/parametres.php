@@ -47,7 +47,7 @@
 				echo '<td>';
 
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSafe.php"> ';
+				echo '<a  href ="signalSafe.php?id="'."$p['id_proposition']".'"&table=Proposition"> ';
 				echo '<p>ne plus signaler</p>';
 				echo '</a>';
 				echo '</div>';

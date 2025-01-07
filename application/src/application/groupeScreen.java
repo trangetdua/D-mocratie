@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -17,8 +18,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
 
 public class groupeScreen extends JPanel {
+
+	public void invi(){
+    	this.setVisible(false);
+    }
 
 	private static final long serialVersionUID = 1L;
 	private JList<String> propos;
@@ -32,19 +39,24 @@ public class groupeScreen extends JPanel {
 	 * Create the panel.
 	 */
 	public groupeScreen(int idGroupe) throws JSONException {
-		JSONObject jsonPropo = connect.con("Proposition","id_proposition");
+    	System.out.println("test0");
+
+		JSONObject jsonPropo = connect.con("Proposition");
         //créer le modèle et ajouter des éléments
     	
 		  //System.out.println(jsonUti1.getString("Mail_Utilisateur"));
         DefaultListModel<String> model = new DefaultListModel<>();
-        for(int i = 1 ; i<=jsonPropo.length(); i++) {
+    	System.out.println("test1");
+
+        for(int i = 0 ; i<jsonPropo.length(); i++) {
         	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
         	int groupe = Integer.parseInt(jsonUti1.getString("Id_Groupe"));
         	
         	if(groupe == idGroupe) {
-        		listPropo.add(jsonUti1.getString("Id_Utilisateur"));
+        		listPropo.add(jsonUti1.getString("id_proposition"));
         		model.addElement(jsonUti1.getString("Titre_Proposition"));
         	}
+        	System.out.println("test2");
         	
         }
         JButton bntAlgo = new JButton("Algorithme");
@@ -86,21 +98,23 @@ public class groupeScreen extends JPanel {
               
         this.setBounds(100, 100, 870, 554);
         this.setSize(870, 554);
-        
+        JPanel panel = this;
         JButton btnInfo = new JButton("En savoir plus");
         btnInfo.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		for( int i =0; i<propos.getSelectedValuesList().size() ; i++  ) {
-        			JFrame jFrame = new JFrame();
+        		//	JFrame jFrame = new JFrame();
         			String index = listPropo.get(propos.getSelectedIndex());
-        			try {
-						JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(index));
-						String texteTitre = jsonUti1.getString("Titre_Proposition");
-						JOptionPane.showMessageDialog(jFrame, texteTitre);
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+            		propScreen propScreen_;
+
+        			
+        				/*propScreen_ = new propScreen(Integer.parseInt(index));
+    					propScreen_.setSize(870, 554);
+    					propScreen_.setLocation(0, 0);*/
+    					panel.setVisible(false);
+    					/*jFrame.getContentPane().add(propScreen_);
+    					jFrame.setBackground(Color.BLACK);*/
+    					appDecideur.addPanel(Integer.parseInt(index));
         		
         		}
         		
@@ -108,6 +122,25 @@ public class groupeScreen extends JPanel {
         });
         btnInfo.setBounds(640, 131, 178, 21);
         add(btnInfo);
+        
+        JTextArea textArea = new JTextArea();
+        textArea.setBounds(289, 32, 106, 22);
+        add(textArea);
+        
+        JButton btnNewButton = new JButton("Modifier");
+        
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//put
+        		//connect.update("groupe",, , , );
+        		JLabel lblBudget = new JLabel("Budget modifié. Nouveau budget :");
+        		lblBudget.setBounds(170, 49, 106, 22);
+        		add(lblBudget);
+
+        	}
+        });
+        btnNewButton.setBounds(407, 33, 89, 23);
+        add(btnNewButton);
         this.setVisible(true);
 	}
 	

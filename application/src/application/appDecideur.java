@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 
 public class appDecideur {
 
-	private JFrame frame;
+	static private JFrame frame;
 	
 	private JPanel panelGroupe;
 	private JPanel panelProposition;
@@ -33,6 +33,19 @@ public class appDecideur {
 	/**
 	 * Launch the application.
 	 */
+	 public static void addPanel(int index) {
+ 		propScreen propScreen_;
+		 try {
+			propScreen_ = new propScreen(index);
+			propScreen_.setSize(870, 554);
+			 propScreen_.setLocation(0, 0);
+			 frame.getContentPane().add(propScreen_);
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -75,14 +88,14 @@ public class appDecideur {
 		JList<String> groupes;
 		List<String> listGroupe = new ArrayList();
 		
-		JSONObject jsonPropo = connect.con("groupe","Id_Groupe");
-        
+		JSONObject jsonPropo = connect.con("groupe");
         DefaultListModel<String> model = new DefaultListModel<>();
-        for(int i = 1 ; i<=jsonPropo.length()-1; i++) {
+        for(int i = 0; i<jsonPropo.length(); i++) {
+        	
         	JSONObject jsonUti1 = new JSONObject(jsonPropo.getString(String.valueOf(i)));
         		listGroupe.add(jsonUti1.getString("Id_Groupe"));
         		model.addElement(jsonUti1.getString("Nom_Groupe"));
-        	
+
         }
         System.out.println(listGroupe.get(2));
         
@@ -107,17 +120,16 @@ public class appDecideur {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-        		
-        		
         	}
-        });
+        }
+       
+        );
         btnGroupe.setBounds(563, 239, 126, 21);
         panel.add(btnGroupe);
 		/*
 		
 		*/
 		
-		new JListExemple(1);
 	        
 	    
 		

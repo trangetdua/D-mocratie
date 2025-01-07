@@ -6,22 +6,22 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/projet_democratie/projet-demo/application/org.json.jar/org.json.jar">
+	<classpathentry kind="lib" path="C:/Users/Lune/Documents/projet-demo/application/org.json.jar/org.json.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/projet_democratie/projet-demo/application/http-request-3.0.jar/http-request-3.0.jar">
+	<classpathentry kind="lib" path="C:/Users/Lune/Documents/projet-demo/application/http-request-3.0.jar/http-request-3.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/projet_democratie/projet-demo/application/mysql-connector-java-5.1.5-bin.jar">
+	<classpathentry kind="lib" path="C:/Users/Lune/Documents/projet-demo/application/mysql-connector-java-5.1.5-bin.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/projet_democratie/projet-demo/application/java.net.http.jar">
+	<classpathentry kind="lib" path="C:/Users/Lune/Documents/projet-demo/application/java.net.http.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
