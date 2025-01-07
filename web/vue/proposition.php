@@ -11,7 +11,14 @@
 
 <main>
 
+<?php
+if($_SESSION['role'] = "administrateur"){
+	echo "<a href='parametres.php'>";
+	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
+	echo "</a>";
+}
 
+?>
 
 
 <div id= "bigBox"> <!--la boite bleu de la proposition -->
@@ -23,7 +30,7 @@
 			</div>
 		</div>
 
-<a  href ="acceuil_groupe.html"> 
+<a  href ="acceuil_groupe.php"> 
 	<div class="boutonPropo">
 		  <p>retour</p>
 	</div>
@@ -61,14 +68,9 @@
 			}
 		}
 	
-		echo  "<h6 id ='text' class='js-expandmore'>";
+		echo  "<h6 id ='text' >";
 		echo  "<image src='./images/pdpUtilisateur.png' alt='photo de profil utilisateur' id='plus' class = propo></image>";
 		echo  "$prenom $nom</h6>";
-		echo  "<div class = 'js-to_expand'>";
-		echo  "<div class='boutonSignalNom'>";
-		echo  "<p>Signaler</p>";
-		echo  "</div>";
-		echo  "</div>";
 		echo  "</div>";
 
 	

@@ -22,20 +22,15 @@
 	?>
 
 <main>
-<!--
-<div id = "box">
-<image src="./images/menuDepliant.png" alt="plus" class="js-expandmore" id="menu"/>
-<div class = "js-to_expand">
-<div id = "box">
+<?php
+if($_SESSION['role'] = "administrateur"){
+	echo "<a href='parametres.php'>";
+	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
+	echo "</a>";
+}
 
-	<p>Administrateur<p>
-	</div>
-	</div>
-	</div>
-	-->
+?>
 
-
-<!--navigation-->
 <div id="centered">
 
   <div class="active">
