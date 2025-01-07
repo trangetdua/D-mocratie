@@ -44,13 +44,9 @@ require_once("header.php");
 		<input name="Theme" id="Theme"/>
 		<br>
 			
-			<div type="submit" class="boutonCreer">
-			<a  href ="creation_proposition.php"> 
-			  <p>Publier</p>
-			</a>
-			</div>
+		<button id="boutonParti"> Publier </button>
 			
-		  </form>
+		</form>
 
 
 </div>

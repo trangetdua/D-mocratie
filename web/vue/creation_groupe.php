@@ -3,7 +3,6 @@ require_once("header.php");
 
 try{
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nom = $_POST['nom'];
     $couleur = $_POST['couleur'];
@@ -85,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		$_SESSION['role'] = "administrateur";
 		header('Location: acceuil_groupe.php');
-}
+
 } catch (Exception $e) {
     echo $e->getMessage();
 }

@@ -3,20 +3,18 @@ require_once("header.php");
 
 try{
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nom = $_POST['nom'];
     $contenue = $_POST['contenue'];
-	
-	
 	$createur = intval($_SESSION['user_number']);
 	
 		$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=POST";
+		
         $data = [
             'Titre_Proposition' => $nom,
-            'Description_Proposition' => $couleur,
+            'Description_Proposition' => $contenue,
             'Id_Utilisateur' => $createur,
-			'Id_Groupe' => $_SESSION['groupe']
+			'Id_Groupe' => $_SESSION['groupe'],
         ];
 
         $curl = curl_init($url);
@@ -35,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Erreur de décode JSON: " . json_last_error_msg());
         }
 
+		$id = $response['id'];
+		$_SESSION['proposition']=$id;
 
 	
 
@@ -55,12 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 		}
-
-		$id = $response['id'];
-		$_SESSION['proposition']=$id;
 		
 		header('Location: proposition.php');
-}
+
 } catch (Exception $e) {
     echo $e->getMessage();
 }

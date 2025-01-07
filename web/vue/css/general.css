@@ -464,6 +464,9 @@ textarea {
   	height: 5em;
   	resize: vertical;
 }
+input{
+		background: #FFFFFF !important;
+}
 
 
 .button {

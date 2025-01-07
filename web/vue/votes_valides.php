@@ -8,16 +8,6 @@
 	
 		$fullname = $_SESSION['fullname'];
 
-		if (isset($_GET['group_id']) && !empty($_GET['group_id'])) {
-			$groupName = trim($_GET['group_id']);
-		} else {
-			// utiliser session s'il manque id
-			if (!isset($_SESSION['groupe']) || empty($_SESSION['groupe'])) {
-				echo "Erreur: Aucun groupe sélectionné.";
-				exit;
-			}
-			$groupName = $_SESSION['groupe'];
-		}
 
 	?>
 
@@ -33,7 +23,7 @@ if($_SESSION['role'] = "administrateur"){
 
 <div id="centered">
 
-  <div class="active">
+  <div class="nonactive">
     <a  href ="acceuil_groupe.php"> 
       <p>Propositions</p>
     </a>
@@ -45,7 +35,7 @@ if($_SESSION['role'] = "administrateur"){
     </a>
   </div>
   
-<div class="nonactive" style="margin-left:20px;">
+<div class="active" style="margin-left:20px;">
   <a href ="votes_valides.php"> 
     <p>Votes terminés</p>
   </a>
@@ -57,21 +47,26 @@ if($_SESSION['role'] = "administrateur"){
   </div>
 </div>
 
-<a href ="propositionCreer.php">
-<div style="margin-top:20px;" id="centered" class = "nouveauPropo">
- Nouvelle proposition <image src="./images/plus.png" alt="plus" id="plus"/>
-</div>
-</a>
+
 
 
 <?php
-	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/id_groupe/Proposition?method=GET');
+	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/id_groupe/Proposition/id_proposition/Vote?method=GET');
 	curl_setopt($curlPropos,CURLOPT_RETURNTRANSFER,1);
 	$propos = json_decode(curl_exec($curlPropos),true);
+		date_default_timezone_set('Europe/Paris');
+			$dateActuelle = date('Y-m-d H:i:s');
+			$dateActuelle=date_create($dateActuelle);
 		foreach ($propos as $value){
-			if($value['Id_Groupe'] == $_SESSION['groupe']){
-				$link = "transition_propo.php?id=".$value['id_proposition'];
-				$titre = $value['Titre_Proposition'];
+			$dateVote = $value['Date_debut_vote'];
+			$duree = $value['Duree_Vote'];
+			$dateVote=date_create($dateVote);
+			$diff=date_diff($dateVote,$dateActuelle);
+			$temps = $diff->format("%R%a ")+$duree;
+
+			if( $value['Id_Groupe'] == $_SESSION['groupe']&& $temps<=0){
+				$link = "transition_vote1.php?id=".$value['Id_Vote'];
+				$titre = $value['Titre_Vote'];
 				$descr = $value['Description_Proposition'];
 				echo "<a href=$link>";
 				echo "<div  id='centeredColumn' class = 'Propo'>";

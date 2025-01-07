@@ -26,7 +26,7 @@ if($_SESSION['role'] = "administrateur"){
 	<image src="./images/troisPoints.png" alt="plus" class="js-expandmore" id="expand" style="margin-top : 2px"/>
 		<div class = "js-to_expand">
 			<?php
-			$link = "signalement.php?page=propositionCommentaire&type=proposition&id='.$_SESSION['proposition']";
+			$link = "signalement.php?page=propositionCommentaire&type=proposition&id=".$_SESSION['proposition'];
 			echo "<a href = $link>";
 			?>
 			<div class="boutonSignal">
@@ -36,7 +36,7 @@ if($_SESSION['role'] = "administrateur"){
 		</div>
 
 	<div class="boutonPropo">
-		<a  href ="acceuil_groupe.html"> 
+		<a  href ="acceuil_groupe.php"> 
 		  <p>Retour</p>
 		</a>
 	</div>
@@ -85,7 +85,7 @@ if($_SESSION['role'] = "administrateur"){
 
 		<a href ="proposition.php">
 		<div class="boutonComment">
-			<a  href ="acceuil_groupe.html"> 
+			<a  href ="proposition.php"> 
 			  <p>Retour</p>
 			</a>
 		</div>
@@ -94,13 +94,10 @@ if($_SESSION['role'] = "administrateur"){
 		<h1 id ='text'>Commentaire</h1> 
 
 
-		<form action="creation_Commentaire.php" method="post">
+		<form action="creation_commentaire.php" method="post">
 			
-			<button id="boutonComment"> Publier </button>
 			<div type="submit" class="boutonComment">
-			<a  href ="creation_commentaire.php"> 
-			  <p>Publier</p>
-			</a>
+						<button id="boutonComment"> Publier </button>
 			</div>
 			
 			<div>
@@ -118,8 +115,8 @@ if($_SESSION['role'] = "administrateur"){
 	curl_setopt($curlCom,CURLOPT_RETURNTRANSFER,1);
 	$coms = json_decode(curl_exec($curlCom),true);
 		
-		<table>
-			<tbody>
+		echo '<table>';
+			echo '<tbody>';
 				foreach ($coms as $value){
 					if($value['id_proposition']==$_SESSION['proposition']){
 						$contenue = $value['Contenue_Commentaire'];

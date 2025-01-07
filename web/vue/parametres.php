@@ -30,7 +30,6 @@
 		curl_setopt($curlPropositions,CURLOPT_RETURNTRANSFER,1);
 		$propo = json_decode(curl_exec($curlPropositions),true);
 		
-		$_SESSION['groupe']=1;
 		foreach ($propo as $p){
 			if($p['Id_Groupe']==$_SESSION['groupe'] && $p['Signaler']>0){
 				echo '<tr>';
@@ -40,14 +39,15 @@
 				echo '<td>' . $p['Signaler'] . '</td>';
 				echo '<td>';
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSuppr.php?id="'."$p['id_proposition']".'"&table=Proposition&key=id_proposition"> ';
+				$url ='signalSuppr.php?id='.$p['id_proposition'].'&table=Proposition&key=id_proposition';
+				echo "<a  href =$url> ";
 				echo '<p>supprimer la proposition</p>';
 				echo '</a>';
 				echo '</td>';
 				echo '<td>';
-
+				$url ='signalSafe.php?id='.$p['id_proposition'].'&table=Proposition&key=id_proposition';
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSafe.php?id="'."$p['id_proposition']".'"&table=Proposition"> ';
+				echo "<a  href =$url> ";
 				echo '<p>ne plus signaler</p>';
 				echo '</a>';
 				echo '</div>';
@@ -83,14 +83,15 @@
 				echo '<td>' . $c['Signaler'] . '</td>';
 				echo '<td>';
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSuppr.php?id="'.$p['Id_commentaire'].'"&table=commentaire&key=Id_commentaire"> ';
-				echo '<p>supprimer la proposition</p>';
+				$url='signalSuppr.php?id='.$c['Id_commentaire'].'&table=commentaire&key=Id_commentaire';
+				echo "<a  href =$url> ";
+				echo '<p>supprimer le commentaire</p>';
 				echo '</a>';
 				echo '</td>';
 				echo '<td>';
-
+				$url='signalSafe.php?id='.$c['Id_commentaire'].'&table=commentaire&key=Id_commentaire';
 				echo '<div class="boutonPara">';
-				echo '<a  href ="signalSafe.php"> ';
+				echo "<a  href =$url ";
 				echo '<p>ne plus signaler</p>';
 				echo '</a>';
 				echo '</div>';

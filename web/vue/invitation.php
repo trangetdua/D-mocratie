@@ -67,9 +67,6 @@ require_once("header.php");
 
                 <button type="button" class="btn finish-btn">Terminer</button>
 
-                <div class="settings-icon">
-                    <img src="./images/parameter.png" alt="Settings" />
-                </div>
             </form>
         </div>
     </main>
