@@ -18,17 +18,17 @@
 		</a>
 	</div>
 	<?php 
-		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Vote?method=GET');
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Vote?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$verif = json_decode(curl_exec($curl),true);
 		foreach($verif as $v){
 			if($v['id_proposition']==$_SESSION['proposition']){
 				$_SESSION['vote']=$v['Id_Vote'];
-				header('Location:vote.php');
+				header('Location:../vue/vote.php');
 			}
 		}
 
-		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Proposition/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$prop = json_decode(curl_exec($curl),true);
 		foreach($prop as $p){
@@ -47,7 +47,7 @@
 		<select name = "typeVote" id="typeVote">
 		
 		<?php
-			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/type_vote/?method=GET');
+			$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/type_vote/?method=GET');
 			curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 			$types = json_decode(curl_exec($curl),true);
 			foreach($types as $value){

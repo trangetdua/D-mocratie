@@ -1,8 +1,8 @@
 	<?php 
-	require_once("header.php");
+	require_once("../vue/header.php");
 
 	if (!isset($_SESSION['fullname'])) {
-		header("Location: connection.php?error=notlogged");
+		header("Location: ../vue/connection.php?error=notlogged");
 		exit;
 	}
 
@@ -16,7 +16,7 @@
 		</a>
 	</div>
 		<?php
-		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=GET');
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Proposition/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$prop = json_decode(curl_exec($curl),true);
 		foreach($prop as $p){
@@ -31,7 +31,7 @@
 			date_default_timezone_set('Europe/Paris');
 			$dateActuelle = date('Y-m-d H:i:s');
 
-			$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Vote/?method=POST";
+			$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Vote/?method=POST";
 			$data = [
             'Titre_Vote' => $titre,
             'Duree_vote' => $_POST['temps'],
@@ -54,38 +54,38 @@
 			$_SESSION['vote'] = $id;
 
 			if($_POST['typeVote']==1){
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Oui/$id/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Choix/id/Oui/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 				curl_exec($curl);
 				
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Non/$id/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Choix/id/Non/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 				curl_exec($curl);
 				
-				header('Location:vote.php');
+				header('Location:../vue/vote.php');
 
 			}
 			else if($_POST['typeVote']==2){
-				 $url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Pour/$id/?method=POST";
+				 $url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Choix/id/Pour/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 				curl_exec($curl);
 				
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/id/Contre/$id/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Choix/id/Contre/$id/?method=POST";
 			
 				$curl = curl_init($url);
 				curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 				curl_exec($curl);
-				header('Location:vote.php');
+				header('Location:../vue/vote.php');
 
 			}
 			else{
-			echo '<form action="creer_options.php" method="post">';
+			echo '<form action="../vue/creer_options.php" method="post">';
 			$nb=$_POST['nbOptions'];
 			for($i=0;$i<$nb;$i++){
 					$name = "choix".$i;

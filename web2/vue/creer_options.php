@@ -13,7 +13,7 @@
 
 			for($i=0;$i<count($_POST);$i++){
 				$name = "choix".$i.'_';
-				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Choix/?method=POST";
+				$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Choix/?method=POST";
 			$data = [
             'Nom_Choix' =>$_POST[$name],
 			'Id_Vote'=>$id,

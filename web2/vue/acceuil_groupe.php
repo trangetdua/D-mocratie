@@ -50,11 +50,15 @@ if($_SESSION['role'] = "administrateur"){
     <p>Votes terminés</p>
   </a>
 </div>
-<div class="nonactive" style="margin-left:20px;">
-    <a href="invitation.php"> 
-      <p>Inviter un membre</p>
-    </a>
-  </div>
+<?php
+if (isset($_SESSION['role']) && $_SESSION['role'] === "administrateur") {
+    echo '<div class="nonactive" style="margin-left:20px;">
+            <a href="invitation.php"> 
+              <p>Inviter un membre</p>
+            </a>
+          </div>';
+}
+?>
 </div>
 
 <a href ="propositionCreer.php">

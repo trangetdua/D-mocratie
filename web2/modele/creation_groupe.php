@@ -1,5 +1,5 @@
 <?php
-require_once("header.php"); //creer_groupe
+require_once("../vue/header.php"); //creer_groupe - bouton c'ets parti
 
 try{
 

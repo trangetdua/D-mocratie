@@ -52,7 +52,7 @@ if($_SESSION['role'] = "administrateur"){
 	<div >
 
 	<?php
-	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition?method=GET');
+	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Proposition?method=GET');
 	curl_setopt($curlPropos,CURLOPT_RETURNTRANSFER,1);
 	$propos = json_decode(curl_exec($curlPropos),true);
 	$titre;
@@ -68,7 +68,7 @@ if($_SESSION['role'] = "administrateur"){
 
 	echo "<div>";
 
-	$curlUti = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur?method=GET');
+	$curlUti = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/utilisateur?method=GET');
 	curl_setopt($curlUti,CURLOPT_RETURNTRANSFER,1);
 	$utis = json_decode(curl_exec($curlUti),true);
 		foreach ($utis as $value){
@@ -102,7 +102,7 @@ if($_SESSION['role'] = "administrateur"){
 			<table>
 				<tbody>
 					<?php
-					$curlemoji = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/emoticone?method=GET');
+					$curlemoji = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/emoticone?method=GET');
 					curl_setopt($curlemoji,CURLOPT_RETURNTRANSFER,1);
 					$emojis = json_decode(curl_exec($curlemoji),true);
 					$num =0;

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     try {
-        $groupeApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe?method=GET";
+        $groupeApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/groupe?method=GET";
         $groupeResponse = file_get_contents($groupeApiUrl);
         $groupes = json_decode($groupeResponse, true);
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        $utilisateurApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur?method=GET";
+        $utilisateurApiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/utilisateur?method=GET";
         $utilisateurResponse = file_get_contents($utilisateurApiUrl);
         $users = json_decode($utilisateurResponse, true);
         $invitee = null;
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $inviteeId = $invitee['Id_Utilisateur']; //Recepteur
 
         $regularite = urlencode("Invitation au groupe $nomGroupeBrut");
-        $typeNotificationGetUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification/Regularite_Notification/$regularite/Id_Groupe/$groupeId?method=GET";
+        $typeNotificationGetUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Type_Notification/Regularite_Notification/$regularite/Id_Groupe/$groupeId?method=GET";
 
         $typeNotificationResponse = file_get_contents($typeNotificationGetUrl);
         $typeNotifications = json_decode($typeNotificationResponse, true);
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($typeNotifications)) {
             $typeNotificationId = $typeNotifications[0]['Id_Notification'];
         } else {
-            $typeNotificationPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Type_Notification?method=POST";
+            $typeNotificationPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Type_Notification?method=POST";
             $typeNotificationData = [
                 'Regularite_Notification' => "Invitation au groupe $nomGroupeBrut",
                 'Id_Groupe' => $groupeId
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Kiểm tra xem đã có thông báo mời chưa thông qua API
-        $checkNotificationUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications?method=GET";
+        $checkNotificationUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Notifications?method=GET";
         $checkNotificationResponse = file_get_contents($checkNotificationUrl);
         $allNotifications = json_decode($checkNotificationResponse, true);
         $invitationAlreadySent = false;
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        $notificationsPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications?method=POST";
+        $notificationsPostUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Notifications?method=POST";
             $notificationData = [
                 'Id_Emetteur'    => $currentUserId,
                 'Id_Notification' => $typeNotificationId,
