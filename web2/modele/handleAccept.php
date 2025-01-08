@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = Connexion::getConnection();
 
     try {
-        $addMemberUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/membre?method=POST";
+        $addMemberUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/membre?method=POST";
         $memberData = [
             'Id_Utilisateur' => $userId,
             'Id_Groupe' => $groupId,
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        header("Location: acceuil_groupe.php?group_id=$groupId");
+        header("Location: ../vue/acceuil_groupe.php?group_id=$groupId");
         exit;
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Erreur: ' . $e->getMessage()]);

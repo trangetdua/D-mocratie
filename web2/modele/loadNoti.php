@@ -2,14 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['user_number'])) {
-    header('Location: connection.php');
+    header('Location: ../vue/connection.php');
     exit;
 }
 
 $userId = $_SESSION['user_number']; //Emetteur
 
 $curl = curl_init();
-$apiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Notifications/Id_Notification/Type_Notification/Id_Groupe/groupe/Id_Groupe/?method=GET";
+$apiUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Notifications/Id_Notification/Type_Notification/Id_Groupe/groupe/Id_Groupe/?method=GET";
 
 curl_setopt_array($curl, [
     CURLOPT_URL => $apiUrl,

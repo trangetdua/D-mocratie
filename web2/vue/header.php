@@ -13,7 +13,7 @@
 	<body>
 
     <?php
-    require_once('loadNoti.php'); 
+    require_once('../modele/loadNoti.php'); 
     ?>
 
 	<header>
@@ -44,7 +44,7 @@
                 <p><?= htmlspecialchars($notification['message']) ?></p>
 
                 <?php if ($groupId && $notificationId): ?>
-                    <form action="handleAccept.php" method="POST" style="display:inline;">
+                    <form action="../modele/handleAccept.php" method="POST" style="display:inline;">
                         <input type="hidden" name="group_id" value="<?= $groupId ?>">
                         <input type="hidden" name="notification_id" value="<?= $notificationId ?>">
                         <input type="hidden" name="sender_id" value="<?= htmlspecialchars($notification['sender_id']) ?>">
