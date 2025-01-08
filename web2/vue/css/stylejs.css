@@ -1,0 +1,27 @@
+
+input, select, textarea, optgroup, button {
+  background: transparent;
+  border: 0;
+  font: inherit;
+  /* -webkit-appearance: none; */
+}
+.js-to_expand[aria-hidden=true],
+.js-to_expand[data-hidden=true] {
+  display: none;
+}
+/* optionnal or prefix with .js with modernizr */
+.expandmore__button[aria-expanded=false] > .expandmore__symbol:before,
+.expandmore__button[data-expanded=false] > .expandmore__symbol:before {
+  content : ' ';
+}
+.expandmore__button[aria-expanded=true] > .expandmore__symbol:before,
+.expandmore__button[data-expanded=true] > .expandmore__symbol:before {
+  content : ' ';
+}
+
+.expandmore__button {
+  background: none;
+  font-size: inherit;
+  color: inherit;
+}
+
