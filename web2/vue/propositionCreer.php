@@ -1,8 +1,6 @@
 <?php 
-require_once("header.php");
+require_once("header.php"); //vue
 ?>
-
-
 
 
 
@@ -10,7 +8,7 @@ require_once("header.php");
 	<div class = 'centered'>
 
 	<div class="boutonPropo">
-		<a  href ="acceuil_groupe.html"> 
+		<a  href ="acceuil_groupe.php"> 
 		  <p>Annuler</p>
 		</a>
 	</div>
@@ -25,7 +23,7 @@ require_once("header.php");
 		</div>
 
 
-		<form action="creation_proposition.php" method="post">
+		<form action="../modele/creation_proposition.php" method="post">
 			
 			<div class = 'textCreation'>
 				<label for="nom"> </label>

@@ -65,7 +65,7 @@ if($_SESSION['role'] = "administrateur"){
 
 
 <?php
-	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/id_groupe/Proposition?method=GET');
+	$curlPropos = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/groupe/id_groupe/Proposition?method=GET');
 	curl_setopt($curlPropos,CURLOPT_RETURNTRANSFER,1);
 	$propos = json_decode(curl_exec($curlPropos),true);
 		foreach ($propos as $value){

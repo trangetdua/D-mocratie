@@ -1,5 +1,5 @@
 <?php
-require_once("header.php");
+require_once("../vue/header.php");
 
 try{
 
@@ -8,7 +8,7 @@ try{
     $contenue = $_POST['contenue'];
 	$createur = intval($_SESSION['user_number']);
 	
-		$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/?method=POST";
+		$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Proposition/?method=POST";
 		
         $data = [
             'Titre_Proposition' => $nom,
@@ -40,7 +40,7 @@ try{
 
 		if(isset($_POST['Theme'])){
 			$theme2 = $_POST['Theme'];
-						$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Thème/?method=POST";
+						$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Thème/?method=POST";
 			$data = [
             'Nom_Theme' => $theme2,
             'Id_Groupe' => $id,
@@ -56,7 +56,7 @@ try{
 
 		}
 		
-		header('Location: proposition.php');
+		header('Location: ../vue/proposition.php');
 
 } catch (Exception $e) {
     echo $e->getMessage();

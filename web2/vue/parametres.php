@@ -26,7 +26,7 @@
 			<th> Signalements </th>
 		</tr>
 	<?php 
-		$curlPropositions = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Proposition/id_utilisateur/utilisateur/?method=GET');
+		$curlPropositions = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Proposition/id_utilisateur/utilisateur/?method=GET');
 		curl_setopt($curlPropositions,CURLOPT_RETURNTRANSFER,1);
 		$propo = json_decode(curl_exec($curlPropositions),true);
 		
@@ -39,13 +39,13 @@
 				echo '<td>' . $p['Signaler'] . '</td>';
 				echo '<td>';
 				echo '<div class="boutonPara">';
-				$url ='signalSuppr.php?id='.$p['id_proposition'].'&table=Proposition&key=id_proposition';
+				$url ='../modele/signalSuppr.php?id='.$p['id_proposition'].'&table=Proposition&key=id_proposition';
 				echo "<a  href =$url> ";
 				echo '<p>supprimer la proposition</p>';
 				echo '</a>';
 				echo '</td>';
 				echo '<td>';
-				$url ='signalSafe.php?id='.$p['id_proposition'].'&table=Proposition&key=id_proposition';
+				$url ='../modele/signalSafe.php?id='.$p['id_proposition'].'&table=Proposition&key=id_proposition';
 				echo '<div class="boutonPara">';
 				echo "<a  href =$url> ";
 				echo '<p>ne plus signaler</p>';
@@ -69,7 +69,7 @@
 
 		</tr>
 	<?php 
-		$curlCom = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/utilisateur/id_utilisateur/commentaire/id_proposition/Proposition/?method=GET');
+		$curlCom = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/utilisateur/id_utilisateur/commentaire/id_proposition/Proposition/?method=GET');
 		curl_setopt($curlCom,CURLOPT_RETURNTRANSFER,1);
 		$com = json_decode(curl_exec($curlCom),true);
 		
@@ -83,13 +83,13 @@
 				echo '<td>' . $c['Signaler'] . '</td>';
 				echo '<td>';
 				echo '<div class="boutonPara">';
-				$url='signalSuppr.php?id='.$c['Id_commentaire'].'&table=commentaire&key=Id_commentaire';
+				$url='../modele/signalSuppr.php?id='.$c['Id_commentaire'].'&table=commentaire&key=Id_commentaire';
 				echo "<a  href =$url> ";
 				echo '<p>supprimer le commentaire</p>';
 				echo '</a>';
 				echo '</td>';
 				echo '<td>';
-				$url='signalSafe.php?id='.$c['Id_commentaire'].'&table=commentaire&key=Id_commentaire';
+				$url='../modele/signalSafe.php?id='.$c['Id_commentaire'].'&table=commentaire&key=Id_commentaire';
 				echo '<div class="boutonPara">';
 				echo "<a  href =$url ";
 				echo '<p>ne plus signaler</p>';

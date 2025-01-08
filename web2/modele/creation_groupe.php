@@ -10,7 +10,7 @@ try{
 	
 	$createur = intval($_SESSION['user_number']);
 	
-		$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/groupe/?method=POST";
+		$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/groupe/?method=POST";
         $data = [
             'Nom_Groupe' => $nom,
             'Couleur_groupe' => $couleur,
@@ -36,19 +36,19 @@ try{
 		$_SESSION['groupe'] = $id;
 
 	//on rajoute le groupe dans groupe, le role de l'utilisateur dans role_groupe et le membre a la liste des mmebres et les themes 
-		$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/membre/$createur/$id/0/?method=POST";
+		$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/membre/$createur/$id/0/?method=POST";
 		$curl = curl_init($url);
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		curl_exec($curl);
 		
-		$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/role_groupe/$id/1/$createur/?method=POST";
+		$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/role_groupe/$id/1/$createur/?method=POST";
 		$curl = curl_init($url);
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		curl_exec($curl);
 		echo $_POST['Theme1'];
 		if(isset($_POST['Theme1'])){
 			$theme1 = $_POST['Theme1'];
-			$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Thème/?method=POST";
+			$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Thème/?method=POST";
 			$data = [
             'Nom_Theme' => $theme1,
             'Id_Groupe' => $id,
@@ -65,7 +65,7 @@ try{
 
 		if(isset($_POST['Theme2'])){
 			$theme2 = $_POST['Theme2'];
-						$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/Thème/?method=POST";
+						$url ="https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/Thème/?method=POST";
 			$data = [
             'Nom_Theme' => $theme2,
             'Id_Groupe' => $id,
@@ -83,7 +83,7 @@ try{
 
 
 		$_SESSION['role'] = "administrateur";
-		header('Location: acceuil_groupe.php');
+		header('Location: ../vue/acceuil_groupe.php');
 
 } catch (Exception $e) {
     echo $e->getMessage();

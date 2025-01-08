@@ -3,7 +3,7 @@ require_once("isConnected.php");
 
 try{
 		$_SESSION['groupe'] = $_GET['id'];
-		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/role_groupe/Id_Role/role/?method=GET');
+		$curl = curl_init('https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/role_groupe/Id_Role/role/?method=GET');
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		$data = json_decode(curl_exec($curl),true);		
 		$_SESSION['role'] = "membre";
@@ -13,7 +13,7 @@ try{
 				break;
 			}
 		}
-		header('Location: acceuil_groupe.php');
+		header('Location: ../vue/acceuil_groupe.php');
 }
 catch (Exception $e) {
     echo $e->getMessage();

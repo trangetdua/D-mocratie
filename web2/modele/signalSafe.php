@@ -5,7 +5,7 @@ try{
 	$id = $_GET['id'];
 	$table = $_GET['table'];
 	$key=$_GET['key'];
-	$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/$table/$key/$id/Signaler/0/?method=PUT";
+	$url = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/web2/controller/api.php/$table/$key/$id/Signaler/0/?method=PUT";
 	echo $url;
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");

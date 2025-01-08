@@ -39,7 +39,7 @@
 				$groupIdsFromAPI[] = $value['Id_Groupe'];
 
 				$color = "#" .$value['Couleur_Groupe'];
-				$link = "transition_groupe.php?id=".$value['Id_Groupe'];
+				$link = "../modele/transition_groupe.php?id=".$value['Id_Groupe'];
 				echo "<a href=$link>";
 				echo "<div class='grp'style='background-color:$color'>";
 				echo "<image class ='photoGroupe' src='./images/iconImage.png' alt ='icon image'/>";
@@ -59,7 +59,7 @@
 
 		foreach ($_SESSION['groupe'] as $groupId) {
 			if (!in_array($groupId, $groupIdsFromAPI)) { 
-				echo "<a href='transition_groupe.php?id=$groupId'>";
+				echo "<a href='../modele/transition_groupe.php?id=$groupId'>";
 				echo "<div class='grp' style='background-color:#ccc'>";
 				echo "<img class='photoGroupe' src='./images/iconImage.png' alt='icon image'/>";
 				echo "<h2>New Group (ID: $groupId)</h2>";
