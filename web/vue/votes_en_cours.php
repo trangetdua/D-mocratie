@@ -13,7 +13,7 @@
 
 <main>
 <?php
-if($_SESSION['role'] = "administrateur"){
+if($_SESSION['role'] == "administrateur"){
 	echo "<a href='parametres.php'>";
 	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
 	echo "</a>";
