@@ -13,7 +13,7 @@
 
 <main>
 <?php
-if($_SESSION['role'] = "administrateur"){
+if($_SESSION['role'] == "administrateur"){
 	echo "<a href='parametres.php'>";
 	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
 	echo "</a>";
@@ -58,19 +58,14 @@ if($_SESSION['role'] = "administrateur"){
 			$dateActuelle = date('Y-m-d H:i:s');
 			$dateActuelle=date_create($dateActuelle);
 		foreach ($propos as $value){
-			$dateVote = $value['Date_debut_vote'];
-			$duree = $value['Duree_Vote'];
-			$dateVote=date_create($dateVote);
-			if (var_dump($dateVote>$dateActuelle)){
+			
+			if( $value['Id_Groupe'] == $_SESSION['groupe']){
+				$dateVote = $value['Date_debut_vote'];
+				$duree = $value['Duree_Vote'];
+				$dateVote=date_create($dateVote);
+				$diff=date_diff($dateVote,$dateActuelle);
 				$temps = $diff->format("%R%a ")+$duree;
-			}
-
-			else{
-				$temps = 0;
-			}
-
-
-			if( $value['Id_Groupe'] == $_SESSION['groupe']&& $temps<=0){
+				if($temps <=0){
 				$link = "transition_vote1.php?id=".$value['Id_Vote'];
 				$titre = $value['Titre_Vote'];
 				$descr = $value['Description_Proposition'];
@@ -80,6 +75,7 @@ if($_SESSION['role'] = "administrateur"){
 				echo "<div><p>$descr</p></div>";
 			echo "</div>";
 			echo "</a>";
+			}
 			}
 		}
 
