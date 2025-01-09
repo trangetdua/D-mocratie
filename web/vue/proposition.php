@@ -12,7 +12,7 @@
 <main>
 
 <?php
-if($_SESSION['role'] = "administrateur"){
+if($_SESSION['role'] == "administrateur"){
 	echo "<a href='parametres.php'>";
 	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
 	echo "</a>";
@@ -43,7 +43,7 @@ if($_SESSION['role'] = "administrateur"){
 	</div>
 </a>
 <?php
-	if($_SESSION['role'] = "administrateur"){
+	if($_SESSION['role'] == "administrateur"){
 		echo '<a  href ="creer_vote.php">'; 
 		echo '<div class="boutonPropo">'; 
 		echo"	  <p>Créer un vote</p>";
