@@ -8,24 +8,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $userId = $_SESSION['user_number'];
-    $groupId = isset($_POST['group_id']) ? trim($_POST['group_id']) : null;
+    $groupName = isset($_POST['group_id']) ? trim($_POST['group_id']) : null; 
     $notificationId = isset($_POST['notification_id']) ? intval($_POST['notification_id']) : null;
     $senderId = isset($_POST['sender_id']) ? intval($_POST['sender_id']) : null;
 
-    // Debug POST data
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+    require_once('../config/connexion.php');
+    $pdo = Connexion::getConnection();
 
-    if (empty($groupId) || empty($notificationId) || empty($senderId)) {
-        echo json_encode(['success' => false, 'message' => 'Paramètres invalides']);
+    if (!is_numeric($groupName)) {
+        try {
+            $sql = "SELECT Id_Groupe FROM groupe WHERE Nom_Groupe = :Nom_Groupe";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':Nom_Groupe', $groupName, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                echo json_encode(['success' => false, 'message' => 'Nom de groupe invalide']);
+                exit;
+            }
+            $groupId = $result['Id_Groupe'];
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Erreur SQL: ' . $e->getMessage()]);
+            exit;
+        }
+    } else {
+        $groupId = intval($groupName); // Nếu group_id là số, sử dụng trực tiếp
+    }
+
+    if (empty($notificationId) || empty($senderId)) {
+        echo json_encode(['success' => false, 'message' => 'Paramètres notification_id ou sender_id manquants']);
         exit;
     }
 
-    require_once('../config/connexion.php'); 
-    $pdo = Connexion::getConnection();
-
     try {
+        // Thêm người dùng vào nhóm
         $addMemberUrl = "https://projets.iut-orsay.fr/saes3-aviau/TestProket/Web/controller/api.php/membre?method=POST";
         $memberData = [
             'Id_Utilisateur' => $userId,
@@ -47,12 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        if (!isset($_SESSION['groupe']) || !is_array($_SESSION['groupe'])) {
-            $_SESSION['groupe'] = []; // Khởi tạo mảng nếu chưa tồn tại
-        }
-        // Mettre à jour avec nouveau groupe
-        $_SESSION['groupe'][] = $groupId; // Thêm nhóm mới vào danh sách nhóm trong session
+        // Cập nhật session với ID nhóm hiện tại
+        $_SESSION['groupe'] = $groupId;
 
+        // Xóa thông báo liên quan
         try {
             $sql = "DELETE FROM Notifications 
                     WHERE Id_Notification = :Id_Notification 
@@ -73,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        header("Location: acceuil_groupe.php?group_id=$groupId");
+        // Chuyển hướng đến trang accueil_groupe.php
+        header("Location: acceuil_groupe.php");
         exit;
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Erreur: ' . $e->getMessage()]);

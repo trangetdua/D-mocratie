@@ -9,21 +9,18 @@
 		$fullname = $_SESSION['fullname'];
 
 		if (isset($_GET['group_id']) && !empty($_GET['group_id'])) {
-			$groupName = trim($_GET['group_id']);
-		} else {
-			// utiliser session s'il manque id
-			if (!isset($_SESSION['groupe']) || empty($_SESSION['groupe'])) {
-				echo "Erreur: Aucun groupe sélectionné.";
-				exit;
-			}
-			$groupName = $_SESSION['groupe'];
+			$_SESSION['groupe'] = intval($_GET['group_id']); 
 		}
-
+		
+		if (!isset($_SESSION['groupe']) || empty($_SESSION['groupe'])) {
+			echo "Erreur: Aucun groupe sélectionné.";
+			exit;
+		}
 	?>
 
 <main>
 <?php
-if($_SESSION['role'] = "administrateur"){
+if($_SESSION['role'] == "administrateur"){
 	echo "<a href='parametres.php'>";
 	echo "<image src='./images/rouage.png' alt='parametre'  id='rouage'/>";
 	echo "</a>";
